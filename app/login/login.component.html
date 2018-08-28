@@ -1,24 +1,31 @@
-<GridLayout rows="auto,*">
+<ActionBar  android:title="Login"></ActionBar>
+
+<GridLayout class="frame-login" rows="auto,*">
 
     <ScrollView #scrollView row="1" class="content">
         <GridLayout class="input-field" rows="auto">
             <StackLayout class="m-x-10 m-y-20">
-                <!-- <StackLayout>
-                    <Image class="logo" horizontalAlignment="center" src="~/images/pied-piper-logo.png"></Image>
-                    <Label class="lbl-school m-b-10" horizontalAlignment="center" text="PIED PIPER SCHOOL"></Label>
-                </StackLayout> -->
+                <StackLayout>
+                    <Image class="img-logo" src="~/images/pied-piper-logo.png"></Image>
+                    <Label class="lbl-school-name m-b-30" horizontalAlignment="center" text="PIED PIPER SCHOOL"></Label>
+                </StackLayout>
                 
-                <mat-form-field class="example-full-width">
-                    <textarea matInput placeholder="Username"></textarea>
-                </mat-form-field>
+                <Label class="login-label" text="Username" row="0"></Label>
+                <TextField class="m-b-20" row="1" autocorrect="false" autocapitalizationType="none" returnKeyType="next"></TextField>
 
-                <mat-form-field class="example-full-width">
-                    <textarea matInput placeholder="Password"></textarea>
-                </mat-form-field>
+                <Label class="login-label" text="Password" row="2"></Label>
+                <TextField #password class="input input-border m-b-20" row="3" secure="true" [returnKeyType]="isLoggingIn ? 'done' : 'next'"></TextField>
 
-                <mat-form-field class="example-full-width">
-                    <textarea matInput placeholder="Date of Birth"></textarea>
-                </mat-form-field>
+                <Label text="Date of Birth (dd/mm/yyyy)" class="login-label" row="4"></Label>
+                <TextField class="input input-border m-b-20" row="5" keyboardType="datetime" secure="false"></TextField>
+
+                <StackLayout>
+                    <Button class="btn-login m-b-20" text="Sign in" (tap)="login()"></Button>
+                </StackLayout>
+
+                <StackLayout>
+                    <Label class="text-center" text="Forgot password?"></Label>
+                </StackLayout>
 
             </StackLayout>
         </GridLayout>

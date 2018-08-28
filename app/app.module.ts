@@ -4,7 +4,6 @@ import { AppRoutingModule } from "./app.routing";
 import { AppComponent } from "./app.component";
 
 import { LoginComponent } from "./login/login.component";
-import { MatInputModule } from '@angular/material';
 
 @NgModule({
     bootstrap: [
@@ -25,7 +24,7 @@ import { MatInputModule } from '@angular/material';
         NO_ERRORS_SCHEMA
     ],
     exports: [
-        MatInputModule
+        
     ]
 })
 

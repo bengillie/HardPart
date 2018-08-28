@@ -3,8 +3,6 @@ import { RouterExtensions } from 'nativescript-angular/router'
 
 import { UserModel } from "../model/user.model"
 
-import { MatInputModule } from '@angular/material';
-
 @Component({
     moduleId: module.id,
     selector: 'ns-login',
@@ -12,27 +10,21 @@ import { MatInputModule } from '@angular/material';
     styleUrls: ['./login.component.less']
 })
 export class LoginComponent implements OnInit {
+    title = "Login";
     isLoggingIn = true;
     user: UserModel;
-    input: any;
 
     @ViewChild('scrollView') scrollView: ElementRef
 
     private isLoading = true
 
-    constructor(private router: RouterExtensions) { 
-        this.input = {
-            "username": "",
-            "password": "",
-            "birthdate": ""
-        }
-    }
+    constructor(
+        private router: RouterExtensions,
+    ) { }
 
     ngOnInit() { }
 
     public login() {
-        if (this.input.username && this.input.password && this.input.birthdate) {
-
-        }
+       
     }
 }

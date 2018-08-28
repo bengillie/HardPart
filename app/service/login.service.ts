@@ -21,11 +21,19 @@ export class LoginService {
         private http: HttpClient
     ) { }
     
-    getUser (): Observable<UserModel[]> {
+    /* getUser (): Observable<UserModel[]> {
         return this.http.get<UserModel[]>(this.userUrl)
         .pipe(
             tap(user => this.log('fetched user')),
             catchError(this.handleError('getUser', []))
+        );
+    } */
+
+    getUser(userDetail: UserModel) {
+        const url = `${this.userUrl}/${userDetail}`;
+        return this.http.get<UserModel>(url).pipe(
+          tap(_ => this.log(`fetched username=${userDetail}`)),
+          catchError(this.handleError<UserModel>(`getUsername id=${userDetail}`))
         );
     }
 

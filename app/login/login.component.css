@@ -1,1 +1,1 @@
-@import '~nativescript-theme-core/css/core.light.css';div{color:#0057A4}
+.btn-login{background-color:#1A2040;color:white;height:130px}div{color:#0057A4}.frame-login{margin:0 20px}.img-logo{width:200px;height:200px}TextField:focus{border-width:0 0 1 0;border-bottom-color:green}.lbl-school-name{font-size:20px;font-weight:bold;color:#0057A4}
