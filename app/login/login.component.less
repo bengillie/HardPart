@@ -1,13 +1,13 @@
 @import "../app.variable.less";
 
 .btn-login {
-    background-color: @mediumblue;
+    background-color: @lightBlue;
     color: white;
-    height: 90%;
+    height: 60vh;
 }
 
-div {
-    color: @lightBlue;
+.error-msg {
+    color: red;
 }
 
 .frame-login {
@@ -23,4 +23,19 @@ div {
     font-size: 20%;
     font-weight: bold;
     color: @lightBlue;
+}
+
+.ng-invalid {
+    border-bottom-color: red; 
+    border-bottom-width: 1;
+}
+
+.ng-pristine {
+    border-bottom-color: #757575;
+    border-bottom-width: 1;
+}
+
+.ng-valid[required] {
+    border-bottom-color: @lightBlue; 
+    border-bottom-width: 1;
 }

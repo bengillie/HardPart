@@ -1,13 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, tap } from 'rxjs/operators';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { RouterExtensions } from 'nativescript-angular/router'
 import { Observable, of } from 'rxjs';
+import { catchError,map, tap } from 'rxjs/operators'; 
 
 import { UserModel, UserType } from '../model/user.model';
-
-const httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
 
 @Injectable()
 export class LoginService {
@@ -18,39 +15,35 @@ export class LoginService {
     private userUrl = 'api/users';
 
     constructor(
-        private http: HttpClient
+        private http: HttpClient,
+        private router: RouterExtensions
     ) { }
-    
-    /* getUser (): Observable<UserModel[]> {
-        return this.http.get<UserModel[]>(this.userUrl)
-        .pipe(
-            tap(user => this.log('fetched user')),
-            catchError(this.handleError('getUser', []))
-        );
-    } */
 
-    getUser(userDetail: UserModel) {
-        const url = `${this.userUrl}/${userDetail}`;
-        return this.http.get<UserModel>(url).pipe(
-          tap(_ => this.log(`fetched username=${userDetail}`)),
-          catchError(this.handleError<UserModel>(`getUsername id=${userDetail}`))
+    getUser(user: UserModel): Observable<UserModel> {
+
+        let params = new HttpParams();
+        params = params.append('username', user.username);
+        params = params.append('password', user.password);
+        params = params.append('birthdate', user.birthdate.toString());
+
+        return this.http.get<UserModel[]>(this.userUrl, {params: params})
+        .pipe(
+            map(users => users[0]),
+            tap(_ => this.log(`fetched username = ${user.username}`)),
+            catchError(this.handleError<UserModel>(`getUser username = ${user.username}`))
         );
     }
 
     private handleError<T> (operation = 'operation', result?: T) {
         return (error: any): Observable<T> => {
-    
-          console.error(error); // log to console instead
-    
+          console.error(error);
           this.log(`${operation} failed: ${error.message}`);
-    
-          // Let the app keep running by returning an empty result.
           return of(result as T);
         };
     }
     
     // Log error 
     private log(message: string) {
-        console.error('LoginService: ' + message);
+        console.log('LoginService: ' + message);
     }
 }
