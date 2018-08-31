@@ -1,8 +1,11 @@
-<ActionBar  android:title="Login"></ActionBar>
+<ActionBar android:title="Login"></ActionBar>
 
-<GridLayout class="frame-login" rows="auto,*">
+<GridLayout class="frame-login" rows="auto,*"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
 
-    <ScrollView #scrollView row="1" class="content">
+    <ScrollView row="1" class="content">
         <GridLayout class="input-field" rows="auto">
             <StackLayout class="m-x-10 m-y-20">
                 <StackLayout>
@@ -11,15 +14,16 @@
                 </StackLayout>
                 
                 <Label class="login-label" text="Username" row="0"></Label>
-                <TextField class="m-b-20" row="1" autocorrect="false" autocapitalizationType="none" returnKeyType="next"></TextField>
+                <TextField #username class="input input-border m-b-20" required row="1" autocapitalizationType="none" returnKeyType="next" [(ngModel)]="user.username"></TextField>
 
                 <Label class="login-label" text="Password" row="2"></Label>
-                <TextField #password class="input input-border m-b-20" row="3" secure="true" returnKeyType="next"></TextField>
+                <TextField #password class="input m-b-20" required row="3" secure="true" returnKeyType="next" [(ngModel)]="user.password" ></TextField>
 
                 <Label text="Date of Birth (dd/mm/yyyy)" class="login-label" row="4"></Label>
-                <TextField class="input input-border m-b-20" row="5" keyboardType="datetime" secure="false"></TextField>
+                <TextField #dob class="input m-b-5" required row="5" keyboardType="datetime" secure="false" [(ngModel)]="user.birthdate" ></TextField>
 
                 <StackLayout>
+                    <Label class="error-msg text-center m-y-5" text="{{errorMessage}}" ></Label>
                     <Button class="btn-login m-b-20" text="Sign in" (tap)="login()"></Button>
                 </StackLayout>
 
@@ -30,5 +34,4 @@
             </StackLayout>
         </GridLayout>
     </ScrollView>
-
 </GridLayout>

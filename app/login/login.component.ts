@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
 import { RouterExtensions } from 'nativescript-angular/router'
 
 import { UserModel } from "../model/user.model"
+import { LoginService } from '../service/login.service';
 
 @Component({
     moduleId: module.id,
@@ -10,20 +11,64 @@ import { UserModel } from "../model/user.model"
     styleUrls: ['./login.component.less']
 })
 export class LoginComponent implements OnInit {
-    title = "Login";
-    isLoggingIn = true;
+
     user: UserModel;
 
-    @ViewChild('scrollView') scrollView: ElementRef
+    errorMessage = "";
 
-    private isLoading = true
+    @ViewChild("username") username: ElementRef;
+    @ViewChild("password") password: ElementRef;
+    @ViewChild("dob") dob: ElementRef;
 
     constructor(
-        private router: RouterExtensions,
+        private loginService: LoginService,
+        private router: RouterExtensions
     ) { }
 
-    ngOnInit() { }
+    ngOnInit() { 
+        this.user = new UserModel(); 
+    }
 
+    login() {
+        this.errorMessage = "";
+        let isEmpty = this.checkUserInput(this.user);
+
+        if (isEmpty != false) {
+            this.loginService.getUser(this.user)
+                .subscribe(user => {
+                    this.checkUser(user);
+                })
+        }
+    }
+
+    private checkUserInput(user): boolean {
+        if ((!user.username) || (!user.password) || (!user.birthdate)) {
+            this.errorMessage = "Required fields";
+            if (!user.username) {
+                this.username.nativeElement.borderColor = "red";
+            }
+            
+            if (!user.password) {
+                this.password.nativeElement.borderColor = "red";
+            } 
+            
+            if (!user.birthdate) {
+                this.dob.nativeElement.borderColor = "red";
+            }
+            
+            return false;
+        }
+    }
+
+<<<<<<< HEAD
     public login() {
+=======
+    private checkUser(user: UserModel): void {
+        if (!user || !user.username ) {
+            this.errorMessage = "User not found";
+        } else {
+            this.router.navigate(["dashboard"]);
+        }
+>>>>>>> 6f3664ed2e2445e37d0761c36c0de1ca614ace95
     }
 }

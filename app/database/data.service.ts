@@ -1,15 +1,9 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
+
 import { Homework, HomeworkStatus } from '../model/homework.model';
 
 export class DataService implements InMemoryDbService {
   createDb() {
-    const users = [
-      { id: 1, username: 'student1', password: 'password', usertype: 0 },
-      { id: 2, username: 'student2', password: 'password', usertype: 0 },
-      { id: 3, username: 'parent1', password: 'password', usertype: 1 },
-      { id: 4, username: 'parent2', password: 'password', usertype: 1 },
-    ];
-
     const homework: Homework[] = [
       { id: 1, subject: 'Product', task: `Complete the existing products and user profile research so that you are ready to type all the research pages in the first lesson in September. Plan a conclusion for each page (this is the research analysis page but we will be breaking it up in to a paragraph on each page).\n\nYou might also want to write a draft Design Specification as we will complete that in Lesson 2 of Y11.\n\nUse the power point to guide you.`, createdBy: 'Mr Fixit', createdDate: new Date(), attachedFiles: true, dueDate: new Date(), status: HomeworkStatus.todo },
       { id: 2, subject: 'French', task: `Continue to revise for your speaking exam. Revised times attached as well as presentation themes.`, createdBy: 'Mrs French', createdDate: new Date(), attachedFiles: true, dueDate: new Date(), status: HomeworkStatus.todo },
@@ -25,7 +19,14 @@ export class DataService implements InMemoryDbService {
       { id: 12, subject: 'Computer Science', task: 'Read about System Analysis & Design', createdBy: 'Mr French', createdDate: new Date(), attachedFiles: false, dueDate: new Date(), status: HomeworkStatus.todo },
       { id: 13, subject: 'Chemistry', task: 'Introduction to Chemistry', createdBy: 'Mr French', createdDate: new Date(), attachedFiles: false, dueDate: new Date(), status: HomeworkStatus.removed },
     ];
+
+    const users = [
+      { id: 1, username: 'student1', password: 'password', birthdate: '01/02/1998', usertype: 0 },
+      { id: 2, username: 'student2', password: 'password', birthdate: '02/03/2001', usertype: 0 },
+      { id: 3, username: 'parent1', password: 'password', birthdate: '03/03/1978', usertype: 1 },
+      { id: 4, username: 'parent2', password: 'password', birthdate: '04/05/1975', usertype: 1 }
+    ];
     
-    return { users, homework };
+    return { homework, users };
   }
 }
