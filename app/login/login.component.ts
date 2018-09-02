@@ -61,7 +61,10 @@ export class LoginComponent implements OnInit {
     }
 
     private checkUser(user: UserModel): void {
-        if (!user) {
+        if ((user === undefined) ||
+            (user.username != this.user.username) ||
+            (user.password != this.user.password) ||
+            (user.birthdate != this.user.birthdate)) {
             this.errorMessage = "User not found";
         } else {
             this.router.navigate(["dashboard"]);
