@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -15,10 +15,13 @@ import { Homework } from '../model/homework.model';
 })
 
 export class HomeworkDetailComponent implements OnInit, OnDestroy {
+	// @ViewChild("container") container: ElementRef;
+
 	private subscription : Subscription;
-	isLoading = true;
 
 	homework: Homework = new Homework();
+
+	isLoading = true;
 
 	constructor(private route: ActivatedRoute,
 		private homeworkService: HomeworkService,
@@ -38,7 +41,14 @@ export class HomeworkDetailComponent implements OnInit, OnDestroy {
 		this.subscription = this.homeworkService.getHomework(id).subscribe(
 			(x) => {
 				this.homework = x;
+			},
+			() => {},
+			() => {
 				this.isLoading = false;
+				// this.container.animate({
+				// 	opacity: 1,
+				// 	duration: 400
+				// });
 			}
 		)
 	}
