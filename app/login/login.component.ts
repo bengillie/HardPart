@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core'
 import { RouterExtensions } from 'nativescript-angular/router'
+import { Subscription } from 'rxjs';
 
 import { UserModel } from "../model/user.model"
 import { LoginService } from '../service/login.service';
@@ -10,8 +11,8 @@ import { LoginService } from '../service/login.service';
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.less']
 })
-export class LoginComponent implements OnInit {
-
+export class LoginComponent implements OnInit, OnDestroy {
+    private subscription : Subscription;
     user: UserModel;
 
     errorMessage = "";
@@ -27,6 +28,11 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() { 
         this.user = new UserModel(); 
+    }
+
+    ngOnDestroy() {
+        console.log("ngOnDestroy");
+        this.subscription.unsubscribe();
     }
 
     login() {
@@ -60,15 +66,14 @@ export class LoginComponent implements OnInit {
         }
     }
 
-<<<<<<< HEAD
-    public login() {
-=======
     private checkUser(user: UserModel): void {
-        if (!user || !user.username ) {
+        if ((user === undefined) ||
+            (user.username != this.user.username) ||
+            (user.password != this.user.password) ||
+            (user.birthdate != this.user.birthdate)) {
             this.errorMessage = "User not found";
         } else {
             this.router.navigate(["dashboard"]);
         }
->>>>>>> 6f3664ed2e2445e37d0761c36c0de1ca614ace95
     }
 }
