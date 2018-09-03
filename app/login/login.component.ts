@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core'
+import { ActivatedRoute } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router'
 import { Subscription } from 'rxjs';
 
@@ -23,7 +24,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     constructor(
         private loginService: LoginService,
-        private router: RouterExtensions
+        private router: RouterExtensions,
+        private route: ActivatedRoute
     ) { }
 
     ngOnInit() { 
@@ -73,7 +75,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             (user.birthdate != this.user.birthdate)) {
             this.errorMessage = "User not found";
         } else {
-            this.router.navigate(["dashboard"]);
+            /* this.router.navigate([`/timetable/${user.id}`]); */
         }
     }
 }

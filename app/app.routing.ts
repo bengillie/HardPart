@@ -7,6 +7,7 @@ import { DashboardComponent } from "~/dashboard/dashboard.component";
 import { LoginComponent } from "./login/login.component";
 import { HomeworkComponent } from "./homework/homework.component";
 import { HomeworkDetailComponent } from './homework-detail/homework-detail.component';
+import { TimetableComponent } from './timetable/timetable.component';
 
 const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -15,7 +16,8 @@ const routes: Routes = [
     { path: "login", component: LoginComponent },
     // { path: '', redirectTo: '/homeworkdetails/1', pathMatch: 'full' },
     { path: "homework", component: HomeworkComponent },
-    { path: "homeworkdetails/:id", component: HomeworkDetailComponent }
+    { path: "homeworkdetails/:id", component: HomeworkDetailComponent },
+    { path: "timetable/:id", component: TimetableComponent}
 ];
 
 @NgModule({

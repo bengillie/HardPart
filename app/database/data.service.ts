@@ -1,6 +1,7 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
 
 import { Homework, HomeworkStatus } from '../model/homework.model';
+import { Lessons, Periods } from '../model/timetable.model';
 
 export class DataService implements InMemoryDbService {
   createDb() {
@@ -18,6 +19,14 @@ export class DataService implements InMemoryDbService {
       { id: 11, subject: 'Artificial Intelligence', task: 'You will have a medicine mock the first week back in Year 11.\n\nYou have been revising medicine this half term, and you will need to keep up with this revision over the summer holidays. Many of you have bought revision guides - use them!\n\nI have also attached Medicine and Western revision work books.', createdBy: 'Mr French', createdDate: new Date(), attachedFiles: false, dueDate: new Date(), status: HomeworkStatus.todo },
       { id: 12, subject: 'Computer Science', task: 'Read about System Analysis & Design', createdBy: 'Mr French', createdDate: new Date(), attachedFiles: false, dueDate: new Date(), status: HomeworkStatus.todo },
       { id: 13, subject: 'Chemistry', task: 'Introduction to Chemistry', createdBy: 'Mr French', createdDate: new Date(), attachedFiles: false, dueDate: new Date(), status: HomeworkStatus.removed },
+    ];
+
+    const lessons: Lessons[] = [
+
+    ];
+
+    const periods: Periods[] = [
+
     ];
 
     const users = [
