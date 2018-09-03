@@ -1,37 +1,31 @@
 <ActionBar android:title="Login"></ActionBar>
 
-<GridLayout class="frame-login" rows="auto,*"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center">
-
-    <ScrollView row="1" class="content">
-        <GridLayout class="input-field" rows="auto">
-            <StackLayout class="m-x-10 m-y-20">
-                <StackLayout>
-                    <Image class="img-logo" src="~/images/pied-piper-logo.png"></Image>
-                    <Label class="lbl-school-name m-b-30" horizontalAlignment="center" text="PIED PIPER SCHOOL"></Label>
-                </StackLayout>
-                
-                <Label class="login-label" text="Username" row="0"></Label>
-                <TextField #username class="input input-border m-b-20" required row="1" autocapitalizationType="none" returnKeyType="next" [(ngModel)]="user.username"></TextField>
-
-                <Label class="login-label" text="Password" row="2"></Label>
-                <TextField #password class="input m-b-20" required row="3" secure="true" returnKeyType="next" [(ngModel)]="user.password" ></TextField>
-
-                <Label text="Date of Birth (dd/mm/yyyy)" class="login-label" row="4"></Label>
-                <TextField #dob class="input m-b-5" required row="5" keyboardType="datetime" secure="false" [(ngModel)]="user.birthdate" ></TextField>
-
-                <StackLayout>
-                    <Label class="error-msg text-center m-y-5" text="{{errorMessage}}" ></Label>
-                    <Button class="btn-login m-b-20" text="Sign in" (tap)="login()"></Button>
-                </StackLayout>
-
-                <StackLayout>
-                    <Label class="text-center" text="Forgot password?"></Label>
-                </StackLayout>
-
-            </StackLayout>
+<ScrollView>
+    <StackLayout class="content" verticalAlignment="center">
+        <GridLayout rows="auto,*">
+            <Image class="img-logo" row="0" src="~/images/pied-piper-logo.png"></Image>
+            <Label class="lbl-school-name m-b-30" row="1" horizontalAlignment="center" text="PIED PIPER SCHOOL"></Label>
         </GridLayout>
-    </ScrollView>
-</GridLayout>
+
+        <GridLayout rows="auto,*">
+                <TextField #username class="input tf-input m-b-20" required hint="Username" autocapitalizationType="none" returnKeyType="next" [(ngModel)]="user.username"></TextField>
+        </GridLayout>
+
+        <GridLayout rows="auto,*">
+            <TextField #password class="input tf-input m-b-20" required hint="Password" secure="true" returnKeyType="next" [(ngModel)]="user.password" ></TextField>
+        </GridLayout>
+
+        <GridLayout rows="auto,*">
+            <TextField #dob class="input tf-input m-b-5" required hint="Date of Birth (dd/mm/yyyy)" keyboardType="datetime" secure="false" [(ngModel)]="user.birthdate" ></TextField>
+        </GridLayout>
+
+        <GridLayout rows="auto,*">
+            <Label class="error-msg text-center m-y-5" row="0" text="{{errorMessage}}" ></Label>
+            <Button class="btn-login m-b-20" row="1" text="Sign in" (tap)="login()"></Button>
+        </GridLayout>
+
+        <GridLayout rows="auto,*">
+            <Label class="text-center" text="Forgot password?"></Label>
+        </GridLayout>
+    </StackLayout>
+</ScrollView>

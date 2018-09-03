@@ -6,12 +6,14 @@
     height: 60vh;
 }
 
-.error-msg {
-    color: red;
+.content {
+    padding: 25%;
+    width: 100%;
+    height: auto;
 }
 
-.frame-login {
-    margin: 0 5%;
+.error-msg {
+    color: red;
 }
 
 .img-logo {
@@ -25,6 +27,11 @@
     color: @lightBlue;
 }
 
+.ng-dirty {
+    border-bottom-color: @lightBlue; 
+    border-bottom-width: 1;
+}
+
 .ng-invalid {
     border-bottom-color: red; 
     border-bottom-width: 1;
@@ -35,7 +42,7 @@
     border-bottom-width: 1;
 }
 
-.ng-valid[required] {
-    border-bottom-color: @lightBlue; 
-    border-bottom-width: 1;
+.tf-input::-webkit-input-placeholder {
+    font-family: Arial;
+    font-size: 16%;
 }
