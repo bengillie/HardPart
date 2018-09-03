@@ -1,25 +1,83 @@
 <ActionBar android:title="Homework"></ActionBar>
 
-<GridLayout class="page page-content">
+<GridLayout>
     <TabView selectedIndex="0">
-        <ng-container *ngFor="let tab of homeworksTab">
-            <ListView class="list-group"
-                [items]=tab.items
-                *tabItem="{ title: tab.title }"
-            >
-                <ng-template let-item="item">
-                    <GridLayout columns="*, 40" (tap)="onItemTap(item)">
-                        <StackLayout col=0>
-                            <Label [text]="item.subject" class="list-group-item"></Label>
-                            <StackLayout class="list-group-item list-group-item-sub">
-                                <Label [text]="item.createdBy" ></Label>
-                                <Label [text]='item.dueDate | date:"fullDate"' ></Label>
-                            </StackLayout>
+
+        <ListView class="list-group"
+            [items]="homeworks_todo"
+            *tabItem="{ title: 'TODO' }">
+            <ng-template let-item="item">
+                <GridLayout columns="*, 40" (tap)="onItemTap(item)">
+                    <StackLayout col=0>
+                        <Label [text]="item.subject" class="list-group-item"></Label>
+                        <StackLayout class="list-group-item list-group-item-sub">
+                            <Label [text]="item.createdBy" ></Label>
+                            <Label [text]='item.dueDate | date:"fullDate"' ></Label>
                         </StackLayout>
-                        <Label col=1 class="icon" horizontalAlignment="center" verticalAlignment="center" text="{{ iconCode }}"></Label>
-                    </GridLayout>
-                </ng-template>
-            </ListView>
-        </ng-container>
+                    </StackLayout>
+                </GridLayout>
+            </ng-template>
+        </ListView>
+
+        <ListView class="list-group"
+            [items]="homeworks_done"
+            *tabItem="{ title: 'DONE' }">
+            <ng-template let-item="item">
+                <GridLayout columns="*, 40" (tap)="onItemTap(item)">
+                    <StackLayout col=0>
+                        <Label [text]="item.subject" class="list-group-item"></Label>
+                        <StackLayout class="list-group-item list-group-item-sub">
+                            <Label [text]="item.createdBy" ></Label>
+                            <Label [text]='item.dueDate | date:"fullDate"' ></Label>
+                        </StackLayout>
+                    </StackLayout>
+                </GridLayout>
+            </ng-template>
+        </ListView>
+
+        <ListView class="list-group"
+            [items]="homeworks"
+            *tabItem="{ title: 'All' }">
+            <ng-template let-item="item">
+                <GridLayout columns="*, 40" (tap)="onItemTap(item)">
+                    <StackLayout col=0>
+                        <Label [text]="item.subject" class="list-group-item"></Label>
+                        <StackLayout class="list-group-item list-group-item-sub">
+                            <Label [text]="item.createdBy" ></Label>
+                            <Label [text]='item.dueDate | date:"fullDate"' ></Label>
+                            <Label [text]="item.status" ></Label>
+                        </StackLayout>
+                    </StackLayout>
+                </GridLayout>
+            </ng-template>
+        </ListView>
+        
     </TabView>
+
+    <ActivityIndicator [busy]="isLoading" horizontalAlignment="center"></ActivityIndicator>
+
+    <!-- ngFor implementation. binding [items]="tab.items" isn't working properly -->
+    <!-- <TabView selectedIndex="0">
+            <ng-container *ngFor="let tab of homeworksTab">
+                <ListView class="list-group"
+
+                    [items]="tab.items"
+
+                    *tabItem="{ title: tab.title }">
+                    <ng-template let-item="item">
+                        <GridLayout columns="*, 40" (tap)="onItemTap(item)">
+                            <StackLayout col=0>
+                                <Label [text]="item.subject" class="list-group-item"></Label>
+                                <StackLayout class="list-group-item list-group-item-sub">
+                                    <Label [text]="item.createdBy" ></Label>
+                                    <Label [text]='item.dueDate | date:"fullDate"' ></Label>
+                                </StackLayout>
+                            </StackLayout>
+                            <Label col=1 class="icon" horizontalAlignment="center" verticalAlignment="center" text="{{ iconCode }}"></Label>
+                        </GridLayout>
+                    </ng-template>
+                </ListView>
+            </ng-container>
+        </TabView> -->
+        
 </GridLayout>

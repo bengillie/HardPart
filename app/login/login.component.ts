@@ -60,15 +60,11 @@ export class LoginComponent implements OnInit {
         }
     }
 
-<<<<<<< HEAD
-    public login() {
-=======
     private checkUser(user: UserModel): void {
         if (!user || !user.username ) {
             this.errorMessage = "User not found";
         } else {
             this.router.navigate(["dashboard"]);
         }
->>>>>>> 6f3664ed2e2445e37d0761c36c0de1ca614ace95
     }
 }

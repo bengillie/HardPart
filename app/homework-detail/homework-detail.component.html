@@ -1,14 +1,23 @@
 <ActionBar visibility="{{ homework ? 'visible' : 'collapse' }}" title="{{ homework.subject }}">
     <NavigationButton text="Go Back" android.systemIcon="ic_menu_back" (tap)="goBack()"></NavigationButton>
-    <ActionItem ios.position="right"  android.position="actionBar">
-            <Label class="m-5" [text]="homework.dueDate | date: 'dd/MM/yyyy'" color="white"></Label>
-    </ActionItem>
 </ActionBar>
 
-<StackLayout class="body content">
+<StackLayout>
+    <StackLayout id="container" class="body" 
+        visibility="{{ homework.subject ? 'visible' : 'collapse' }}">
+
     <Label [text]="homework.createdBy" class="h3"></Label>
-    <Label [text]="homework.createdDate | date:'fullDate'"></Label>
-    <Label [text]="homework.status | lowercase"></Label>
+    <Label [text]="homework.status" class="h3"></Label>
+    
+    <StackLayout orientation="horizontal">
+        <Label [text]="homework.createdDate | date:'dd/MM/yyyy' + ' - '" class="h3"></Label>
+        <Label [text]="homework.dueDate | date:'dd/MM/yyyy'" class="h3"></Label>
+    </StackLayout>
+
     <StackLayout class="hr-light m-5"></StackLayout>
+
     <Label [text]="homework.task" textWrap="true"></Label>
+    </StackLayout>
+
+    <ActivityIndicator [busy]="isLoading" horizontalAlignment="center"></ActivityIndicator>
 </StackLayout>
