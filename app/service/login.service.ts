@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { RouterExtensions } from 'nativescript-angular/router'
 import { Observable, of } from 'rxjs';
 import { catchError,map, tap } from 'rxjs/operators'; 
 
@@ -37,14 +36,20 @@ export class LoginService {
         );
     }
 
-    getLoggedUser(id: number): Observable<UserModel> {
-        const url = `${this.userUrl}/${id}`;
+    getLoggedUser(user: UserModel): Observable<UserModel> {
+        var data = {
+            userid: user.id,
+            username: user.username,
+            birthdate: user.birthdate,
+            usertype: user.usertype,
+        };
+        exports.data = data;
 
-        return this.http.get<UserModel[]>(url)
+        return this.http.get<UserModel[]>(this.userUrl)
         .pipe(
-            map(users => users[0]),
-            tap(_ => this.logService.log(`fetched user id = ${id}`)),
-            catchError(this.errorService.handleError<UserModel>(`getUser id = ${id}`))
-        );
+            map(data => data[0]),
+            tap(_ => this.logService.log(`fetched username = ${user.username}`)),
+            catchError(this.errorService.handleError<UserModel>(`getUser username = ${user.username}`))
+        )
     }
 }

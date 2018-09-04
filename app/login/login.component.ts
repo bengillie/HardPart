@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         let isEmpty = this.checkUserInput(this.user);
 
         if (isEmpty != false) {
-            this.loginService.getUser(this.user)
+            this.subscription = this.loginService.getUser(this.user)
                 .subscribe(user => {
                     this.checkUser(user);
                 })
@@ -75,7 +75,8 @@ export class LoginComponent implements OnInit, OnDestroy {
             (user.birthdate != this.user.birthdate)) {
             this.errorMessage = "User not found";
         } else {
-            /* this.router.navigate([`/timetable/${user.id}`]); */
+            this.loginService.getLoggedUser(user);
+            this.router.navigate([`timetable`]);
         }
     }
 }
