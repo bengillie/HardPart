@@ -32,10 +32,6 @@ export class TimetableComponent implements OnInit, OnDestroy {
     }
 
     getLoggedUser() {
-        const id = +this.route.snapshot.paramMap.get('id');
-        this.loginService.getLoggedUser(id)
-            .subscribe(user => {
-                
-            })
+        const user = this.loginService.getLoggedInUser();
     }
 }

@@ -2,9 +2,9 @@
 
 <GridLayout rows="50, auto, *">
     <GridLayout columns="*, *, *">
-        <Button col="0" class="btnTab" [class.btnTab-active]="tabViewSelectedIndex===0" text="TODO" (tap)="onTabViewClicked(0)"></Button>
-        <Button col="1" class="btnTab" [class.btnTab-active]="tabViewSelectedIndex===1" text="DONE" (tap)="onTabViewClicked(1)"></Button>
-        <Button col="2" class="btnTab" [class.btnTab-active]="tabViewSelectedIndex===2" text="ALL" (tap)="onTabViewClicked(2)"></Button>
+        <Button col="0" class="btnTab" [class.btnTab-active]="tabViewSelectedIndex===0" [class.btnTab-notActive]="tabViewSelectedIndex!==0" text="TODO" (tap)="onTabViewClicked(0)"></Button>
+        <Button col="1" class="btnTab" [class.btnTab-active]="tabViewSelectedIndex===1" [class.btnTab-notActive]="tabViewSelectedIndex!==1" text="DONE" (tap)="onTabViewClicked(1)"></Button>
+        <Button col="2" class="btnTab" [class.btnTab-active]="tabViewSelectedIndex===2" [class.btnTab-notActive]="tabViewSelectedIndex!==2" text="ALL" (tap)="onTabViewClicked(2)"></Button>
     </GridLayout>
 
     <StackLayout row="1" class="hr-light"></StackLayout>

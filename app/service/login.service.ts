@@ -10,8 +10,8 @@ import { LoggingService } from '../service/logging.service';
 
 @Injectable()
 export class LoginService {
-    user = UserModel;
-    userType = UserType;
+    user: UserModel;
+    userType: UserType;
 
     private userUrl = 'api/users';
 
@@ -20,6 +20,10 @@ export class LoginService {
         private errorService: ErrorService,
         private logService: LoggingService
     ) { }
+
+    getLoggedInUser(): UserModel {
+        return this.user;
+    }
 
     getUser(user: UserModel): Observable<UserModel> {
 
@@ -36,20 +40,8 @@ export class LoginService {
         );
     }
 
-    getLoggedUser(user: UserModel): Observable<UserModel> {
-        var data = {
-            userid: user.id,
-            username: user.username,
-            birthdate: user.birthdate,
-            usertype: user.usertype,
-        };
-        exports.data = data;
-
-        return this.http.get<UserModel[]>(this.userUrl)
-        .pipe(
-            map(data => data[0]),
-            tap(_ => this.logService.log(`fetched username = ${user.username}`)),
-            catchError(this.errorService.handleError<UserModel>(`getUser username = ${user.username}`))
-        )
+    setLoggedInUser(user: UserModel) {
+        this.user = user;
     }
+
 }
