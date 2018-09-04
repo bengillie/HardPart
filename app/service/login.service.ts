@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { RouterExtensions } from 'nativescript-angular/router'
 import { Observable, of } from 'rxjs';
 import { catchError,map, tap } from 'rxjs/operators'; 
 
 import { UserModel, UserType } from '../model/user.model';
 
+import { ErrorService } from '../service/error.service';
+import { LoggingService } from '../service/logging.service';
+
 @Injectable()
 export class LoginService {
-
     user = UserModel;
     userType = UserType;
 
@@ -16,7 +17,8 @@ export class LoginService {
 
     constructor(
         private http: HttpClient,
-        private router: RouterExtensions
+        private errorService: ErrorService,
+        private logService: LoggingService
     ) { }
 
     getUser(user: UserModel): Observable<UserModel> {
@@ -29,21 +31,25 @@ export class LoginService {
         return this.http.get<UserModel[]>(this.userUrl, {params: params})
         .pipe(
             map(users => users[0]),
-            tap(_ => this.log(`fetched username = ${user.username}`)),
-            catchError(this.handleError<UserModel>(`getUser username = ${user.username}`))
+            tap(_ => this.logService.log(`fetched username = ${user.username}`)),
+            catchError(this.errorService.handleError<UserModel>(`getUser username = ${user.username}`))
         );
     }
 
-    private handleError<T> (operation = 'operation', result?: T) {
-        return (error: any): Observable<T> => {
-          console.error(error);
-          this.log(`${operation} failed: ${error.message}`);
-          return of(result as T);
+    getLoggedUser(user: UserModel): Observable<UserModel> {
+        var data = {
+            userid: user.id,
+            username: user.username,
+            birthdate: user.birthdate,
+            usertype: user.usertype,
         };
-    }
-    
-    // Log error 
-    private log(message: string) {
-        console.log('LoginService: ' + message);
+        exports.data = data;
+
+        return this.http.get<UserModel[]>(this.userUrl)
+        .pipe(
+            map(data => data[0]),
+            tap(_ => this.logService.log(`fetched username = ${user.username}`)),
+            catchError(this.errorService.handleError<UserModel>(`getUser username = ${user.username}`))
+        )
     }
 }

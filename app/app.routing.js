@@ -6,13 +6,15 @@ var dashboard_component_1 = require("~/dashboard/dashboard.component");
 var login_component_1 = require("./login/login.component");
 var homework_component_1 = require("./homework/homework.component");
 var homework_detail_component_1 = require("./homework-detail/homework-detail.component");
+var timetable_component_1 = require("./timetable/timetable.component");
 var routes = [
     { path: '', redirectTo: '/homework', pathMatch: 'full' },
     // { path: '', redirectTo: '/homeworkdetails/1', pathMatch: 'full' },
     { path: "dashboard", component: dashboard_component_1.DashboardComponent },
     { path: "login", component: login_component_1.LoginComponent },
     { path: "homework", component: homework_component_1.HomeworkComponent },
-    { path: "homeworkdetails/:id", component: homework_detail_component_1.HomeworkDetailComponent }
+    { path: "homeworkdetails/:id", component: homework_detail_component_1.HomeworkDetailComponent },
+    { path: "timetable/:id", component: timetable_component_1.TimetableComponent }
 ];
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {
