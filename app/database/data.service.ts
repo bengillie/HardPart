@@ -1,4 +1,5 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
+import { Time } from "@angular/common";
 
 import { Homework, HomeworkStatus } from '../model/homework.model';
 import { Lessons, Periods } from '../model/timetable.model';
@@ -7,6 +8,14 @@ export class DataService implements InMemoryDbService {
   createDb() {
     var dateNow1 = new Date();
     var dateNow2 = new Date();
+
+    var lessonDate = new Date();
+    let monday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 1));
+    let tuesday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 2));
+    let wednesday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 3));
+    let thursday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 4));
+    let friday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 5));
+    
     const homework: Homework[] = [
       { id: 1, subject: 'Product', 
         task: `Complete the existing products and user profile research so that you are ready to type all the research pages in the first lesson in September. Plan a conclusion for each page (this is the research analysis page but we will be breaking it up in to a paragraph on each page).\n\nYou might also want to write a draft Design Specification as we will complete that in Lesson 2 of Y11.\n\nUse the power point to guide you.`, 
@@ -63,11 +72,20 @@ export class DataService implements InMemoryDbService {
     ];
 
     const lessons: Lessons[] = [
-
+      { userid: 1, startDate: monday, endDate: new Date(), teacher: "M. Downs", subject: "Science", class: "11Sc1"},
+      { userid: 1, startDate: tuesday, endDate: new Date(), teacher: "N. Heyes", subject: "History", class: "11Hi1"},
+      { userid: 1, startDate: wednesday, endDate: new Date(), teacher: "S. Williams", subject: "Calculus", class: "11Ma1"},
+      { userid: 1, startDate: thursday, endDate: new Date(), teacher: "C. Baldwin", subject: "Music", class: "11Mu1"},
+      { userid: 1, startDate: friday, endDate: new Date(), teacher: "V. Romero", subject: "Physical Education", class: "11Pe1"},   
+      { userid: 2, startDate: monday, endDate: new Date(), teacher: "C. Baldwin", subject: "Music", class: "11Mu1"},
+      { userid: 2, startDate: tuesday, endDate: new Date(), teacher: "S. Williams", subject: "Calculus", class: "11Ma1"},
+      { userid: 2, startDate: wednesday, endDate: new Date(), teacher: "V. Romero", subject: "Physical Education", class: "11Pe1"},
+      { userid: 2, startDate: thursday, endDate: new Date(), teacher: "M. Downs", subject: "Science", class: "11Sc1"},
+      { userid: 2, startDate: friday, endDate: new Date(), teacher: "N. Heyes", subject: "History", class: "11Hi1"},
     ];
 
     const periods: Periods[] = [
-
+      
     ];
 
     const users = [
@@ -77,6 +95,6 @@ export class DataService implements InMemoryDbService {
       { id: 4, username: 'parent2', password: 'password', birthdate: '04/05/1975', usertype: 1 }
     ];
     
-    return { homework, users };
+    return { homework, lessons, periods, users };
   }
 }

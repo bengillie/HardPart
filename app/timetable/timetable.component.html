@@ -1,4 +1,5 @@
-<ActionBar android:title="Timetable">
+<ActionBar>
+    <NavigationButton text="Go Back" android.systemIcon="ic_menu_back" (tap)="goBack()"></NavigationButton>
     <ActionItem ios.position="right"  android.position="actionBar">
             <Label class="m-5" [text]="lesson.date | date: 'dd/MM/yyyy'" color="white"></Label>
     </ActionItem>
