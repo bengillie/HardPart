@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     login() {
         this.errorMessage = "";
-        let isEmpty = this.checkUserInput(this.user);
+        let isEmpty = this.validInput(this.user);
 
         if (isEmpty != false) {
             this.subscription = this.loginService.getUser(this.user)
@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
     }
 
-    private checkUserInput(user): boolean {
+    private validInput(user): boolean {
         if ((!user.username) || (!user.password) || (!user.birthdate)) {
             this.errorMessage = "Required fields";
             if (!user.username) {
@@ -67,6 +67,8 @@ export class LoginComponent implements OnInit, OnDestroy {
             
             return false;
         }
+
+        return true;
     }
 
     private checkUser(user: UserModel): void {
@@ -76,8 +78,8 @@ export class LoginComponent implements OnInit, OnDestroy {
             (user.birthdate != this.user.birthdate)) {
             this.errorMessage = "User not found";
         } else {
-            this.loginService.getLoggedUser(user);
-            this.router.navigate([`timetable`]);
+            this.loginService.setLoggedInUser(user);
+            this.router.navigate([`homework`]);
         }
     }
 }

@@ -5,6 +5,7 @@ import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { AppRoutingModule } from "./app.routing";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
 import { NativeScriptModule } from "nativescript-angular/nativescript.module";
+import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
 
 import { AppComponent } from "./app.component";
 import { DashboardComponent } from "~/dashboard/dashboard.component";
@@ -33,7 +34,8 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
         HttpClientModule,
         HttpClientInMemoryWebApiModule.forRoot(
             DataService, { dataEncapsulation: false }
-        )
+        ),
+        NativeScriptUIListViewModule
     ],
     declarations: [
         AppComponent,

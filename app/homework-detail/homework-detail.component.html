@@ -7,12 +7,13 @@
         visibility="{{ homework.subject ? 'visible' : 'collapse' }}">
 
     <Label [text]="homework.createdBy" class="h3"></Label>
-    <Label [text]="homework.status" class="h3"></Label>
     
     <StackLayout orientation="horizontal">
         <Label [text]="homework.createdDate | date:'dd/MM/yyyy' + ' - '" class="h3"></Label>
         <Label [text]="homework.dueDate | date:'dd/MM/yyyy'" class="h3"></Label>
     </StackLayout>
+    
+    <Label [text]="homework.status" class="h3"></Label>
 
     <StackLayout class="hr-light m-5"></StackLayout>
 
