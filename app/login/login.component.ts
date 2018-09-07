@@ -79,7 +79,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.errorMessage = "User not found";
         } else {
             this.loginService.setLoggedInUser(user);
-            this.router.navigate([`homework`]);
+            this.router.navigate([`timetable`]);
         }
     }
 }

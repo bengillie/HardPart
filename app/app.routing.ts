@@ -10,14 +10,14 @@ import { HomeworkDetailComponent } from './homework-detail/homework-detail.compo
 import { TimetableComponent } from './timetable/timetable.component';
 
 const routes: Routes = [
-    { path: '', redirectTo: '/login', pathMatch: 'full' },
+    { path: '', redirectTo: '/timetable', pathMatch: 'full' },
     // { path: '', redirectTo: '/homeworkdetails/1', pathMatch: 'full' },
 
     { path: "dashboard", component: DashboardComponent},
     { path: "login", component: LoginComponent },
     { path: "homework", component: HomeworkComponent },
     { path: "homeworkdetails/:id", component: HomeworkDetailComponent },
-    { path: "timetable/:id", component: TimetableComponent}
+    { path: "timetable", component: TimetableComponent}
 ];
 
 @NgModule({

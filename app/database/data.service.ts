@@ -10,12 +10,13 @@ export class DataService implements InMemoryDbService {
     var dateNow2 = new Date();
 
     var lessonDate = new Date();
-    let monday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 1));
-    let tuesday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 2));
-    let wednesday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 3));
-    let thursday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 4));
-    let friday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 5));
-    
+    var monday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 1) );
+    var tuesday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 2));
+    var wednesday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 3));
+    var thursday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 4));
+    var friday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 5));
+    var saturday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 6));
+        
     const homework: Homework[] = [
       { id: 1, subject: 'Product', 
         task: `Complete the existing products and user profile research so that you are ready to type all the research pages in the first lesson in September. Plan a conclusion for each page (this is the research analysis page but we will be breaking it up in to a paragraph on each page).\n\nYou might also want to write a draft Design Specification as we will complete that in Lesson 2 of Y11.\n\nUse the power point to guide you.`, 
@@ -72,20 +73,55 @@ export class DataService implements InMemoryDbService {
     ];
 
     const lessons: Lessons[] = [
-      { userid: 1, startDate: monday, endDate: new Date(), teacher: "M. Downs", subject: "Science", class: "11Sc1"},
-      { userid: 1, startDate: tuesday, endDate: new Date(), teacher: "N. Heyes", subject: "History", class: "11Hi1"},
-      { userid: 1, startDate: wednesday, endDate: new Date(), teacher: "S. Williams", subject: "Calculus", class: "11Ma1"},
-      { userid: 1, startDate: thursday, endDate: new Date(), teacher: "C. Baldwin", subject: "Music", class: "11Mu1"},
-      { userid: 1, startDate: friday, endDate: new Date(), teacher: "V. Romero", subject: "Physical Education", class: "11Pe1"},   
-      { userid: 2, startDate: monday, endDate: new Date(), teacher: "C. Baldwin", subject: "Music", class: "11Mu1"},
-      { userid: 2, startDate: tuesday, endDate: new Date(), teacher: "S. Williams", subject: "Calculus", class: "11Ma1"},
-      { userid: 2, startDate: wednesday, endDate: new Date(), teacher: "V. Romero", subject: "Physical Education", class: "11Pe1"},
-      { userid: 2, startDate: thursday, endDate: new Date(), teacher: "M. Downs", subject: "Science", class: "11Sc1"},
-      { userid: 2, startDate: friday, endDate: new Date(), teacher: "N. Heyes", subject: "History", class: "11Hi1"},
+      { id: 1, startDate: new Date(monday.setHours(8, 0, 0)), endDate: new Date(monday.setHours(9, 30, 0)), teacher: "Matthew Downs", subject: "Science", class: "11Sc1"},
+      { id: 1, startDate: new Date(tuesday.setHours(11, 0, 0)), endDate: new Date(tuesday.setHours(12, 30, 0)), teacher: "Susan Williams", subject: "Mathematics", class: "11Ma1"},
+      //{ id: 1, startDate: new Date(wednesday.setHours(13, 0, 0)), endDate: new Date(wednesday.setHours(14, 0, 0)), teacher: "Christopher Baldwin", subject: "Music", class: "11Mu1"},
+      
+      { id: 1, startDate: new Date(thursday.setHours(9, 30, 0)), endDate: new Date(thursday.setHours(10, 30, 0)), teacher: "Vincent Romero", subject: "Geography", class: "11Ge1"},  
+      { id: 1, startDate: new Date(thursday.setHours(14, 0, 0)), endDate: new Date(thursday.setHours(15, 0, 0)), teacher: "Vincent Romero", subject: "Physical Education", class: "11Pe1"},  
+      
+      { id: 1, startDate: new Date(friday.setHours(14, 0, 0)), endDate: new Date(friday.setHours(15, 0, 0)), teacher: "Harry James Moore", subject: "Design and Technology", class: "ICT1"},
+      { id: 1, startDate: new Date(friday.setHours(9, 30, 0)), endDate: new Date(friday.setHours(10, 30, 0)), teacher: "Norbert Heyes", subject: "History", class: "11Hi1"},
+
+      { id: 1, startDate: new Date(saturday.setHours(9, 0, 0)), endDate: new Date(saturday.setHours(10, 0, 0)), teacher: "Edward Thomas", subject: "Physical Education", class: "11Pe1"},  
     ];
 
     const periods: Periods[] = [
+      { name: "P1", startDate: new Date(monday.setHours(8, 0, 0)), endDate: new Date(monday.setHours(9, 30, 0)) },
+      { name: "P1", startDate: new Date(tuesday.setHours(8, 0, 0)), endDate: new Date(tuesday.setHours(9, 30, 0)) },
+      { name: "P1", startDate: new Date(wednesday.setHours(8, 0, 0)), endDate: new Date(wednesday.setHours(9, 30, 0)) },
+      { name: "P1", startDate: new Date(thursday.setHours(8, 0, 0)), endDate: new Date(thursday.setHours(9, 30, 0)) },
+      { name: "P1", startDate: new Date(friday.setHours(8, 0, 0)), endDate: new Date(friday.setHours(9, 30, 0)) },
+      { name: "P1", startDate: new Date(saturday.setHours(8, 0, 0)), endDate: new Date(saturday.setHours(9, 30, 0)) },
       
+      { name: "P2", startDate: new Date(monday.setHours(9, 30, 0)), endDate: new Date(monday.setHours(10, 30, 0)) },
+      { name: "P2", startDate: new Date(tuesday.setHours(9, 30, 0)), endDate: new Date(tuesday.setHours(10, 30, 0)) },
+      { name: "P2", startDate: new Date(wednesday.setHours(9, 30, 0)), endDate: new Date(wednesday.setHours(10, 30, 0)) },
+      { name: "P2", startDate: new Date(thursday.setHours(9, 30, 0)), endDate: new Date(thursday.setHours(10, 30, 0)) },
+      { name: "P2", startDate: new Date(friday.setHours(9, 30, 0)), endDate: new Date(friday.setHours(10, 30, 0)) },
+      { name: "P2", startDate: new Date(saturday.setHours(9, 30, 0)), endDate: new Date(saturday.setHours(10, 30, 0)) },
+      
+      { name: "P3", startDate: new Date(monday.setHours(11, 0, 0)), endDate: new Date(monday.setHours(12, 30, 0)) },
+      { name: "P3", startDate: new Date(tuesday.setHours(11, 0, 0)), endDate: new Date(tuesday.setHours(12, 30, 0)) },
+      { name: "P3", startDate: new Date(wednesday.setHours(11, 0, 0)), endDate: new Date(wednesday.setHours(12, 30, 0)) },
+      { name: "P3", startDate: new Date(thursday.setHours(11, 0, 0)), endDate: new Date(thursday.setHours(12, 30, 0)) },
+      { name: "P3", startDate: new Date(friday.setHours(11, 0, 0)), endDate: new Date(friday.setHours(12, 30, 0)) },
+      { name: "P3", startDate: new Date(saturday.setHours(11, 0, 0)), endDate: new Date(saturday.setHours(12, 30, 0)) },
+      
+      { name: "P4", startDate: new Date(monday.setHours(13, 0, 0)), endDate: new Date(monday.setHours(14, 0, 0)) },
+      { name: "P4", startDate: new Date(tuesday.setHours(13, 0, 0)), endDate: new Date(tuesday.setHours(14, 0, 0)) },
+      { name: "P4", startDate: new Date(wednesday.setHours(13, 0, 0)), endDate: new Date(wednesday.setHours(14, 0, 0)) },
+      { name: "P4", startDate: new Date(thursday.setHours(13, 0, 0)), endDate: new Date(thursday.setHours(14, 0, 0)) },
+      { name: "P4", startDate: new Date(friday.setHours(13, 0, 0)), endDate: new Date(friday.setHours(14, 0, 0)) },
+      { name: "P4", startDate: new Date(saturday.setHours(13, 0, 0)), endDate: new Date(saturday.setHours(14, 0, 0)) },
+
+
+      { name: "P5", startDate: new Date(monday.setHours(14, 0, 0)), endDate: new Date(monday.setHours(15, 0, 0)) },
+      { name: "P5", startDate: new Date(tuesday.setHours(14, 0, 0)), endDate: new Date(tuesday.setHours(15, 0, 0)) },
+      { name: "P5", startDate: new Date(wednesday.setHours(14, 0, 0)), endDate: new Date(wednesday.setHours(15, 0, 0)) },
+      { name: "P5", startDate: new Date(thursday.setHours(14, 0, 0)), endDate: new Date(thursday.setHours(15, 0, 0)) },
+      { name: "P5", startDate: new Date(friday.setHours(14, 0, 0)), endDate: new Date(friday.setHours(15, 0, 0)) },
+      { name: "P5", startDate: new Date(saturday.setHours(14, 0, 0)), endDate: new Date(saturday.setHours(15, 0, 0)) },
     ];
 
     const users = [

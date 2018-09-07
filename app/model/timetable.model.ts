@@ -1,7 +1,7 @@
 import { Time } from "@angular/common";
 
 export class Lessons {
-    userid: number;
+    id: number;
     startDate: Date;
     endDate: Date;
     teacher: string;

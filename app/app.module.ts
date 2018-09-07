@@ -19,6 +19,7 @@ import { ErrorService } from './service/error.service';
 import { HomeworkService } from "~/service/homework.service";
 import { LoginService } from './service/login.service';
 import { LoggingService } from './service/logging.service';
+import { TimetableService } from './service/timetable.service';
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 
@@ -49,7 +50,8 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
         ErrorService,
         HomeworkService,
         LoginService,
-        LoggingService
+        LoggingService,
+        TimetableService
     ],
     schemas: [
         NO_ERRORS_SCHEMA
