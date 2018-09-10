@@ -7,10 +7,12 @@ import { ErrorService } from '../service/error.service';
 import { LoggingService } from '../service/logging.service';
 
 import { Lessons, Periods } from '../model/timetable.model';
+import { Parent } from '../model/user.model';
 
 @Injectable()
 export class TimetableService {
     private url = 'api/lessons';
+    private parentUrl = 'api/parent';
 
     constructor(
         private http: HttpClient,
@@ -26,7 +28,7 @@ export class TimetableService {
         .pipe(
             map(lesson => lesson),
             tap(_ => this.logService.log(`fetched user id = ${userId}`)),
-            catchError(this.errorService.handleError<Lessons[]>(`getLesson user id = ${userId}`))
+            catchError(this.errorService.handleError<Lessons[]>(`getLesson() user id = ${userId}`))
         );
     }
 
@@ -39,7 +41,17 @@ export class TimetableService {
         .pipe(
             map(period => period[0]),
             tap(_ => this.logService.log(`fetched period = ${startDate.toString()}`)),
-            catchError(this.errorService.handleError<Periods>(`getPeriod period = ${startDate.toString()}`))
+            catchError(this.errorService.handleError<Periods>(`getPeriod() period = ${startDate.toString()}`))
+        );
+    }
+
+    getParent(userId: number): Observable<Parent> {
+        const url = `${this.parentUrl}/${userId}`;
+
+        return this.http.get<Parent>(url)
+        .pipe(
+            tap(_ => this.logService.log(`fetched parent id = ${userId.toString()}`)),
+            catchError(this.errorService.handleError<Parent>(`getParent() parent id = ${userId.toString()}`))
         );
     }
 

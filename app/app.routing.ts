@@ -10,7 +10,7 @@ import { HomeworkDetailComponent } from './homework-detail/homework-detail.compo
 import { TimetableComponent } from './timetable/timetable.component';
 
 const routes: Routes = [
-    { path: '', redirectTo: '/timetable', pathMatch: 'full' },
+    { path: '', redirectTo: '/login', pathMatch: 'full' },
     // { path: '', redirectTo: '/homeworkdetails/1', pathMatch: 'full' },
 
     { path: "dashboard", component: DashboardComponent},

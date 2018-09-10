@@ -124,6 +124,10 @@ export class DataService implements InMemoryDbService {
       { name: "P5", startDate: new Date(saturday.setHours(14, 0, 0)), endDate: new Date(saturday.setHours(15, 0, 0)) },
     ];
 
+    const parent = [
+      { id: 3, childId: [1] }
+    ]
+
     const users = [
       { id: 1, username: 'student1', password: 'password', birthdate: '01/02/1998', usertype: 0 },
       { id: 2, username: 'student2', password: 'password', birthdate: '02/03/2001', usertype: 0 },
@@ -131,6 +135,6 @@ export class DataService implements InMemoryDbService {
       { id: 4, username: 'parent2', password: 'password', birthdate: '04/05/1975', usertype: 1 }
     ];
     
-    return { homework, lessons, periods, users };
+    return { homework, lessons, parent, periods, users }; 
   }
 }

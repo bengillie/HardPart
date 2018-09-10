@@ -9,7 +9,7 @@
     <RadListView class="list-group" [items]="lesson">
         <GridLayout class="gridLayoutLayout" tkExampleTitle tkToggleNavButton>
             <ng-template tkListItemTemplate let-item="item">
-                <StackLayout #subjectColour>
+                <StackLayout>
                     <StackLayout class="list-group-item">
                         <Label class="list-group-item-heading" [text]="item.subject"></Label>
                         <Label class="list-group-item-text" [text]="item.class" ></Label>
@@ -34,11 +34,12 @@
                                 <Label [text]="item.teacher"></Label>
                             </StackLayout>
                         </GridLayout>
-                        <StackLayout>
-                            <!-- <Label [text]="getPeriod(item.startDate, item.endDate)"></Label> -->
-                        </StackLayout>
+                        <!-- <StackLayout>
+                            <Label [text]="getPeriod(item.startDate, item.endDate)"></Label>
+                        </StackLayout> -->
+                        <StackLayout class="hr-light"></StackLayout>
                     </StackLayout>
-                    <StackLayout class="hr-light"></StackLayout>
+                    
                 </StackLayout>
             </ng-template>
         </GridLayout>

@@ -4,11 +4,11 @@ import { Subscription } from 'rxjs';
 
 import { Lessons, Periods } from "../model/timetable.model";
 import { LoginService } from "../service/login.service";
+import { Parent } from '../model/user.model';
 import { TimetableService } from "../service/timetable.service";
-import { UserModel } from '~/model/user.model';
+import { UserModel, UserType } from '~/model/user.model';
 
 import { StackLayout } from 'tns-core-modules/ui/layouts/stack-layout/stack-layout';
-import { Color } from 'tns-core-modules/ui/content-view/content-view';
 
 @Component({
     moduleId: module.id,
@@ -21,9 +21,12 @@ export class TimetableComponent implements OnInit, OnDestroy {
     
     isLoading = true;
     lesson: Lessons[] = [];
+    lessonDate: Date;
+    parent: Parent;
     period: Periods;
     user: UserModel;
-    lessonDate: Date;
+    userId: number;
+    
     hasLesson = true;
 
     @ViewChild("subjectColour") subjectColour: StackLayout;
@@ -37,8 +40,10 @@ export class TimetableComponent implements OnInit, OnDestroy {
     ngOnInit() { 
         this.lessonDate = new Date();
         this.period = new Periods;
-        /* this.user = this.getLoggedInUser(); */
-        this.getLesson();
+
+        this.user = this.getLoggedInUser();
+        this.getUserType();
+        /* this.getParent(); */ // for testing
     }
 
     ngOnDestroy() {
@@ -47,8 +52,19 @@ export class TimetableComponent implements OnInit, OnDestroy {
         }
     }
 
-    getLesson() {
-        this.subscription = this.timetableService.getLesson(1)
+    getChild(parent: Parent) {
+        if (parent.childId.length > 1) {
+            for (var i=0; i<parent.childId.length; i++) {
+                console.log("student id: " + parent.childId[i]);
+            }
+        } else {
+            this.userId = parent.childId[0];
+            this.getLesson(this.userId);
+        }
+    }
+
+    getLesson(userId: number) {
+        this.subscription = this.timetableService.getLesson(userId)
             .subscribe(
                 lesson => {
                     lesson = lesson.filter(all => new Date(all.startDate).toDateString() === this.lessonDate.toDateString());
@@ -66,8 +82,18 @@ export class TimetableComponent implements OnInit, OnDestroy {
     }
 
     getLoggedInUser() {
-        const user = this.loginService.getLoggedInUser();
+        const user = this.loginService.getLoggedInUser(); 
         return user;
+    }
+
+    getParent() {
+        this.subscription = this.timetableService.getParent(3) //this.user.id
+            .subscribe(
+                parent => {
+                    this.parent = parent;
+                    this.getChild(parent);
+                }
+            )
     }
 
     /* for testing */
@@ -96,22 +122,29 @@ export class TimetableComponent implements OnInit, OnDestroy {
         }
     }
 
+    getUserType() {
+        if (this.user.usertype === UserType.parent) {
+            this.getParent();
+        } else {
+            this.userId = this.user.id;
+            this.getLesson(this.userId);
+        }
+    }
+
     goBack(): void {
 		this.location.back();
     }  
     
     onLeftSwipeClick() {
-        console.log ("swipe left");
         this.isLoading = true;
         this.lessonDate = new Date(this.lessonDate.setDate(this.lessonDate.getDate() - 1));
-        this.getLesson();
+        this.getLesson(this.userId);
     }
 
     onRightSwipeClick() {
-        console.log ("swipe right");
         this.isLoading = true;
         this.lessonDate = new Date(this.lessonDate.setDate(this.lessonDate.getDate() + 1));
-        this.getLesson();
+        this.getLesson(this.userId);
     }   
 
     
