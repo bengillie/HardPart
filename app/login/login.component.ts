@@ -40,9 +40,9 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     login() {
         this.errorMessage = "";
-        let isEmpty = this.validInput(this.user);
+        let isValid = this.validInput(this.user);
 
-        if (isEmpty != false) {
+        if (isValid != false) {
             this.subscription = this.loginService.getUser(this.user)
                 .subscribe(user => {
                     this.checkUser(user);
