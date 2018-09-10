@@ -1,7 +1,8 @@
 import { Time } from "@angular/common";
 
-export class Lessons {
+export class Lesson {
     id: number;
+    userId: number;
     startDate: Date;
     endDate: Date;
     teacher: string;
@@ -9,7 +10,7 @@ export class Lessons {
     class: string;
 }
 
-export class Periods {
+export class Period {
     name: string;
     startDate: Date;
     endDate: Date;

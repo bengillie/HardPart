@@ -6,49 +6,45 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { ErrorService } from '../service/error.service';
 import { LoggingService } from '../service/logging.service';
 
-import { Lessons, Periods } from '../model/timetable.model';
+import { Lesson, Period } from '../model/timetable.model';
+import { LoginService } from '~/service/login.service';
+import { UserModel } from '~/model/user.model';
 
 @Injectable()
 export class TimetableService {
-    private url = 'api/lessons';
+    private url = 'api/';
 
     constructor(
         private http: HttpClient,
         private errorService: ErrorService,
-        private logService: LoggingService
+        private logService: LoggingService,
+        private loginService: LoginService
     ) { }
     
-    getLesson(userId: number): Observable<Lessons[]> {
+    getLessons(): Observable<Lesson[]> {
+        const loggedInUser: UserModel = this.loginService.getLoggedInUser();
         let params = new HttpParams();
-        params = params.append('id', userId.toString());
+        params = params.append('userId', loggedInUser.id.toString());
         
-        return this.http.get<Lessons[]>(this.url, {params: params})
+        return this.http.get<Lesson[]>(this.url + "lessons", {params: params})
         .pipe(
             map(lesson => lesson),
-            tap(_ => this.logService.log(`fetched user id = ${userId}`)),
-            catchError(this.errorService.handleError<Lessons[]>(`getLesson user id = ${userId}`))
+            tap(_ => this.logService.log(`fetched lessons for user id = ${loggedInUser.id.toString()}`)),
+            catchError(this.errorService.handleError<Lesson[]>(`getLesson user id = ${loggedInUser.id.toString()}`))
         );
     }
 
-    getPeriod(startDate: Date, endDate: Date): Observable<Periods> {
+    getPeriods(startDate: Date, endDate: Date): Observable<Period[]> {
         let params = new HttpParams();
         params = params.append('startDate', startDate.toString());
         params = params.append('endDate', endDate.toString());
 
-        return this.http.get<Periods>(this.url, {params: params})
+        // TODO - only get periods between a set of dates by passing in params.
+        return this.http.get<Period[]>(this.url + "periods")
         .pipe(
-            map(period => period[0]),
+            map(periods => periods),
             tap(_ => this.logService.log(`fetched period = ${startDate.toString()}`)),
-            catchError(this.errorService.handleError<Periods>(`getPeriod period = ${startDate.toString()}`))
+            catchError(this.errorService.handleError<Period[]>(`getPeriod period = ${startDate.toString()}`))
         );
     }
-
-/*     getPeriod(startDate: Date, endDate: Date): Observable<Periods[]> {
-        return this.http.get<Periods[]>(this.url)
-        .pipe(
-            map(period => period),
-            tap(_ => this.logService.log(`fetched period = ${startDate.toString()}`)),
-            catchError(this.errorService.handleError<Periods[]>(`getPeriod period = ${startDate.toString()}`))
-        );
-    } */
 }

@@ -2,13 +2,14 @@ import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/co
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
 
-import { Lessons, Periods } from "../model/timetable.model";
+import { Lesson, Period } from "../model/timetable.model";
 import { LoginService } from "../service/login.service";
 import { TimetableService } from "../service/timetable.service";
 import { UserModel } from '~/model/user.model';
+import { LoggingService } from '~/service/logging.service';
 
-import { StackLayout } from 'tns-core-modules/ui/layouts/stack-layout/stack-layout';
-import { Color } from 'tns-core-modules/ui/content-view/content-view';
+import { SwipeGestureEventData } from "ui/gestures";
+
 
 @Component({
     moduleId: module.id,
@@ -17,77 +18,131 @@ import { Color } from 'tns-core-modules/ui/content-view/content-view';
     styleUrls: ['./timetable.component.less']
 })
 export class TimetableComponent implements OnInit, OnDestroy {
-    private subscription : Subscription;
+    private subscriptions : Subscription[] = [];
     
     isLoading = true;
-    lesson: Lessons[] = [];
-    period: Periods;
+    
+    lessonDate: Date = new Date();
+    startDate: Date = new Date();
+    endDate: Date = new Date();
+
+    allLessons: Lesson[] = [];
+    lessonsForDate: Lesson[] = [];
+
+    allPeriods: Period[] = [];
+
     user: UserModel;
-    lessonDate: Date;
+
     hasLesson = true;
 
-    @ViewChild("subjectColour") subjectColour: StackLayout;
+    @ViewChild("subjectColour") subjectColour: ElementRef;
        
     constructor(
         private location: Location,
         private loginService: LoginService,
+        private loggingService: LoggingService,
         private timetableService: TimetableService,
     ) { }
 
     ngOnInit() { 
-        this.lessonDate = new Date();
-        this.period = new Periods;
-        /* this.user = this.getLoggedInUser(); */
-        this.getLesson();
+        this.startDate.setDate(this.startDate.getDate() - (this.startDate.getDay() - 7));
+        this.endDate.setDate(this.endDate.getDate() - (this.endDate.getDay() + 7));
+
+        this.getLessons();
+        this.getPeriods();
     }
 
     ngOnDestroy() {
-        if (this.subscription != undefined) {
-            this.subscription.unsubscribe();
+        if (this.subscriptions) {
+            for (let subscription of this.subscriptions)
+            {
+                subscription.unsubscribe();
+            }
+
         }
     }
 
-    getLesson() {
-        this.subscription = this.timetableService.getLesson(1)
+    getLessons() {
+        this.isLoading = true;
+        this.subscriptions.push(this.timetableService.getLessons()
             .subscribe(
-                lesson => {
-                    lesson = lesson.filter(all => new Date(all.startDate).toDateString() === this.lessonDate.toDateString());
-                    lesson = lesson.sort ((obj1: Lessons, obj2: Lessons)  =>
+                lessons => {
+                    lessons = lessons.sort ((obj1: Lesson, obj2: Lesson)  =>
                     {
                         return new Date(obj1.startDate).getHours() - new Date(obj2.startDate).getHours();
                     });
-                    
-                    this.getTotalLesson(lesson);
-                    this.getSubjectColour(lesson);
-                    this.lesson = lesson;
+
+                    this.allLessons = lessons;
+                    this.getLessonsForDate(this.lessonDate);
                     this.isLoading = false;
                 },
-            );
+            )
+        );
     }
 
-    getLoggedInUser() {
-        const user = this.loginService.getLoggedInUser();
-        return user;
+    getLessonsForDate(date: Date) {
+        if (!this.allLessons) {
+            this.lessonsForDate = [];
+            return;
+        }
+
+        const test = new Date(this.allLessons[0].startDate).getDate();
+        const test1 = new Date(this.allLessons[0].startDate).getDay();
+        const test2 = new Date(this.allLessons[0].startDate).toDateString();
+        const test3 = new Date(this.allLessons[0].startDate).toISOString();
+        const test4 = new Date(this.allLessons[0].startDate).toLocaleDateString();
+        const test5 = new Date(this.allLessons[0].startDate).toString();
+
+        this.lessonsForDate = this.allLessons.filter(l => new Date(l.startDate).toDateString() === date.toDateString());
     }
 
-    /* for testing */
-    getPeriod(startDate: Date, endDate: Date) {
-        let pName = "";
-        this.subscription = this.timetableService.getPeriod(new Date(startDate), new Date(endDate))
-            .subscribe(
-                period => { 
-                    this.period = period;
-                    if (this.period.name === undefined) {
-                        pName = this.period.name;
-                    } else {
-                        pName = "ERROR";
-                    }
-                },
-            );
-        return pName;
+    getPeriods() {
+        this.isLoading = true;
+        this.subscriptions.push(
+            this.timetableService.getPeriods(new Date(this.startDate), new Date(this.endDate))
+                .subscribe(p => { 
+                    this.allPeriods = p;
+                    this.isLoading = false;
+                })
+        );
+    }
+
+    getPeriodNameForLesson(lesson: Lesson): string {
+        let name = "";
+
+        const startLessonDay = new Date(lesson.startDate).getDay();
+        const startLessonHour = new Date(lesson.startDate).getHours();
+        const startLessonMinute = new Date(lesson.startDate).getMinutes();
+        const endLessonDay = new Date(lesson.endDate).getDay();
+        const endLessonHour = new Date(lesson.endDate).getHours();
+        const endLessonMinute = new Date(lesson.endDate).getMinutes();
+
+        const period = this.allPeriods.find(p => 
+            new Date(p.startDate).getDay() == startLessonDay && 
+            new Date(p.startDate).getHours() == startLessonHour && 
+            new Date(p.startDate).getMinutes() == startLessonMinute && 
+            new Date(p.endDate).getDay() == endLessonDay && 
+            new Date(p.endDate).getHours() == endLessonHour && 
+            new Date(p.endDate).getMinutes() == endLessonMinute
+        );
+
+        if (period){
+            name = period.name;
+        }
+
+        return name;
     }  
 
-    getTotalLesson(lesson: Lessons[]) {
+    getSubjectColour(lesson: Lesson) {
+            switch (lesson.subject) {
+                case "Science":
+                    this.subjectColour.nativeElement.backgroundColor="green";
+                default:
+                    this.subjectColour.nativeElement.backgroundColor = "gray";
+            }
+    }
+
+    getTotalLesson(lesson: Lesson[]) {
         if (lesson.length === 0) {
             this.hasLesson = false;
         }
@@ -99,32 +154,26 @@ export class TimetableComponent implements OnInit, OnDestroy {
     goBack(): void {
 		this.location.back();
     }  
-    
+
     onLeftSwipeClick() {
-        console.log ("swipe left");
-        this.isLoading = true;
+        this.loggingService.log("swipe left");
         this.lessonDate = new Date(this.lessonDate.setDate(this.lessonDate.getDate() - 1));
-        this.getLesson();
+        this.getLessonsForDate(this.lessonDate);
     }
 
     onRightSwipeClick() {
-        console.log ("swipe right");
-        this.isLoading = true;
+        this.loggingService.log("swipe right");
         this.lessonDate = new Date(this.lessonDate.setDate(this.lessonDate.getDate() + 1));
-        this.getLesson();
+        this.getLessonsForDate(this.lessonDate);
     }   
 
-    
-
-    /* for testing */
-    getSubjectColour(lesson: Lessons[]) {
-        for (var i=0; i<lesson.length; i++) {
-            switch (lesson[i].subject) {
-                case "Science":
-                    this.subjectColour.backgroundColor="green";
-                default:
-                    this.subjectColour.backgroundColor = "gray";
-            }
+        
+    onSwipe(args: SwipeGestureEventData) {
+        this.loggingService.log("timetable swipe direction" + args.direction.toString());
+        if (args.direction === 1){
+            this.onLeftSwipeClick();
+        } else {
+            this.onRightSwipeClick();
         }
     }
 }

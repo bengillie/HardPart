@@ -6,13 +6,14 @@
 </ActionBar>
 
 <div *ngIf="hasLesson; else noLesson">                          
-    <RadListView class="list-group" [items]="lesson">
-        <GridLayout class="gridLayoutLayout" tkExampleTitle tkToggleNavButton>
-            <ng-template tkListItemTemplate let-item="item">
+    <ListView class="list-group" [items]="lessonsForDate" (swipe)="onSwipe($event)">
+        <GridLayout class="gridLayoutLayout" >
+            <ng-template let-item="item">
                 <StackLayout #subjectColour>
                     <StackLayout class="list-group-item">
                         <Label class="list-group-item-heading" [text]="item.subject"></Label>
                         <Label class="list-group-item-text" [text]="item.class" ></Label>
+                        <Label class="list-group-item-text" [text]="getPeriodNameForLesson(item)" ></Label>
                     </StackLayout>
                     <StackLayout class="list-group-item list-group-item-sub">
                         <GridLayout columns="auto, auto, auto" class="gridLayoutLayout">
@@ -42,7 +43,7 @@
                 </StackLayout>
             </ng-template>
         </GridLayout>
-    </RadListView>
+    </ListView>
 </div>
 
 <ng-template #noLesson>
@@ -51,8 +52,8 @@
     </GridLayout>
 </ng-template>
 
-<DockLayout (tap)="onLeftSwipeClick()" horizontalAlignment="left"></DockLayout>
+<!-- <DockLayout (tap)="onLeftSwipeClick()" horizontalAlignment="left"></DockLayout>
 
-<DockLayout (tap)="onRightSwipeClick()" horizontalAlignment="right"></DockLayout>
+<DockLayout (tap)="onRightSwipeClick()" horizontalAlignment="right"></DockLayout> -->
 
 <ActivityIndicator [busy]="isLoading" horizontalAlignment="center"></ActivityIndicator>

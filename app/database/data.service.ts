@@ -2,7 +2,7 @@ import { InMemoryDbService } from 'angular-in-memory-web-api';
 import { Time } from "@angular/common";
 
 import { Homework, HomeworkStatus } from '../model/homework.model';
-import { Lessons, Periods } from '../model/timetable.model';
+import { Lesson, Period } from '../model/timetable.model';
 
 export class DataService implements InMemoryDbService {
   createDb() {
@@ -72,21 +72,24 @@ export class DataService implements InMemoryDbService {
         dueDate: new Date(dateNow2.setDate(dateNow2.getDate() - 15)), status: HomeworkStatus.removed },
     ];
 
-    const lessons: Lessons[] = [
-      { id: 1, startDate: new Date(monday.setHours(8, 0, 0)), endDate: new Date(monday.setHours(9, 30, 0)), teacher: "Matthew Downs", subject: "Science", class: "11Sc1"},
-      { id: 1, startDate: new Date(tuesday.setHours(11, 0, 0)), endDate: new Date(tuesday.setHours(12, 30, 0)), teacher: "Susan Williams", subject: "Mathematics", class: "11Ma1"},
-      //{ id: 1, startDate: new Date(wednesday.setHours(13, 0, 0)), endDate: new Date(wednesday.setHours(14, 0, 0)), teacher: "Christopher Baldwin", subject: "Music", class: "11Mu1"},
+    const lessons: Lesson[] = [
+      { id: 1, userId: 1, startDate: new Date(monday.setHours(8, 0, 0)), endDate: new Date(monday.setHours(9, 30, 0)), teacher: "Matthew Downs", subject: "Science", class: "11Sc1"},
+      { id: 8, userId: 1, startDate: new Date(monday.setHours(9, 30, 0)), endDate: new Date(monday.setHours(10, 30, 0)), teacher: "Matthew Downs", subject: "Biology", class: "11Sc1"},
+      { id: 9, userId: 1, startDate: new Date(monday.setHours(11, 0, 0)), endDate: new Date(monday.setHours(12, 30, 0)), teacher: "Matthew Downs", subject: "Chemistry", class: "11Sc1"},
+      { id: 10, userId: 1, startDate: new Date(monday.setHours(13, 0, 0)), endDate: new Date(monday.setHours(14, 0, 0)), teacher: "Matthew Downs", subject: "Physics", class: "11Sc1"},
       
-      { id: 1, startDate: new Date(thursday.setHours(9, 30, 0)), endDate: new Date(thursday.setHours(10, 30, 0)), teacher: "Vincent Romero", subject: "Geography", class: "11Ge1"},  
-      { id: 1, startDate: new Date(thursday.setHours(14, 0, 0)), endDate: new Date(thursday.setHours(15, 0, 0)), teacher: "Vincent Romero", subject: "Physical Education", class: "11Pe1"},  
+      { id: 2, userId: 1, startDate: new Date(tuesday.setHours(11, 0, 0)), endDate: new Date(tuesday.setHours(12, 30, 0)), teacher: "Susan Williams", subject: "Mathematics", class: "11Ma1"},
       
-      { id: 1, startDate: new Date(friday.setHours(14, 0, 0)), endDate: new Date(friday.setHours(15, 0, 0)), teacher: "Harry James Moore", subject: "Design and Technology", class: "ICT1"},
-      { id: 1, startDate: new Date(friday.setHours(9, 30, 0)), endDate: new Date(friday.setHours(10, 30, 0)), teacher: "Norbert Heyes", subject: "History", class: "11Hi1"},
+      { id: 3, userId: 1, startDate: new Date(thursday.setHours(9, 30, 0)), endDate: new Date(thursday.setHours(10, 30, 0)), teacher: "Vincent Romero", subject: "Geography", class: "11Ge1"},  
+      { id: 4, userId: 1, startDate: new Date(thursday.setHours(14, 0, 0)), endDate: new Date(thursday.setHours(15, 0, 0)), teacher: "Vincent Romero", subject: "Physical Education", class: "11Pe1"},  
+      
+      { id: 5, userId: 1, startDate: new Date(friday.setHours(14, 0, 0)), endDate: new Date(friday.setHours(15, 0, 0)), teacher: "Harry James Moore", subject: "Design and Technology", class: "ICT1"},
+      { id: 6, userId: 1, startDate: new Date(friday.setHours(9, 30, 0)), endDate: new Date(friday.setHours(10, 30, 0)), teacher: "Norbert Heyes", subject: "History", class: "11Hi1"},
 
-      { id: 1, startDate: new Date(saturday.setHours(9, 0, 0)), endDate: new Date(saturday.setHours(10, 0, 0)), teacher: "Edward Thomas", subject: "Physical Education", class: "11Pe1"},  
+      { id: 7, userId: 1, startDate: new Date(saturday.setHours(9, 0, 0)), endDate: new Date(saturday.setHours(10, 0, 0)), teacher: "Edward Thomas", subject: "Physical Education", class: "11Pe1"},  
     ];
 
-    const periods: Periods[] = [
+    const periods: Period[] = [
       { name: "P1", startDate: new Date(monday.setHours(8, 0, 0)), endDate: new Date(monday.setHours(9, 30, 0)) },
       { name: "P1", startDate: new Date(tuesday.setHours(8, 0, 0)), endDate: new Date(tuesday.setHours(9, 30, 0)) },
       { name: "P1", startDate: new Date(wednesday.setHours(8, 0, 0)), endDate: new Date(wednesday.setHours(9, 30, 0)) },
