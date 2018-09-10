@@ -5,11 +5,10 @@ import { Subscription } from 'rxjs';
 import { Lesson, Period } from "../model/timetable.model";
 import { LoginService } from "../service/login.service";
 import { TimetableService } from "../service/timetable.service";
-import { UserModel } from '~/model/user.model';
 import { LoggingService } from '~/service/logging.service';
+import { UserModel, UserType } from '~/model/user.model';
 
 import { SwipeGestureEventData } from "ui/gestures";
-
 
 @Component({
     moduleId: module.id,
@@ -32,7 +31,6 @@ export class TimetableComponent implements OnInit, OnDestroy {
     allPeriods: Period[] = [];
 
     user: UserModel;
-
     hasLesson = true;
 
     @ViewChild("subjectColour") subjectColour: ElementRef;
@@ -85,13 +83,6 @@ export class TimetableComponent implements OnInit, OnDestroy {
             this.lessonsForDate = [];
             return;
         }
-
-        const test = new Date(this.allLessons[0].startDate).getDate();
-        const test1 = new Date(this.allLessons[0].startDate).getDay();
-        const test2 = new Date(this.allLessons[0].startDate).toDateString();
-        const test3 = new Date(this.allLessons[0].startDate).toISOString();
-        const test4 = new Date(this.allLessons[0].startDate).toLocaleDateString();
-        const test5 = new Date(this.allLessons[0].startDate).toString();
 
         this.lessonsForDate = this.allLessons.filter(l => new Date(l.startDate).toDateString() === date.toDateString());
     }

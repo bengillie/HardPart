@@ -134,6 +134,6 @@ export class DataService implements InMemoryDbService {
       { id: 4, username: 'parent2', password: 'password', birthdate: '04/05/1975', usertype: 1 }
     ];
     
-    return { homework, lessons, periods, users };
+    return { homework, lessons, periods, users }; 
   }
 }
