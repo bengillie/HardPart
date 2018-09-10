@@ -58,7 +58,7 @@ export class TimetableComponent implements OnInit, OnDestroy {
                     });
                     
                     this.getTotalLesson(lesson);
-                    this.getSubjectColour(lesson);
+                    /* this.getSubjectColour(lesson); */
                     this.lesson = lesson;
                     this.isLoading = false;
                 },
