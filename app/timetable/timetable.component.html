@@ -7,12 +7,9 @@
 
 <div *ngIf="hasLesson; else noLesson">                          
     <RadListView class="list-group" [items]="lesson">
-        <GridLayout class="gridLayoutLayout" columns="*,*,*" tkExampleTitle tkToggleNavButton>
-            <StackLayout col="0" (tap)="onLeftSwipeClick()">
-                <Label text="LEFT" verticalAlignment="center" horizontalAlignment="center"></Label>
-            </StackLayout>
+        <GridLayout class="gridLayoutLayout" tkExampleTitle tkToggleNavButton>
             <ng-template tkListItemTemplate let-item="item">
-                <StackLayout col="1" (tap)="onRightSwipeClick()">
+                <StackLayout #subjectColour>
                     <StackLayout class="list-group-item">
                         <Label class="list-group-item-heading" [text]="item.subject"></Label>
                         <Label class="list-group-item-text" [text]="item.class" ></Label>
@@ -44,10 +41,6 @@
                     <StackLayout class="hr-light"></StackLayout>
                 </StackLayout>
             </ng-template>
-
-            <StackLayout col="2" (tap)="onRightSwipeClick()">
-                <Label text="RIGHT" verticalAlignment="center" horizontalAlignment="center"></Label>
-            </StackLayout>
         </GridLayout>
     </RadListView>
 </div>
@@ -57,5 +50,9 @@
         <Label class="lbl-nolesson" row="0" style.verticalAlignment="center" text="You have no lessons today"></Label>
     </GridLayout>
 </ng-template>
+
+<DockLayout (tap)="onLeftSwipeClick()" horizontalAlignment="left"></DockLayout>
+
+<DockLayout (tap)="onRightSwipeClick()" horizontalAlignment="right"></DockLayout>
 
 <ActivityIndicator [busy]="isLoading" horizontalAlignment="center"></ActivityIndicator>

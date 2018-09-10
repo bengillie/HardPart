@@ -7,6 +7,9 @@ import { LoginService } from "../service/login.service";
 import { TimetableService } from "../service/timetable.service";
 import { UserModel } from '~/model/user.model';
 
+import { StackLayout } from 'tns-core-modules/ui/layouts/stack-layout/stack-layout';
+import { Color } from 'tns-core-modules/ui/content-view/content-view';
+
 @Component({
     moduleId: module.id,
     selector: 'ns-timetable',
@@ -15,13 +18,15 @@ import { UserModel } from '~/model/user.model';
 })
 export class TimetableComponent implements OnInit, OnDestroy {
     private subscription : Subscription;
-
+    
     isLoading = true;
     lesson: Lessons[] = [];
     period: Periods;
     user: UserModel;
     lessonDate: Date;
     hasLesson = true;
+
+    @ViewChild("subjectColour") subjectColour: StackLayout;
        
     constructor(
         private location: Location,
@@ -51,12 +56,10 @@ export class TimetableComponent implements OnInit, OnDestroy {
                     {
                         return new Date(obj1.startDate).getHours() - new Date(obj2.startDate).getHours();
                     });
-                    this.lesson = lesson;
                     
-                    if (lesson.length === 0) {
-                        this.hasLesson = false;
-                    }
-
+                    this.getTotalLesson(lesson);
+                    this.getSubjectColour(lesson);
+                    this.lesson = lesson;
                     this.isLoading = false;
                 },
             );
@@ -67,17 +70,31 @@ export class TimetableComponent implements OnInit, OnDestroy {
         return user;
     }
 
-    getPeriod(startDate: Date, endDate: Date): string {
-        startDate = new Date(startDate);
-        endDate = new Date(endDate);
-        this.subscription = this.timetableService.getPeriod(startDate, endDate)
+    /* for testing */
+    getPeriod(startDate: Date, endDate: Date) {
+        let pName = "";
+        this.subscription = this.timetableService.getPeriod(new Date(startDate), new Date(endDate))
             .subscribe(
                 period => { 
                     this.period = period;
+                    if (this.period.name === undefined) {
+                        pName = this.period.name;
+                    } else {
+                        pName = "ERROR";
+                    }
                 },
             );
-        return this.period.name;
+        return pName;
     }  
+
+    getTotalLesson(lesson: Lessons[]) {
+        if (lesson.length === 0) {
+            this.hasLesson = false;
+        }
+        else {
+            this.hasLesson = true;
+        }
+    }
 
     goBack(): void {
 		this.location.back();
@@ -85,13 +102,29 @@ export class TimetableComponent implements OnInit, OnDestroy {
     
     onLeftSwipeClick() {
         console.log ("swipe left");
+        this.isLoading = true;
         this.lessonDate = new Date(this.lessonDate.setDate(this.lessonDate.getDate() - 1));
         this.getLesson();
     }
 
     onRightSwipeClick() {
         console.log ("swipe right");
+        this.isLoading = true;
         this.lessonDate = new Date(this.lessonDate.setDate(this.lessonDate.getDate() + 1));
         this.getLesson();
+    }   
+
+    
+
+    /* for testing */
+    getSubjectColour(lesson: Lessons[]) {
+        for (var i=0; i<lesson.length; i++) {
+            switch (lesson[i].subject) {
+                case "Science":
+                    this.subjectColour.backgroundColor="green";
+                default:
+                    this.subjectColour.backgroundColor = "gray";
+            }
+        }
     }
 }

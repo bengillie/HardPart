@@ -35,11 +35,20 @@ export class TimetableService {
         params = params.append('startDate', startDate.toString());
         params = params.append('endDate', endDate.toString());
 
-        return this.http.get<Periods[]>(this.url, {params: params})
+        return this.http.get<Periods>(this.url, {params: params})
         .pipe(
             map(period => period[0]),
             tap(_ => this.logService.log(`fetched period = ${startDate.toString()}`)),
             catchError(this.errorService.handleError<Periods>(`getPeriod period = ${startDate.toString()}`))
         );
     }
+
+/*     getPeriod(startDate: Date, endDate: Date): Observable<Periods[]> {
+        return this.http.get<Periods[]>(this.url)
+        .pipe(
+            map(period => period),
+            tap(_ => this.logService.log(`fetched period = ${startDate.toString()}`)),
+            catchError(this.errorService.handleError<Periods[]>(`getPeriod period = ${startDate.toString()}`))
+        );
+    } */
 }
