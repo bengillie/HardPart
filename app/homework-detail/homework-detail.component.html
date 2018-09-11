@@ -13,7 +13,10 @@
         <Label [text]="homework.dueDate | date:'dd/MM/yyyy'" class="h3"></Label>
     </StackLayout>
     
-    <Label [text]="homework.status" class="h3"></Label>
+    <StackLayout orientation="horizontal">
+        <Label [text]="homework.status" class="h3"></Label>
+        <Label *ngIf="homeworkService.isNearDueDate(homework)" class="icon warningIconCode" [text]="warningIconCode" verticalAlignment="center"></Label>
+    </StackLayout>
 
     <StackLayout class="hr-light m-5"></StackLayout>
 

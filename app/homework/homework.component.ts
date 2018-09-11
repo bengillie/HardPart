@@ -17,8 +17,9 @@ import { Homework, HomeworkStatus } from '../model/homework.model';
 })
 
 export class HomeworkComponent implements OnInit, OnDestroy {
-	private subscription : Subscription;
+	private subscriptions : Subscription[] = [];
 	public tabViewSelectedIndex = 0;
+	public swipeText = 'Complete';
 
 	homeworks: Homework[] = [];
 	homeworks_todo: Homework[] = [];
@@ -30,7 +31,7 @@ export class HomeworkComponent implements OnInit, OnDestroy {
 	@ViewChild("listView_done") listViewComponent_done: RadListViewComponent;
 	@ViewChild("listView_all") listViewComponent_all: RadListViewComponent;
 	
-	// iconCode = String.fromCharCode(0xeaa3);
+	warningIconCode = String.fromCharCode(0xea08);
 	
 	constructor(private router: Router,
 		private homeworkService: HomeworkService) { }
@@ -40,21 +41,44 @@ export class HomeworkComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		this.subscription.unsubscribe();
+		if (this.subscriptions) {
+            for (let subscription of this.subscriptions)
+            {
+                subscription.unsubscribe();
+            }
+        }
 	}
 
 	getHomeworks() {
-		this.subscription = this.homeworkService.getHomeworks().subscribe(
-			x => {
-				this.homeworks = x.filter(all => all.status !== HomeworkStatus.removed);
-				this.homeworks_todo = this.homeworks.filter(all => all.status === HomeworkStatus.todo);
-				this.homeworks_done = this.homeworks.filter(all => all.status === HomeworkStatus.done);
-			},
-			error => console.log("Error: ", error),
-			() => {
-				this.isLoading = false;
-			}
+		this.subscriptions.push(
+			this.homeworkService.getHomeworks()
+			.subscribe(
+				x => {
+					this.homeworks = x.filter(all => all.status !== HomeworkStatus.removed).sort(this.sortHomeworkByDueDate);
+					this.homeworks_todo = this.homeworks.filter(all => all.status === HomeworkStatus.todo).sort(this.sortHomeworkByDueDate);
+					this.homeworks_done = this.homeworks.filter(all => all.status === HomeworkStatus.done).sort(this.sortHomeworkByDueDate);
+					this.sortHomeworkList();
+				},
+				error => console.log("Error: ", error),
+				() => {
+					this.isLoading = false;
+				}
+			)
 		);
+	}
+
+	sortHomeworkList() {
+		this.homeworks = this.homeworks.sort(this.sortHomeworkByDueDate);
+		this.homeworks_todo = this.homeworks_todo.sort(this.sortHomeworkByDueDate);
+		this.homeworks_done = this.homeworks_done.sort(this.sortHomeworkByDueDate);
+	}
+
+	sortHomeworkByDueDate(a, b) {
+		if (a.dueDate < b.dueDate)
+		  return -1;
+		if (a.dueDate > b.dueDate)
+		  return 1;
+		return 0;
 	}
 
 	onTabViewClicked(args){ 
@@ -73,12 +97,12 @@ export class HomeworkComponent implements OnInit, OnDestroy {
 		this.onItemTap(args, "ALL");
 	}
 
-	onItemTap(args, homeworkStatus) {
+	onItemTap(args, tabText) {
 		let homework = new Homework();
-		if(homeworkStatus === HomeworkStatus.todo) {
+		if(tabText === HomeworkStatus.todo) {
 			homework = this.homeworks_todo[args.index];
 		}
-		else if(homeworkStatus === HomeworkStatus.done) {
+		else if(tabText === HomeworkStatus.done) {
 			homework = this.homeworks_done[args.index];
 		}
 		else {
@@ -88,7 +112,17 @@ export class HomeworkComponent implements OnInit, OnDestroy {
 	}
 	
 	onItemSwiping(args) {
-		
+
+	}
+
+	onItemSwiping_all(args) {
+		let item = this.homeworks[args.index];
+		if(item.status === HomeworkStatus.todo) {
+			this.swipeText = 'Complete';
+		}
+		else {
+			this.swipeText = 'To Do';
+		}
 	}
 	
 	onSwipeCellFinished(args) {
@@ -125,10 +159,43 @@ export class HomeworkComponent implements OnInit, OnDestroy {
 		this.listViewComponent_all.listView.notifySwipeToExecuteFinished();
 	}
 
-	onRightSwipeClick(args) {
-		console.log("Right swipe click");
+	markComplete(args) {
+		let item = args.object.bindingContext as Homework;
+		item.status = HomeworkStatus.done;
+		
+		this.subscriptions.push(
+			this.homeworkService.updateUserHomework(item)
+			.subscribe(
+				() => { },
+				() => { },
+				() => {
+					this.homeworks_todo.splice(this.homeworks_todo.indexOf(item), 1);
+					this.homeworks_done.push(item);
+					this.sortHomeworkList();
+				}
+			)
+		);
 		this.listViewComponent_todo.listView.notifySwipeToExecuteFinished();
 		this.listViewComponent_done.listView.notifySwipeToExecuteFinished();
-		this.listViewComponent_all.listView.notifySwipeToExecuteFinished();
+	}
+
+	markTodo(args) {
+		let item = args.object.bindingContext as Homework;
+		item.status = HomeworkStatus.todo;
+		
+		this.subscriptions.push(
+			this.homeworkService.updateUserHomework(item)
+			.subscribe(
+				() => { },
+				() => { },
+				() => {
+					this.homeworks_done.splice(this.homeworks_done.indexOf(item), 1);
+					this.homeworks_todo.push(item);
+					this.sortHomeworkList();
+				}
+			)
+		);
+		this.listViewComponent_todo.listView.notifySwipeToExecuteFinished();
+		this.listViewComponent_done.listView.notifySwipeToExecuteFinished();
 	}
 }

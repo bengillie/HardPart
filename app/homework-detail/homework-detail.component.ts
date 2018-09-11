@@ -15,11 +15,12 @@ import { Homework } from '../model/homework.model';
 })
 
 export class HomeworkDetailComponent implements OnInit, OnDestroy {
-	private subscription : Subscription;
+	private subscriptions : Subscription[] = [];
 
 	homework: Homework = new Homework();
 
 	isLoading = true;
+	warningIconCode = String.fromCharCode(0xea08);
 
 	constructor(private route: ActivatedRoute,
 		private homeworkService: HomeworkService,
@@ -31,19 +32,26 @@ export class HomeworkDetailComponent implements OnInit, OnDestroy {
 	} 
 
 	ngOnDestroy() {
-		this.subscription.unsubscribe();
+		if (this.subscriptions) {
+            for (let subscription of this.subscriptions)
+            {
+                subscription.unsubscribe();
+            }
+        }
 	}
 
 	getHomework(): void {
 		const id = +this.route.snapshot.paramMap.get('id');
-		this.subscription = this.homeworkService.getHomework(id).subscribe(
-			(x) => {
-				this.homework = x;
-			},
-			() => {},
-			() => {
-				this.isLoading = false;
-			}
+		this.subscriptions.push(this.homeworkService.getHomework(id)
+			.subscribe(
+				(x) => {
+					this.homework = x;
+				},
+				() => {},
+				() => {
+					this.isLoading = false;
+				}
+			)
 		)
 	}
 
