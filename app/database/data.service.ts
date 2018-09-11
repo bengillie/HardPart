@@ -1,5 +1,4 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
-import { Time } from "@angular/common";
 
 import { Homework, HomeworkStatus } from '../model/homework.model';
 import { Lesson, Period } from '../model/timetable.model';
