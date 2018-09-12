@@ -1,0 +1,40 @@
+<ActionBar android:title="Attendance"></ActionBar>
+
+<GridLayout rows="1*, auto, 5*">
+    <GridLayout row="0" rows="*, *, *" class="summary">
+        <StackLayout row="0" class="present summ-tab">
+            <Label class="summ-lbl" [text]="summPresentText" verticalAlignment="center"></Label>
+        </StackLayout>
+        <StackLayout row="1" class="absence-authorized summ-tab">
+            <Label class="summ-lbl" [text]="summAuthText"></Label>
+        </StackLayout>
+        <StackLayout row="2" class="absence-unauthorized summ-tab">
+            <Label class="summ-lbl" [text]="summUnAuthText"></Label>
+        </StackLayout>
+    </GridLayout>
+
+    <StackLayout row="1" class="hr-light"></StackLayout>
+
+    <GridLayout row="2">
+        <ListView [items]="attendance" class="list-group">
+            <ng-template let-item="item" let-i="index">
+                <StackLayout class="list-group-item">
+                    <GridLayout columns="*, *">
+                        <Label col="0" class=" list-label" [text]='item.date | date:"fullDate"'></Label>
+                        <StackLayout col="2">
+                            <StackLayout orientation="horizontal">
+                                <Label class="list-label" text="AM: "></Label>
+                                <Label class="list-label" [text]="item.isLateAM ? 'L' : '/'"></Label>
+                            </StackLayout>
+                            <StackLayout orientation="horizontal">
+                                <Label class="list-label" text="PM: "></Label>
+                                <Label class="list-label" [text]="item.isLatePM ? 'L' : '/'"></Label>
+                            </StackLayout>
+                        </StackLayout>
+                    </GridLayout>
+                </StackLayout>
+            </ng-template>
+        </ListView>
+    </GridLayout>
+</GridLayout>
+<ActivityIndicator [busy]="isLoading" horizontalAlignment="center"></ActivityIndicator>
