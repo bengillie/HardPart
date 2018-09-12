@@ -18,14 +18,13 @@ export class HomeworkDetailComponent implements OnInit, OnDestroy {
 	private subscriptions : Subscription[] = [];
 
 	homework: Homework = new Homework();
-
 	isLoading = true;
+
 	warningIconCode = String.fromCharCode(0xea08);
 
 	constructor(private route: ActivatedRoute,
 		private homeworkService: HomeworkService,
-		private location: Location) 
-	{ }
+		private location: Location) { }
 
 	ngOnInit() {
 		this.getHomework();
@@ -57,5 +56,9 @@ export class HomeworkDetailComponent implements OnInit, OnDestroy {
 
 	goBack(): void {
 		this.location.back();
+	}
+
+	isNearDueDate(homework: Homework) : boolean {
+		return this.homeworkService.isNearDueDate(homework);
 	}
 }

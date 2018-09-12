@@ -15,7 +15,7 @@
     
     <StackLayout orientation="horizontal">
         <Label [text]="homework.status" class="h3"></Label>
-        <Label *ngIf="homeworkService.isNearDueDate(homework)" class="icon warningIconCode" [text]="warningIconCode" verticalAlignment="center"></Label>
+        <Label *ngIf="isNearDueDate(homework)" class="icon warningIconCode" [text]="warningIconCode" verticalAlignment="center"></Label>
     </StackLayout>
 
     <StackLayout class="hr-light m-5"></StackLayout>

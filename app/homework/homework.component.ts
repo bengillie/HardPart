@@ -6,8 +6,8 @@ import { ListViewEventData, RadListView, SwipeActionsEventData } from "nativescr
 import { RadListViewComponent } from "nativescript-ui-listview/angular";
 import { View } from 'tns-core-modules/ui/core/view';
 
-import { HomeworkService } from '../service/homework.service';
 import { Homework, HomeworkStatus } from '../model/homework.model';
+import { HomeworkService } from '../service/homework.service';
 
 @Component({
 	moduleId: module.id,
@@ -67,6 +67,10 @@ export class HomeworkComponent implements OnInit, OnDestroy {
 		);
 	}
 
+	isNearDueDate(homework: Homework) : boolean {
+		return this.homeworkService.isNearDueDate(homework);
+	}
+
 	sortHomeworkList() {
 		this.homeworks = this.homeworks.sort(this.sortHomeworkByDueDate);
 		this.homeworks_todo = this.homeworks_todo.sort(this.sortHomeworkByDueDate);
@@ -81,7 +85,51 @@ export class HomeworkComponent implements OnInit, OnDestroy {
 		return 0;
 	}
 
-	onTabViewClicked(args){ 
+	markComplete(args) {
+		let item = args.object.bindingContext as Homework;
+		item.status = HomeworkStatus.done;
+		
+		this.subscriptions.push(
+			this.homeworkService.updateUserHomework(item)
+			.subscribe(
+				() => { },
+				() => { },
+				() => {
+					this.homeworks_todo.splice(this.homeworks_todo.indexOf(item), 1);
+					this.homeworks_done.push(item);
+					this.sortHomeworkList();
+				}
+			)
+		);
+
+		this.listViewComponent_todo.listView.notifySwipeToExecuteFinished();
+		this.listViewComponent_done.listView.notifySwipeToExecuteFinished();
+		this.listViewComponent_all.listView.notifySwipeToExecuteFinished();
+	}
+
+	markTodo(args) {
+		let item = args.object.bindingContext as Homework;
+		item.status = HomeworkStatus.todo;
+		
+		this.subscriptions.push(
+			this.homeworkService.updateUserHomework(item)
+			.subscribe(
+				() => { },
+				() => { },
+				() => {
+					this.homeworks_done.splice(this.homeworks_done.indexOf(item), 1);
+					this.homeworks_todo.push(item);
+					this.sortHomeworkList();
+				}
+			)
+		);
+
+		this.listViewComponent_todo.listView.notifySwipeToExecuteFinished();
+		this.listViewComponent_done.listView.notifySwipeToExecuteFinished();
+		this.listViewComponent_all.listView.notifySwipeToExecuteFinished();
+	}
+
+	onTabViewClicked(args) { 
 		this.tabViewSelectedIndex = args;
 	}
 
@@ -157,45 +205,5 @@ export class HomeworkComponent implements OnInit, OnDestroy {
 		this.listViewComponent_todo.listView.notifySwipeToExecuteFinished();
 		this.listViewComponent_done.listView.notifySwipeToExecuteFinished();
 		this.listViewComponent_all.listView.notifySwipeToExecuteFinished();
-	}
-
-	markComplete(args) {
-		let item = args.object.bindingContext as Homework;
-		item.status = HomeworkStatus.done;
-		
-		this.subscriptions.push(
-			this.homeworkService.updateUserHomework(item)
-			.subscribe(
-				() => { },
-				() => { },
-				() => {
-					this.homeworks_todo.splice(this.homeworks_todo.indexOf(item), 1);
-					this.homeworks_done.push(item);
-					this.sortHomeworkList();
-				}
-			)
-		);
-		this.listViewComponent_todo.listView.notifySwipeToExecuteFinished();
-		this.listViewComponent_done.listView.notifySwipeToExecuteFinished();
-	}
-
-	markTodo(args) {
-		let item = args.object.bindingContext as Homework;
-		item.status = HomeworkStatus.todo;
-		
-		this.subscriptions.push(
-			this.homeworkService.updateUserHomework(item)
-			.subscribe(
-				() => { },
-				() => { },
-				() => {
-					this.homeworks_done.splice(this.homeworks_done.indexOf(item), 1);
-					this.homeworks_todo.push(item);
-					this.sortHomeworkList();
-				}
-			)
-		);
-		this.listViewComponent_todo.listView.notifySwipeToExecuteFinished();
-		this.listViewComponent_done.listView.notifySwipeToExecuteFinished();
 	}
 }

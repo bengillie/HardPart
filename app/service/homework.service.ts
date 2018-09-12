@@ -13,8 +13,7 @@ const httpOptions = {
 export class HomeworkService {
     private url = 'api/homework';
 
-    constructor(
-        private http: HttpClient,) { }
+    constructor(private http: HttpClient) { }
 
     getHomeworks (): Observable<Homework[]> {
         return this.http.get<Homework[]>(this.url);
@@ -33,7 +32,7 @@ export class HomeworkService {
 		if (homework.status === HomeworkStatus.todo) {
 			var dateNow = new Date();
 			
-			if(new Date(homework.dueDate) <= dateNow){
+			if(new Date(homework.dueDate) <= dateNow) {
 				return true;
 			}
 			else {
@@ -41,7 +40,7 @@ export class HomeworkService {
 				var diffDays = Math.ceil(diff / (1000 * 3600 * 24)); 
 				return diffDays <= 2;
 			}
-		}
+        }
 		return false;
 	}
 }

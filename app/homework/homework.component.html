@@ -23,7 +23,7 @@
                 <StackLayout class="listItemStackLayout">
                     <StackLayout orientation="horizontal">
                         <Label [text]="item.subject" class="list-group-item"></Label>
-                        <Label *ngIf="homeworkService.isNearDueDate(item)" class="icon warningIconCode" [text]="warningIconCode" verticalAlignment="center"></Label>
+                        <Label *ngIf="isNearDueDate(item)" class="icon warningIconCode" [text]="warningIconCode" verticalAlignment="center"></Label>
                     </StackLayout>
                     <StackLayout class="list-group-item list-group-item-sub">
                         <Label [text]="item.createdBy" ></Label>
@@ -82,7 +82,7 @@
                 <StackLayout class="listItemStackLayout" >
                     <StackLayout orientation="horizontal">
                         <Label [text]="item.subject" class="list-group-item"></Label>
-                        <Label *ngIf="homeworkService.isNearDueDate(item)" class="icon warningIconCode" [text]="warningIconCode" verticalAlignment="center"></Label>
+                        <Label *ngIf="isNearDueDate(item)" class="icon warningIconCode" [text]="warningIconCode" verticalAlignment="center"></Label>
                     </StackLayout>
                     <StackLayout class="list-group-item list-group-item-sub">
                         <Label [text]="item.createdBy" ></Label>
