@@ -1,13 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Subscription } from 'rxjs';
-import { isIOS } from 'tns-core-modules/platform';
-import { ItemEventData } from 'ui/list-view/list-view.d.ts';
 
 import { Attendance } from '../model/attendance.model';
 import { AttendanceService } from '../service/attendance.service';
-
-declare var UITableViewCellSelectionStyle;
 
 @Component({
 	moduleId: module.id,
@@ -20,9 +16,15 @@ export class AttendanceComponent implements OnInit, OnDestroy {
 	private subscriptions : Subscription[] = [];
 
 	attendance: Attendance[] = [];
-	summPresentText = 'Present - 0.00%';
-	summAuthText = 'Authorised Absence - 0.00%';
-	summUnAuthText = 'Unauthorised Absence - 0.00%';
+
+	summPresentValue = 0;
+	summPresentText = '0.00%';
+
+	summAuthValue = 0;
+	summAuthText = '0.00%';
+
+	summUnAuthValue = 0;
+	summUnAuthText = '0.00%';
 
 	isLoading = true;
 
@@ -50,15 +52,16 @@ export class AttendanceComponent implements OnInit, OnDestroy {
 				},
 				error => console.log("Error: ", error),
 				() => {
-					this.summPresentText = 'Present - ' + (
-							((this.attendance.filter(x => x.isPresent === true).length / this.attendance.length) * 100).toFixed(2)
-					) + '%';
-					this.summAuthText = 'Authorised Absence - ' + (
-							((this.attendance.filter(x => x.isPresent === false && x.isAbsenceAuthorised === true).length / this.attendance.length) * 100).toFixed(2)
-					) + '%';
-					this.summUnAuthText = 'Unauthorised Absence - ' + (
-						((this.attendance.filter(x => x.isPresent === false && x.isAbsenceAuthorised === false).length / this.attendance.length) * 100).toFixed(2)
-					) + '%';
+					let arrayLength = this.attendance.length;
+
+					this.summPresentValue = ((this.attendance.filter(x => x.isPresent === true).length / arrayLength) * 100);
+					this.summPresentText = (this.summPresentValue.toFixed(2)) + '%';
+					
+					this.summAuthValue = ((this.attendance.filter(x => x.isPresent === false && x.isAbsenceAuthorised === true).length / arrayLength) * 100);
+					this.summAuthText = (this.summAuthValue.toFixed(2)) + '%';
+
+					this.summUnAuthValue = ((this.attendance.filter(x => x.isPresent === false && x.isAbsenceAuthorised === false).length / arrayLength) * 100);
+					this.summUnAuthText = (this.summUnAuthValue.toFixed(2)) + '%';
 					
 					this.isLoading = false;
 				}

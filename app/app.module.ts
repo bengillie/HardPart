@@ -6,6 +6,7 @@ import { AppRoutingModule } from "./app.routing";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
 import { NativeScriptModule } from "nativescript-angular/nativescript.module";
 import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
+import { registerElement } from 'nativescript-angular/element-registry'
 
 import { AppComponent } from "./app.component";
 import { AttendanceComponent } from "./attendance/attendance.component";
@@ -24,6 +25,8 @@ import { LoggingService } from './service/logging.service';
 import { TimetableService } from './service/timetable.service';
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+
+registerElement('AnimatedCircle', () => require('nativescript-animated-circle').AnimatedCircle);
 
 @NgModule({
     bootstrap: [
