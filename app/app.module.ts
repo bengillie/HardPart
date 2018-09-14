@@ -11,6 +11,7 @@ import { AppComponent } from "./app.component";
 import { DashboardComponent } from "~/dashboard/dashboard.component";
 import { HomeworkComponent } from './homework/homework.component';
 import { HomeworkDetailComponent } from './homework-detail/homework-detail.component';
+import { NavigationBarComponent } from "~/navigationbar/navigationbar.component";
 import { LoginComponent } from "./login/login.component";
 import { TimetableComponent } from "./timetable/timetable.component";
 
@@ -43,6 +44,7 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
         DashboardComponent,
         HomeworkComponent,
         HomeworkDetailComponent,
+        NavigationBarComponent,
         LoginComponent,
         TimetableComponent
     ],

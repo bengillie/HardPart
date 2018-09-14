@@ -80,12 +80,12 @@ export class DataService implements InMemoryDbService {
       { id: 2, userId: 1, startDate: new Date(tuesday.setHours(11, 0, 0)), endDate: new Date(tuesday.setHours(12, 30, 0)), teacher: "Susan Williams", subject: "Mathematics", class: "11Ma1"},
       
       { id: 3, userId: 1, startDate: new Date(thursday.setHours(9, 30, 0)), endDate: new Date(thursday.setHours(10, 30, 0)), teacher: "Vincent Romero", subject: "Geography", class: "11Ge1"},  
-      { id: 4, userId: 1, startDate: new Date(thursday.setHours(14, 0, 0)), endDate: new Date(thursday.setHours(15, 0, 0)), teacher: "Vincent Romero", subject: "Physical Education", class: "11Pe1"},  
+      { id: 4, userId: 1, startDate: new Date(thursday.setHours(21, 0, 0)), endDate: new Date(thursday.setHours(22, 0, 0)), teacher: "Vincent Romero", subject: "Physical Education", class: "11Pe1"},  
       
       { id: 5, userId: 1, startDate: new Date(friday.setHours(14, 0, 0)), endDate: new Date(friday.setHours(15, 0, 0)), teacher: "Harry James Moore", subject: "Design and Technology", class: "ICT1"},
-      { id: 6, userId: 1, startDate: new Date(friday.setHours(9, 30, 0)), endDate: new Date(friday.setHours(10, 30, 0)), teacher: "Norbert Heyes", subject: "History", class: "11Hi1"},
+      { id: 6, userId: 1, startDate: new Date(friday.setHours(13, 0, 0)), endDate: new Date(friday.setHours(14, 0, 0)), teacher: "Norbert Heyes", subject: "History", class: "11Hi1"},
 
-      { id: 7, userId: 1, startDate: new Date(saturday.setHours(9, 0, 0)), endDate: new Date(saturday.setHours(10, 0, 0)), teacher: "Edward Thomas", subject: "Physical Education", class: "11Pe1"},  
+      { id: 7, userId: 1, startDate: new Date(saturday.setHours(9, 30, 0)), endDate: new Date(saturday.setHours(10, 30, 0)), teacher: "Edward Thomas", subject: "Physical Education", class: "11Pe1"},  
     ];
 
     const periods: Period[] = [

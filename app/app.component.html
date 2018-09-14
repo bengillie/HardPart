@@ -1,2 +1,10 @@
 <!-- https://docs.nativescript.org/angular/core-concepts/angular-navigation.html#page-router-outlet -->
-<page-router-outlet></page-router-outlet>
+
+<GridLayout rows="*,auto">
+    <page-router-outlet></page-router-outlet>
+
+    <StackLayout row="1" orientation="horizontal">
+        <navigation-bar></navigation-bar>
+    </StackLayout>
+</GridLayout>
+

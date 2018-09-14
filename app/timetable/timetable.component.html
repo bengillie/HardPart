@@ -6,17 +6,17 @@
 </ActionBar>
 
 <div *ngIf="hasLesson; else noLesson">                          
-    <ListView class="list-group" [items]="lessonsForDate" (swipe)="onSwipe($event)">
+    <ListView class="list-group" [items]="lessonsForDate" (swipe)="onSwipe($event)" >
         <GridLayout class="gridLayoutLayout" >
             <ng-template let-item="item">
-                <StackLayout #subjectColour>
-                    <StackLayout class="list-group-item">
+                <StackLayout [class.highlight]="getCurrentLesson(item)">
+                    <StackLayout class="list-group-item" [class.highlight]="current">
                         <Label class="list-group-item-heading" [text]="item.subject"></Label>
-                        <Label class="list-group-item-text" [text]="item.class" ></Label>
-                        <Label class="list-group-item-text" [text]="getPeriodNameForLesson(item)" ></Label>
+                        <Label class="sub-text" [text]="item.class"></Label>
+                        <Label class="sub-text" [text]="getPeriodNameForLesson(item)"></Label>
                     </StackLayout>
                     <StackLayout class="list-group-item list-group-item-sub">
-                        <GridLayout columns="auto, auto, auto" class="gridLayoutLayout">
+                        <GridLayout columns="auto, auto, auto" [class.highlight]="current">
                             <StackLayout col="0">
                                 <Label [text]="item.startDate | date: 'HH:mm'"></Label>
                             </StackLayout>
@@ -27,7 +27,7 @@
                                 <Label [text]="item.endDate | date: 'HH:mm'"></Label>
                             </StackLayout>
                         </GridLayout>
-                        <GridLayout columns="auto, auto" class="gridLayoutLayout">
+                        <GridLayout columns="auto, auto" [class.highlight]="current">
                             <StackLayout col="0">
                                 <Label text="Teacher: "></Label>
                             </StackLayout>
@@ -35,9 +35,7 @@
                                 <Label [text]="item.teacher"></Label>
                             </StackLayout>
                         </GridLayout>
-                        <StackLayout class="hr-light"></StackLayout>
                     </StackLayout>
-                    
                 </StackLayout>
             </ng-template>
         </GridLayout>
@@ -45,7 +43,7 @@
 </div>
 
 <ng-template #noLesson>
-    <GridLayout rows="*" columns="*">
+    <GridLayout rows="*" columns="*" (swipe)="onSwipe($event)">
         <Label class="lbl-nolesson" row="0" style.verticalAlignment="center" text="You have no lessons today"></Label>
     </GridLayout>
 </ng-template>

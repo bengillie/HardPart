@@ -1,22 +1,22 @@
 <ActionBar android:title="Login"></ActionBar>
 
-<ScrollView>
-    <StackLayout class="content" verticalAlignment="center">
+<ScrollView style.verticalAlignment="center"> 
+    <StackLayout class="content">
         <GridLayout rows="auto,*">
             <Image class="img-logo" row="0" src="~/images/pied-piper-logo.png"></Image>
             <Label class="lbl-school-name m-b-30" row="1" horizontalAlignment="center" text="PIED PIPER SCHOOL"></Label>
         </GridLayout>
 
-        <GridLayout rows="auto,*">
+        <GridLayout rows="auto,auto,auto">
+            <StackLayout row="0">
                 <TextField #username class="input tf-input m-b-20" required hint="Username" autocapitalizationType="none" returnKeyType="next" [(ngModel)]="user.username"></TextField>
-        </GridLayout>
-
-        <GridLayout rows="auto,*">
-            <TextField #password class="input tf-input m-b-20" required hint="Password" secure="true" returnKeyType="next" [(ngModel)]="user.password" ></TextField>
-        </GridLayout>
-
-        <GridLayout rows="auto,*">
-            <TextField #dob class="input tf-input m-b-5" required hint="Date of Birth (dd/mm/yyyy)" keyboardType="datetime" secure="false" [(ngModel)]="user.birthdate" ></TextField>
+            </StackLayout>
+            <StackLayout row="1">
+                <TextField #password class="input tf-input m-b-20" required hint="Password" secure="true" returnKeyType="next" [(ngModel)]="user.password" ></TextField>
+            </StackLayout>
+            <StackLayout row="2">
+                <TextField #dob class="input tf-input m-b-5" required hint="Date of Birth (dd/mm/yyyy)" keyboardType="datetime" secure="false" [(ngModel)]="user.birthdate" ></TextField>
+            </StackLayout>
         </GridLayout>
 
         <GridLayout rows="auto,*">
