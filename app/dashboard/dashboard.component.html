@@ -1,10 +1,18 @@
-<ActionBar android:title="Home"></ActionBar>
+<ActionBar title="Dashboard"></ActionBar>
 
-<GridLayout rows="auto,*"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_gravity="center">
-
-    <Label text="PIED PIPER SCHOOL"></Label>
-    
-</GridLayout>
+<ScrollView row="0" style.verticalAlignment="center" class="m-10">
+    <WrapLayout orientation="horizontal">
+        <GridLayout *ngFor="let item of menuList" class="grid-home" rows="*,*" >
+            <StackLayout (tap)="onTapList(item.name)">
+                <Label class="icon-list p-y-20" row="0" text="{{ item.icon }}"></Label>
+                <Label
+                    class="lbl-home"
+                    row="1"
+                    text="{{ item.name }}"
+                    horizontalAlignment="center"
+                    verticalAlignment="bottom">
+                </Label>
+            </StackLayout>
+        </GridLayout>
+    </WrapLayout>     
+</ScrollView>

@@ -3,10 +3,9 @@ import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
 
 import { Lesson, Period } from "../model/timetable.model";
-import { LoginService } from "../service/login.service";
 import { TimetableService } from "../service/timetable.service";
 import { LoggingService } from '~/service/logging.service';
-import { UserModel, UserType } from '~/model/user.model';
+import { Subject } from '~/model/timetable.model';
 
 import { SwipeGestureEventData } from "ui/gestures";
 
@@ -30,14 +29,12 @@ export class TimetableComponent implements OnInit, OnDestroy {
 
     allPeriods: Period[] = [];
 
-    user: UserModel;
+    current = false;
     hasLesson = true;
-
-    @ViewChild("subjectColour") subjectColour: ElementRef;
+    showDetails = true;
        
     constructor(
         private location: Location,
-        private loginService: LoginService,
         private loggingService: LoggingService,
         private timetableService: TimetableService,
     ) { }
@@ -56,7 +53,28 @@ export class TimetableComponent implements OnInit, OnDestroy {
             {
                 subscription.unsubscribe();
             }
+        }
+    }
 
+    getBreak(lesson: Lesson): boolean {
+        if (lesson.teacher === "") {
+            this.showDetails = false;
+            return true;
+        } else {
+            this.showDetails =true;
+            return false;
+        }
+    }
+
+    getCurrentLesson(lesson: Lesson): boolean {
+        let today = new Date();
+
+        if ((today >= new Date(lesson.startDate)) && (today <= new Date(lesson.endDate))) {
+            this.current = true;
+            return true;
+        } else {
+            this.current = false;
+            return false;
         }
     }
 
@@ -85,6 +103,7 @@ export class TimetableComponent implements OnInit, OnDestroy {
         }
 
         this.lessonsForDate = this.allLessons.filter(l => new Date(l.startDate).toDateString() === date.toDateString());
+        this.getTotalLesson();
     }
 
     getPeriods() {
@@ -120,21 +139,22 @@ export class TimetableComponent implements OnInit, OnDestroy {
         if (period){
             name = period.name;
         }
-
+        
         return name;
     }  
 
-    getSubjectColour(lesson: Lesson) {
-            switch (lesson.subject) {
-                case "Science":
-                    this.subjectColour.nativeElement.backgroundColor="green";
-                default:
-                    this.subjectColour.nativeElement.backgroundColor = "gray";
+    getLessonColour(lesson: Lesson) {
+        let subject = Subject;
+
+        switch (lesson.class) {
+            case subject.art: {
+                break;
             }
+        }
     }
 
-    getTotalLesson(lesson: Lesson[]) {
-        if (lesson.length === 0) {
+    getTotalLesson() {
+        if (this.lessonsForDate.length === 0) {
             this.hasLesson = false;
         }
         else {
@@ -157,7 +177,6 @@ export class TimetableComponent implements OnInit, OnDestroy {
         this.lessonDate = new Date(this.lessonDate.setDate(this.lessonDate.getDate() + 1));
         this.getLessonsForDate(this.lessonDate);
     }   
-
         
     onSwipe(args: SwipeGestureEventData) {
         this.loggingService.log("timetable swipe direction" + args.direction.toString());
