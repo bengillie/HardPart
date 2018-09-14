@@ -6,8 +6,10 @@ import { AppRoutingModule } from "./app.routing";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
 import { NativeScriptModule } from "nativescript-angular/nativescript.module";
 import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
+import { registerElement } from 'nativescript-angular/element-registry'
 
 import { AppComponent } from "./app.component";
+import { AttendanceComponent } from "./attendance/attendance.component";
 import { DashboardComponent } from "~/dashboard/dashboard.component";
 import { HomeworkComponent } from './homework/homework.component';
 import { HomeworkDetailComponent } from './homework-detail/homework-detail.component';
@@ -15,6 +17,7 @@ import { NavigationBarComponent } from "~/navigationbar/navigationbar.component"
 import { LoginComponent } from "./login/login.component";
 import { TimetableComponent } from "./timetable/timetable.component";
 
+import { AttendanceService } from '~/service/attendance.service';
 import { DataService }  from './database/data.service';
 import { ErrorService } from './service/error.service';
 import { HomeworkService } from "~/service/homework.service";
@@ -23,6 +26,8 @@ import { LoggingService } from './service/logging.service';
 import { TimetableService } from './service/timetable.service';
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+
+registerElement('AnimatedCircle', () => require('nativescript-animated-circle').AnimatedCircle);
 
 @NgModule({
     bootstrap: [
@@ -41,6 +46,7 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
     ],
     declarations: [
         AppComponent,
+        AttendanceComponent,
         DashboardComponent,
         HomeworkComponent,
         HomeworkDetailComponent,
@@ -49,6 +55,7 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
         TimetableComponent
     ],
     providers: [
+        AttendanceService,
         ErrorService,
         HomeworkService,
         LoginService,

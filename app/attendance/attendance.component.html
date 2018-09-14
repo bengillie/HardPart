@@ -1,0 +1,95 @@
+<ActionBar android:title="Attendance"></ActionBar>
+
+<GridLayout rows="3*, auto, 8*">
+    <GridLayout row="0" rows="auto, *">
+        <WrapLayout row="0" class="summaryLegend">
+            <Label class="summaryLegendText" text="Authorised Absence" backgroundColor="#ffa500"></Label>
+            <Label class="summaryLegendText" text="Present" backgroundColor="#00cc00"></Label>
+            <Label class="summaryLegendText" text="Unauthorised Absence" backgroundColor="#FF0000"></Label>
+        </WrapLayout>
+        
+        <GridLayout row="1" columns="*, 4*, 4*, 4*, *" class="summary">
+            <GridLayout col="1" rows="4*, 5*, *">
+                <Label row="1" class="lbl-percentage-short" [text]="summAuthText"
+                    verticalAlignment="center" horizontalAlignment="center">
+                </Label>
+                <AnimatedCircle row="1"
+                    animated="true"
+                    animateFrom="0"
+                    backgroundColor="transparent"
+                    barColor="#ffa500"
+                    fillColor="transparent"
+                    rimColor="#cccccc"
+                    width="100%"
+                    height="100%"
+                    clockwise="true"
+                    rimWidth="5"
+                    [progress]="summAuthValue">
+                </AnimatedCircle>
+            </GridLayout>
+
+            <GridLayout col="2">
+                <Label row="1" class="lbl-percentage" [text]="summPresentText"
+                    verticalAlignment="center" horizontalAlignment="center">
+                </Label>
+                <AnimatedCircle
+                    animated="true"
+                    animateFrom="0"
+                    backgroundColor="transparent"
+                    barColor="#00cc00"
+                    fillColor="transparent"
+                    rimColor="#cccccc"
+                    width="100%"
+                    height="100%"
+                    clockwise="true"
+                    rimWidth="10"
+                    [progress]="summPresentValue">
+                </AnimatedCircle>
+            </GridLayout>
+
+            <GridLayout col="3" rows="4*, 5*, *">
+                <Label row="1" class="lbl-percentage-short" [text]="summUnAuthText"
+                    verticalAlignment="center" horizontalAlignment="center">
+                </Label>
+                <AnimatedCircle row="1"
+                    animated="true"
+                    animateFrom="0"
+                    backgroundColor="transparent"
+                    barColor="#FF0000"
+                    fillColor="transparent"
+                    rimColor="#cccccc"
+                    width="100%"
+                    height="100%"
+                    clockwise="true"
+                    rimWidth="5"
+                    [progress]="summUnAuthValue">
+                </AnimatedCircle>
+            </GridLayout>
+        </GridLayout>
+    </GridLayout>
+
+    <StackLayout row="1" class="hr-light"></StackLayout>
+
+    <GridLayout row="2">
+        <ListView [items]="attendance" class="list-group">
+            <ng-template let-item="item" let-i="index">
+                <StackLayout class="list-group-item">
+                    <GridLayout columns="*, *">
+                        <Label col="0" class=" list-label" [text]='item.date | date:"fullDate"'></Label>
+                        <StackLayout col="2">
+                            <StackLayout orientation="horizontal">
+                                <Label class="list-label" text="AM: "></Label>
+                                <Label class="list-label" [text]="item.isLateAM ? 'L' : '/'"></Label>
+                            </StackLayout>
+                            <StackLayout orientation="horizontal">
+                                <Label class="list-label" text="PM: "></Label>
+                                <Label class="list-label" [text]="item.isLatePM ? 'L' : '/'"></Label>
+                            </StackLayout>
+                        </StackLayout>
+                    </GridLayout>
+                </StackLayout>
+            </ng-template>
+        </ListView>
+    </GridLayout>
+</GridLayout>
+<ActivityIndicator [busy]="isLoading" horizontalAlignment="center"></ActivityIndicator>
