@@ -22,6 +22,12 @@ export class DataService implements InMemoryDbService {
     var nextWeekThursday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 11));
     var nextWeekFriday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 12));
     var nextWeekSaturday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 13));
+    var n2WeekMonday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 15));
+    var n2WeekTuesday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 16));
+    var n2WeekWednesday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 17));
+    var n2WeekThursday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 18));
+    var n2WeekFriday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 19));
+    var n2WeekSaturday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 20));
         
     const attendance: Attendance[] = [
       { id: 1, date: monday, isPresent: true, isLateAM: false, isLatePM: false, isAbsenceAuthorised: null },
@@ -35,7 +41,13 @@ export class DataService implements InMemoryDbService {
       { id: 9, date: nextWeekWednesday, isPresent: true, isLateAM: false, isLatePM: true, isAbsenceAuthorised: null },
       { id: 10, date: nextWeekThursday, isPresent: true, isLateAM: true, isLatePM: true, isAbsenceAuthorised: null },
       { id: 11, date: nextWeekFriday, isPresent: false, isLateAM: false, isLatePM: false, isAbsenceAuthorised: true },
-      { id: 12, date: nextWeekSaturday, isPresent: false, isLateAM: false, isLatePM: false, isAbsenceAuthorised: false }
+      { id: 12, date: nextWeekSaturday, isPresent: false, isLateAM: false, isLatePM: false, isAbsenceAuthorised: false },
+      { id: 13, date: n2WeekMonday, isPresent: true, isLateAM: false, isLatePM: false, isAbsenceAuthorised: false },
+      { id: 14, date: n2WeekTuesday, isPresent: true, isLateAM: false, isLatePM: false, isAbsenceAuthorised: false },
+      { id: 15, date: n2WeekWednesday, isPresent: true, isLateAM: true, isLatePM: false, isAbsenceAuthorised: false },
+      { id: 16, date: n2WeekThursday, isPresent: true, isLateAM: false, isLatePM: true, isAbsenceAuthorised: false },
+      { id: 17, date: n2WeekFriday, isPresent: true, isLateAM: true, isLatePM: true, isAbsenceAuthorised: false },
+      { id: 18, date: n2WeekSaturday, isPresent: true, isLateAM: false, isLatePM: false, isAbsenceAuthorised: false }
     ];
 
     const homework: Homework[] = [
