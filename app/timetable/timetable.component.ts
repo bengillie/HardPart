@@ -31,6 +31,7 @@ export class TimetableComponent implements OnInit, OnDestroy {
 
     current = false;
     hasLesson = true;
+    showDetails = true;
        
     constructor(
         private location: Location,
@@ -55,8 +56,14 @@ export class TimetableComponent implements OnInit, OnDestroy {
         }
     }
 
-    getBreakLesson(lesson: Lesson) {
-        
+    getBreak(lesson: Lesson): boolean {
+        if (lesson.teacher === "") {
+            this.showDetails = false;
+            return true;
+        } else {
+            this.showDetails =true;
+            return false;
+        }
     }
 
     getCurrentLesson(lesson: Lesson): boolean {
@@ -144,8 +151,6 @@ export class TimetableComponent implements OnInit, OnDestroy {
                 break;
             }
         }
-        
-        this.getCurrentLesson(lesson);
     }
 
     getTotalLesson() {

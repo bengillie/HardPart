@@ -11,8 +11,8 @@ import { HomeworkDetailComponent } from './homework-detail/homework-detail.compo
 import { TimetableComponent } from './timetable/timetable.component';
 
 const routes: Routes = [
-    // { path: '', redirectTo: '/login', pathMatch: 'full' },
-    { path: '', redirectTo: '/attendance', pathMatch: 'full' },
+    { path: '', redirectTo: '/login', pathMatch: 'full' },
+    /* { path: '', redirectTo: '/attendance', pathMatch: 'full' }, */
 
     { path: "attendance", component: AttendanceComponent},
     { path: "dashboard", component: DashboardComponent},

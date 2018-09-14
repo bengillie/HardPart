@@ -9,13 +9,15 @@
     <ListView class="list-group" [items]="lessonsForDate" (swipe)="onSwipe($event)" >
         <GridLayout class="gridLayoutLayout" >
             <ng-template let-item="item">
-                <StackLayout [class.highlight]="getCurrentLesson(item)">
+                <StackLayout [class.highlight]="getCurrentLesson(item)" [class.break]="getBreak(item)">
                     <StackLayout class="list-group-item" [class.highlight]="current">
-                        <Label class="list-group-item-heading" [text]="item.subject"></Label>
-                        <Label class="sub-text" [text]="item.class"></Label>
-                        <Label class="sub-text" [text]="getPeriodNameForLesson(item)"></Label>
+                        <StackLayout visibility="{{ showDetails ? 'visible' : 'collapsed' }}">
+                            <Label class="list-group-item-heading" [text]="item.subject"></Label>
+                            <Label class="sub-text" [text]="item.class"></Label>
+                            <Label class="sub-text" [text]="getPeriodNameForLesson(item)"></Label>
+                        </StackLayout>
                     </StackLayout>
-                    <StackLayout class="list-group-item list-group-item-sub">
+                    <StackLayout class="list-group-item list-group-item-sub" visibility="{{ showDetails ? 'visible' : 'collapsed' }}">
                         <GridLayout columns="auto, auto, auto" [class.highlight]="current">
                             <StackLayout col="0">
                                 <Label [text]="item.startDate | date: 'HH:mm'"></Label>

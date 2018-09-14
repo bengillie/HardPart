@@ -28,7 +28,7 @@ export class NavigationBarComponent implements OnInit {
 
     ngOnInit() { 
         this.getIcon();
-        this.getRouter();
+        this.getRouteUrl();
     }
 
     getIcon() {
@@ -50,7 +50,7 @@ export class NavigationBarComponent implements OnInit {
         }
     }
 
-    getRouter() {
+    getRouteUrl() {
         this.route.events.subscribe((res) => { 
             if (this.route.url != '/login') {
                 this.showNavBar = true;
