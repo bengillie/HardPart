@@ -1,5 +1,6 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
 
+import { Achievement } from '~/model/achievement.model';
 import { Attendance } from '~/model/attendance.model';
 import { Homework, HomeworkStatus } from '../model/homework.model';
 import { Lesson, Period } from '../model/timetable.model';
@@ -10,25 +11,54 @@ export class DataService implements InMemoryDbService {
     var dateNow2 = new Date();
 
     var lessonDate = new Date();
-    var monday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 1));
+    var p2WeekMonday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) - 13));
+    var p2WeekTuesday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 2));
+    var p2WeekWednesday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 3));
+    var p2WeekThursday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 4));
+    var p2WeekFriday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 5));
+    var p2WeekSaturday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 6));
+
+    var prevWeekMonday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 8));
+    var prevWeekTuesday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 2));
+    var prevWeekWednesday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 3));
+    var prevWeekThursday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 4));
+    var prevWeekFriday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 5));
+    var prevWeekSaturday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 6));
+
+    var monday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 8));
     var tuesday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 2));
     var wednesday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 3));
     var thursday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 4));
     var friday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 5));
     var saturday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 6));
+
     var nextWeekMonday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 8));
-    var nextWeekTuesday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 9));
-    var nextWeekWednesday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 10));
-    var nextWeekThursday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 11));
-    var nextWeekFriday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 12));
-    var nextWeekSaturday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 13));
-    var n2WeekMonday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 15));
-    var n2WeekTuesday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 16));
-    var n2WeekWednesday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 17));
-    var n2WeekThursday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 18));
-    var n2WeekFriday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 19));
-    var n2WeekSaturday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 20));
+    var nextWeekTuesday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 2));
+    var nextWeekWednesday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 3));
+    var nextWeekThursday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 4));
+    var nextWeekFriday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 5));
+    var nextWeekSaturday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 6));
+
+    var n2WeekMonday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 8));
+    var n2WeekTuesday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 2));
+    var n2WeekWednesday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 3));
+    var n2WeekThursday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 4));
+    var n2WeekFriday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 5));
+    var n2WeekSaturday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 6));
         
+    const achievement: Achievement[] = [
+      { id: 1, subject: 'English', type: 'Excellent Work', date: p2WeekMonday, score: 10 },
+      { id: 2, subject: 'Math', type: 'Excellent Work', date: p2WeekTuesday, score: 10 },
+      { id: 3, subject: 'Art', type: 'Excellent Work', date: p2WeekWednesday, score: 2 },
+      { id: 4, subject: 'English', type: 'Helping Others', date: p2WeekThursday, score: 8 },
+      { id: 5, subject: 'Math', type: 'Excellent Work', date: p2WeekFriday, score: 30 },
+      { id: 6, subject: 'Math', type: 'Excellent Work', date: p2WeekSaturday, score: 20 },
+      { id: 7, subject: 'Math', type: 'Representing School', date: prevWeekMonday, score: 10 },
+      { id: 8, subject: 'Math', type: 'Helping Others', date: prevWeekTuesday, score: 10 },
+      { id: 9, subject: 'Science', type: 'Excellent Work', date: prevWeekWednesday, score: 10 },
+      { id: 10, subject: 'Science', type: 'Representing School', date: prevWeekThursday, score: 10 },
+    ];
+
     const attendance: Attendance[] = [
       { id: 1, date: monday, isPresent: true, isLateAM: false, isLatePM: false, isAbsenceAuthorised: null },
       { id: 2, date: tuesday, isPresent: true, isLateAM: true, isLatePM: false, isAbsenceAuthorised: null },
@@ -180,6 +210,6 @@ export class DataService implements InMemoryDbService {
       { id: 4, username: 'parent2', password: 'password', birthdate: '04/05/1975', usertype: 1 }
     ];
     
-    return { attendance, homework, lessons, periods, users }; 
+    return { achievement, attendance, homework, lessons, periods, users }; 
   }
 }

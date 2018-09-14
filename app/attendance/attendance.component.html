@@ -1,15 +1,9 @@
 <ActionBar android:title="Attendance"></ActionBar>
 
 <GridLayout rows="3*, auto, 8*">
-    <GridLayout row="0" rows="auto, *">
-        <WrapLayout row="0" class="summaryLegend">
-            <Label class="summaryLegendText" text="Authorised Absence" backgroundColor="#ffa500"></Label>
-            <Label class="summaryLegendText" text="Present" backgroundColor="#00cc00"></Label>
-            <Label class="summaryLegendText" text="Unauthorised Absence" backgroundColor="#FF0000"></Label>
-        </WrapLayout>
-        
-        <GridLayout row="1" columns="*, 4*, 4*, 4*, *" class="summary">
-            <GridLayout col="1" rows="4*, 5*, *">
+    <GridLayout row="0" rows="*, auto">        
+        <GridLayout row="0" columns="*, *, *" class="summary">
+            <GridLayout col="0" rows="3*, 6*, 2*">
                 <Label row="1" class="lbl-percentage-short" [text]="summAuthText"
                     verticalAlignment="center" horizontalAlignment="center">
                 </Label>
@@ -17,37 +11,41 @@
                     animated="true"
                     animateFrom="0"
                     backgroundColor="transparent"
-                    barColor="#ffa500"
+                    barColor="#ffae42"
                     fillColor="transparent"
-                    rimColor="#cccccc"
-                    width="100%"
-                    height="100%"
-                    clockwise="true"
-                    rimWidth="5"
-                    [progress]="summAuthValue">
-                </AnimatedCircle>
-            </GridLayout>
-
-            <GridLayout col="2">
-                <Label row="1" class="lbl-percentage" [text]="summPresentText"
-                    verticalAlignment="center" horizontalAlignment="center">
-                </Label>
-                <AnimatedCircle
-                    animated="true"
-                    animateFrom="0"
-                    backgroundColor="transparent"
-                    barColor="#00cc00"
-                    fillColor="transparent"
-                    rimColor="#cccccc"
+                    rimColor="#c0c0c0"
                     width="100%"
                     height="100%"
                     clockwise="true"
                     rimWidth="10"
-                    [progress]="summPresentValue">
+                    [progress]="summAuthValue">
                 </AnimatedCircle>
+                <Label row="2" class="summaryLegendText-short" text="Authorised Absence"
+                    verticalAlignment="bottom" horizontalAlignment="center"></Label>
             </GridLayout>
 
-            <GridLayout col="3" rows="4*, 5*, *">
+            <GridLayout col="1" rows="9*, 2*">
+                <Label row="0" class="lbl-percentage" [text]="summPresentText"
+                    verticalAlignment="center" horizontalAlignment="center">
+                </Label>
+                <AnimatedCircle row="0"
+                    animated="true"
+                    animateFrom="0"
+                    backgroundColor="transparent"
+                    barColor="#8ab82d"
+                    fillColor="transparent"
+                    rimColor="#c0c0c0"
+                    width="100%"
+                    height="100%"
+                    clockwise="true"
+                    rimWidth="16"
+                    [progress]="summPresentValue">
+                </AnimatedCircle>
+                <Label row="1" class="summaryLegendText" text="Present"
+                    verticalAlignment="bottom" horizontalAlignment="center"></Label>
+            </GridLayout>
+
+            <GridLayout col="2" rows="3*, 6*, 2*">
                 <Label row="1" class="lbl-percentage-short" [text]="summUnAuthText"
                     verticalAlignment="center" horizontalAlignment="center">
                 </Label>
@@ -55,15 +53,17 @@
                     animated="true"
                     animateFrom="0"
                     backgroundColor="transparent"
-                    barColor="#FF0000"
+                    barColor="#FF4500"
                     fillColor="transparent"
-                    rimColor="#cccccc"
+                    rimColor="#c0c0c0"
                     width="100%"
                     height="100%"
                     clockwise="true"
-                    rimWidth="5"
+                    rimWidth="10"
                     [progress]="summUnAuthValue">
                 </AnimatedCircle>
+                <Label row="2" class="summaryLegendText-short" text="Unauthorised Absence"
+                    verticalAlignment="bottom" horizontalAlignment="center"></Label>
             </GridLayout>
         </GridLayout>
     </GridLayout>
@@ -71,23 +71,21 @@
     <StackLayout row="1" class="hr-light"></StackLayout>
 
     <GridLayout row="2">
-        <ListView [items]="attendance" class="list-group">
+        <ListView class="list-group" [items]="attendance">
             <ng-template let-item="item" let-i="index">
-                <StackLayout class="list-group-item">
-                    <GridLayout columns="*, *">
-                        <Label col="0" class=" list-label" [text]='item.date | date:"fullDate"'></Label>
-                        <StackLayout col="2">
-                            <StackLayout orientation="horizontal">
-                                <Label class="list-label" text="AM: "></Label>
-                                <Label class="list-label" [text]="item.isLateAM ? 'L' : '/'"></Label>
-                            </StackLayout>
-                            <StackLayout orientation="horizontal">
-                                <Label class="list-label" text="PM: "></Label>
-                                <Label class="list-label" [text]="item.isLatePM ? 'L' : '/'"></Label>
-                            </StackLayout>
+                <GridLayout columns="4*, *" class="list-group-item">
+                    <Label col="0" class="list-label" [text]='item.date | date:"fullDate"'></Label>
+                    <StackLayout col="2">
+                        <StackLayout orientation="horizontal">
+                            <Label class="list-label-dtl" text="AM: "></Label>
+                            <Label class="list-label-dtl" [text]="item.isLateAM ? 'L' : '/'"></Label>
                         </StackLayout>
-                    </GridLayout>
-                </StackLayout>
+                        <StackLayout orientation="horizontal">
+                            <Label class="list-label-dtl" text="PM: "></Label>
+                            <Label class="list-label-dtl" [text]="item.isLatePM ? 'L' : '/'"></Label>
+                        </StackLayout>
+                    </StackLayout>
+                </GridLayout>
             </ng-template>
         </ListView>
     </GridLayout>

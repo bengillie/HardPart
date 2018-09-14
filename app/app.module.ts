@@ -9,6 +9,7 @@ import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
 import { registerElement } from 'nativescript-angular/element-registry'
 
 import { AppComponent } from "./app.component";
+import { AchievementComponent } from '~/achievement/achievement.component';
 import { AttendanceComponent } from "./attendance/attendance.component";
 import { DashboardComponent } from "~/dashboard/dashboard.component";
 import { HomeworkComponent } from './homework/homework.component';
@@ -16,9 +17,11 @@ import { HomeworkDetailComponent } from './homework-detail/homework-detail.compo
 import { LoginComponent } from "./login/login.component";
 import { TimetableComponent } from "./timetable/timetable.component";
 
+import { AchievementService } from '~/service/achievement.service';
 import { AttendanceService } from '~/service/attendance.service';
 import { DataService }  from './database/data.service';
 import { ErrorService } from './service/error.service';
+import { HelperService } from './service/helper.service';
 import { HomeworkService } from "~/service/homework.service";
 import { LoginService } from './service/login.service';
 import { LoggingService } from './service/logging.service';
@@ -45,6 +48,8 @@ registerElement('AnimatedCircle', () => require('nativescript-animated-circle').
     ],
     declarations: [
         AppComponent,
+
+        AchievementComponent,
         AttendanceComponent,
         DashboardComponent,
         HomeworkComponent,
@@ -53,8 +58,10 @@ registerElement('AnimatedCircle', () => require('nativescript-animated-circle').
         TimetableComponent
     ],
     providers: [
+        AchievementService,
         AttendanceService,
         ErrorService,
+        HelperService,
         HomeworkService,
         LoginService,
         LoggingService,

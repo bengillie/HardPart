@@ -3,6 +3,7 @@ import { Routes } from "@angular/router";
 
 import { NativeScriptRouterModule } from "nativescript-angular/router";
 
+import { AchievementComponent } from "~/achievement/achievement.component";
 import { AttendanceComponent } from "~/attendance/attendance.component";
 import { DashboardComponent } from "~/dashboard/dashboard.component";
 import { LoginComponent } from "./login/login.component";
@@ -12,8 +13,9 @@ import { TimetableComponent } from './timetable/timetable.component';
 
 const routes: Routes = [
     // { path: '', redirectTo: '/login', pathMatch: 'full' },
-    { path: '', redirectTo: '/attendance', pathMatch: 'full' },
+    { path: '', redirectTo: '/achievement', pathMatch: 'full' },
 
+    { path: "achievement", component: AchievementComponent},
     { path: "attendance", component: AttendanceComponent},
     { path: "dashboard", component: DashboardComponent},
     { path: "login", component: LoginComponent },
