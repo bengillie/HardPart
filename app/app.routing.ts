@@ -12,13 +12,8 @@ import { HomeworkDetailComponent } from './homework-detail/homework-detail.compo
 import { TimetableComponent } from './timetable/timetable.component';
 
 const routes: Routes = [
-<<<<<<< HEAD
-    // { path: '', redirectTo: '/login', pathMatch: 'full' },
-    { path: '', redirectTo: '/achievement', pathMatch: 'full' },
-=======
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     /* { path: '', redirectTo: '/attendance', pathMatch: 'full' }, */
->>>>>>> 7319842f7d9cf007fc59828f7094623838784221
 
     { path: "achievement", component: AchievementComponent},
     { path: "attendance", component: AttendanceComponent},
