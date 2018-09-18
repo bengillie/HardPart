@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
     templateUrl: './navigationbar.component.html',
     styleUrls: ['./navigationbar.component.less']
 })
-export class NavigationBarComponent implements OnInit {
+export class NavigationBarComponent implements OnInit, OnDestroy {
     private subscriptions : Subscription[] = [];
     
     iconCodeMenu = "";
@@ -29,6 +29,15 @@ export class NavigationBarComponent implements OnInit {
     ngOnInit() { 
         this.getIcon();
         this.getRouteUrl();
+    }
+
+    ngOnDestroy() {
+        if (this.subscriptions) {
+            for (let subscription of this.subscriptions)
+            {
+                subscription.unsubscribe();
+            }
+        }
     }
 
     getIcon() {

@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core'
+import { Component, OnInit, OnDestroy } from '@angular/core'
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
 
 import { Lesson, Period } from "../model/timetable.model";
 import { TimetableService } from "../service/timetable.service";
 import { LoggingService } from '~/service/logging.service';
-import { Subject } from '~/model/timetable.model';
+import { Subject, Break } from '~/model/timetable.model';
 
 import { SwipeGestureEventData } from "ui/gestures";
 
@@ -18,7 +18,7 @@ import { SwipeGestureEventData } from "ui/gestures";
 export class TimetableComponent implements OnInit, OnDestroy {
     private subscriptions : Subscription[] = [];
     
-    isLoading = true;
+    breakText = "";
     
     lessonDate: Date = new Date();
     startDate: Date = new Date();
@@ -28,11 +28,13 @@ export class TimetableComponent implements OnInit, OnDestroy {
     lessonsForDate: Lesson[] = [];
 
     allPeriods: Period[] = [];
+    periodsForDate: Period[] = [];
 
     current = false;
     hasLesson = true;
+    isLoading = true;
     showDetails = true;
-       
+           
     constructor(
         private location: Location,
         private loggingService: LoggingService,
@@ -56,8 +58,19 @@ export class TimetableComponent implements OnInit, OnDestroy {
         }
     }
 
-    getBreak(lesson: Lesson): boolean {
-        if (lesson.teacher === "") {
+    getBreak(lesson: Lesson) {    
+        let breakTime = Break;
+        let today = new Date();
+
+        const regexp = new RegExp('B');
+        const name = this.getPeriodNameForLesson(lesson);
+        
+        if ((new Date(lesson.startDate).getHours() < 12) && regexp.test(name)) {
+            this.breakText = breakTime.amBreak;
+            this.showDetails = false;
+            return true;
+        } else if ((new Date(lesson.startDate).getHours() >= 12) && regexp.test(name)) {
+            this.breakText = breakTime.pmBreak;
             this.showDetails = false;
             return true;
         } else {
@@ -117,6 +130,10 @@ export class TimetableComponent implements OnInit, OnDestroy {
         );
     }
 
+    getPeriodsForDate() {
+
+    }
+
     getPeriodNameForLesson(lesson: Lesson): string {
         let name = "";
 
@@ -143,12 +160,46 @@ export class TimetableComponent implements OnInit, OnDestroy {
         return name;
     }  
 
-    getLessonColour(lesson: Lesson) {
+    getSubjectColour(lesson: Lesson): string {
         let subject = Subject;
+        let color = "";
 
-        switch (lesson.class) {
+        switch (lesson.subject) {
             case subject.art: {
-                break;
+                return color = "#8B0000";
+            }
+            case subject.computing: {
+                return color = "#8B4513";
+            }
+            case subject.design: {
+                return color = "#808000";
+            }
+            case subject.english: {
+                return color = "#2ECCFA";
+            }
+            case subject.geography: {
+                return color = "#FA58F4";
+            }
+            case subject.history: {
+                return color = "#04B404";
+            }
+            case subject.languages: {
+                return color = "#BF00FF";
+            }
+            case subject.math: {
+                return color = "#FF8000";
+            }
+            case subject.music: {
+                return color = "#642EFE";
+            }
+            case subject.pe: {
+                return color = "#FFFF00";
+            }
+            case subject.reg: {
+                return color = "#086A87";
+            }
+            case subject.science: {
+                return color = "#FF0000";
             }
         }
     }

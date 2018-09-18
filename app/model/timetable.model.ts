@@ -25,5 +25,11 @@ export enum Subject {
     math = "Mathematics",
     music = "Music",
     pe = "Physical Education",
+    reg = "Registration",
     science = "Science", 
+}
+
+export enum Break {
+    amBreak = "Morning Break",
+    pmBreak = "Afternoon Break"
 }
