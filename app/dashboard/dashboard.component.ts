@@ -111,10 +111,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 break;
             }
             case this.menuName.behaviour: {
-                //this.router.navigate([`homework`]);
+                //this.router.navigate([`behaviour`]);
+                break;
             }
             case this.menuName.contact: {
-                //this.router.navigate([`homework`]);
+                //this.router.navigate([`contact`]);
+                break;
             }
         }
     }

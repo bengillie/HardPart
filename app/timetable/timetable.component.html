@@ -1,53 +1,58 @@
 <ActionBar [title]="lessonDate | date: 'EEEE'">
-    <NavigationButton android.systemIcon="ic_menu_back" (tap)="goBack()"></NavigationButton>
     <ActionItem ios.position="right"  android.position="actionBar">
         <Label class="p-r-15" [text]="lessonDate | date: 'dd/MM/yyyy'"></Label>
     </ActionItem>
 </ActionBar>
 
 <div *ngIf="hasLesson; else noLesson">                          
-    <ListView class="list-group" [items]="lessonsForDate" (swipe)="onSwipe($event)" >
+    <ListView class="list-group" [items]="lessonsForDate" (swipe)="onSwipe($event)" col="1">
         <GridLayout class="gridLayoutLayout" >
             <ng-template let-item="item">
-                <StackLayout [class.highlight]="getCurrentLesson(item)" [class.break]="getBreak(item)">
-                    <StackLayout class="list-group-item" [class.highlight]="current">
-                        <StackLayout visibility="{{ showDetails ? 'visible' : 'collapsed' }}">
-                            <Label class="list-group-item-heading" [text]="item.subject"></Label>
-                            <Label class="sub-text" [text]="item.class"></Label>
-                            <Label class="sub-text" [text]="getPeriodNameForLesson(item)"></Label>
+                <GridLayout columns="10,*">
+                    <StackLayout col="0" #color class="subject-colour" [style.background]="getSubjectColour(item)"></StackLayout>
+                    <StackLayout col="1" [class.highlight]="getCurrentLesson(item)" [class.break]="getBreak(item)">
+                        <StackLayout class="list-group-item" >
+                            <Label visibility="{{ showDetails ? 'collapsed' : 'visible' }}" [text]="breakText" [class.break]="!showDetails"></Label>
+                            <StackLayout visibility="{{ showDetails ? 'visible' : 'collapsed' }}">
+                                <Label class="list-group-item-heading" [text]="item.subject"></Label>
+                                <Label class="sub-text" [text]="item.class"></Label>
+                                <Label class="sub-text" [text]="getPeriodNameForLesson(item)"></Label>
+                            </StackLayout>
+                        </StackLayout>
+                        <StackLayout class="list-group-item list-group-item-sub" visibility="{{ showDetails ? 'visible' : 'collapsed' }}">
+                            <GridLayout columns="auto, auto, auto" [class.highlight]="current">
+                                <StackLayout col="0">
+                                    <Label [text]="item.startDate | date: 'HH:mm'"></Label>
+                                </StackLayout>
+                                <StackLayout col="1">
+                                    <Label text=" - "></Label>
+                                </StackLayout>
+                                <StackLayout col="2">
+                                    <Label [text]="item.endDate | date: 'HH:mm'"></Label>
+                                </StackLayout>
+                            </GridLayout>
+                            <GridLayout columns="auto, auto" [class.highlight]="current">
+                                <StackLayout col="0">
+                                    <Label text="Teacher: "></Label>
+                                </StackLayout>
+                                <StackLayout col="1">
+                                    <Label [text]="item.teacher"></Label>
+                                </StackLayout>
+                            </GridLayout>
                         </StackLayout>
                     </StackLayout>
-                    <StackLayout class="list-group-item list-group-item-sub" visibility="{{ showDetails ? 'visible' : 'collapsed' }}">
-                        <GridLayout columns="auto, auto, auto" [class.highlight]="current">
-                            <StackLayout col="0">
-                                <Label [text]="item.startDate | date: 'HH:mm'"></Label>
-                            </StackLayout>
-                            <StackLayout col="1">
-                                <Label text=" - "></Label>
-                            </StackLayout>
-                            <StackLayout col="2">
-                                <Label [text]="item.endDate | date: 'HH:mm'"></Label>
-                            </StackLayout>
-                        </GridLayout>
-                        <GridLayout columns="auto, auto" [class.highlight]="current">
-                            <StackLayout col="0">
-                                <Label text="Teacher: "></Label>
-                            </StackLayout>
-                            <StackLayout col="1">
-                                <Label [text]="item.teacher"></Label>
-                            </StackLayout>
-                        </GridLayout>
-                    </StackLayout>
-                </StackLayout>
+                </GridLayout>
             </ng-template>
         </GridLayout>
     </ListView>
 </div>
 
 <ng-template #noLesson>
-    <GridLayout rows="*" columns="*" (swipe)="onSwipe($event)">
-        <Label class="lbl-nolesson" row="0" style.verticalAlignment="center" text="You have no lessons today"></Label>
-    </GridLayout>
+    <StackLayout col="1">
+        <GridLayout rows="*" columns="*" (swipe)="onSwipe($event)">
+            <Label class="lbl-nolesson" row="0" style.verticalAlignment="center" text="You have no lessons today"></Label>
+        </GridLayout>
+    </StackLayout>
 </ng-template>
 
 <ActivityIndicator [busy]="isLoading" horizontalAlignment="center"></ActivityIndicator>
