@@ -61,7 +61,7 @@ export class DataService implements InMemoryDbService {
       { id: 7, subject: 'Math', type: 'Representing School', date: prevWeekMonday, score: 10 },
       { id: 8, subject: 'Math', type: 'Helping Others', date: prevWeekTuesday, score: 10 },
       { id: 9, subject: 'Science', type: 'Excellent Work', date: prevWeekWednesday, score: 10 },
-      { id: 10, subject: 'Science', type: 'Representing School', date: prevWeekThursday, score: 10 },
+      { id: 10, subject: 'Science', type: 'Leadership', date: prevWeekThursday, score: 10 },
     ];
 
     const attendance: Attendance[] = [

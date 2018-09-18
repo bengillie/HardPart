@@ -18,7 +18,6 @@ export class AchievementComponent implements OnInit, OnDestroy {
 
 	achievements: Achievement[] = [];
 	groupedAchievements: any[] = [];
-	gridStarColumns = '';
 
 	isLoading = true;
 
@@ -57,7 +56,6 @@ export class AchievementComponent implements OnInit, OnDestroy {
 							'values': i.values
 						};
 					});
-					this.gridStarColumns = this.helperService.gridColumnsGenerator(this.groupedAchievements.length);
 					this.isLoading = false;
 				}
 			)
