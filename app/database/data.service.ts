@@ -4,13 +4,9 @@ import { Achievement } from '~/model/achievement.model';
 import { Attendance } from '~/model/attendance.model';
 import { Homework, HomeworkStatus } from '../model/homework.model';
 import { Login } from '../model/login.model';
-import { Lesson, Period } from '../model/timetable.model';
-<<<<<<< HEAD
 import { StudentItem } from '~/model/studentitem.model';
 import { User, UserType } from '../model/user.model';
-=======
-import { Subject, Break } from '~/model/timetable.model';
->>>>>>> a092d7acc6d21df43b393801568107c16a5283ab
+import { Break, Lesson, Period, Subject } from '~/model/timetable.model';
 
 export class DataService implements InMemoryDbService {
   createDb() {
@@ -206,10 +202,11 @@ export class DataService implements InMemoryDbService {
 
     const login: Login[] = [
       /* { id: 1, username: 'student1', password: 'password', birthdate: '01/02/1998', usertype: 0 }, */
-      { id: 5, username: '1', password: '1', birthdate: '1' },
+      { id: 1, username: '1', password: '1', birthdate: '1' },
       { id: 2, username: 'student2', password: 'password', birthdate: '02/03/2001' },
       { id: 3, username: 'parent1', password: 'password', birthdate: '03/03/1978' },
-      { id: 4, username: 'parent2', password: 'password', birthdate: '04/05/1975' }
+      { id: 4, username: 'parent2', password: 'password', birthdate: '04/05/1975' },
+      { id: 5, username: 'parent', password: 'parent', birthdate: '01/01/1950' }
     ];
     
     const periods: Period[] = [
