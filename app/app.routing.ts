@@ -9,11 +9,12 @@ import { DashboardComponent } from "~/dashboard/dashboard.component";
 import { LoginComponent } from "./login/login.component";
 import { HomeworkComponent } from "./homework/homework.component";
 import { HomeworkDetailComponent } from './homework-detail/homework-detail.component';
+import { StudentSelectionComponent } from './student-selection/student-selection.component';
 import { TimetableComponent } from './timetable/timetable.component';
 
 const routes: Routes = [
-     { path: '', redirectTo: '/login', pathMatch: 'full' },
-    //{ path: '', redirectTo: '/attendance', pathMatch: 'full' },
+    { path: '', redirectTo: '/login', pathMatch: 'full' },
+    //{ path: '', redirectTo: '/studentselection', pathMatch: 'full' },
 
     { path: "achievement", component: AchievementComponent},
     { path: "attendance", component: AttendanceComponent},
@@ -21,6 +22,7 @@ const routes: Routes = [
     { path: "login", component: LoginComponent },
     { path: "homework", component: HomeworkComponent },
     { path: "homeworkdetails/:id", component: HomeworkDetailComponent },
+    { path: "studentselection", component: StudentSelectionComponent },
     { path: "timetable", component: TimetableComponent}
 ];
 

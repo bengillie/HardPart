@@ -7,8 +7,8 @@ import { ErrorService } from '../service/error.service';
 import { LoggingService } from '../service/logging.service';
 
 import { Lesson, Period } from '../model/timetable.model';
-import { LoginService } from '~/service/login.service';
-import { UserModel } from '~/model/user.model';
+import { AppValuesService } from '~/service/appvalues.service';
+import { User } from '~/model/user.model';
 
 @Injectable()
 export class TimetableService {
@@ -16,13 +16,13 @@ export class TimetableService {
 
     constructor(
         private http: HttpClient,
+        private appValuesService: AppValuesService,
         private errorService: ErrorService,
-        private logService: LoggingService,
-        private loginService: LoginService
+        private logService: LoggingService
     ) { }
     
     getLessons(): Observable<Lesson[]> {
-        const loggedInUser: UserModel = this.loginService.getLoggedInUser();
+        const loggedInUser: User = this.appValuesService.getLoggedInUser();
         let params = new HttpParams();
         params = params.append('userId', loggedInUser.id.toString());
         

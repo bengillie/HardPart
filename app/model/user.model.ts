@@ -1,9 +1,12 @@
-export class UserModel {
+export class User {
     id: number;
+    fname: string;
+    mname: string;
+    lname: string;
     username: string;
-    password: string;
+    parentid: number | null;
     birthdate: Date;   
-    usertype: UserType; 
+    usertype: UserType;
 }
 
 export enum UserType {
