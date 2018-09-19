@@ -12,18 +12,16 @@
                     <StackLayout col="0" #color class="break" [style.background]="getSubjectColour(item)"></StackLayout>
 
                     <StackLayout col="1" [class.highlight]="getCurrentLesson(item)" [class.break]="getBreak(item)">
-                        <StackLayout class="list-group-item" >
-                            <Label visibility="{{ showDetails ? 'collapsed' : 'visible' }}" 
-                                class="list-group-item-heading break" 
-                                [class.highlight]="current"
-                                [text]="breakPeriodLabel">
-                            </Label>
-                            <StackLayout visibility="{{ showDetails ? 'visible' : 'collapsed' }}">
-                                <Label class="list-group-item-heading" [text]="item.subject"></Label>
-                                <Label class="sub-text" [text]="item.class"></Label>
-                                <Label class="sub-text" [text]="getPeriodNameForLesson(item)"></Label>
-                            </StackLayout>
+                        <StackLayout class="list-group-item" visibility="{{ showDetails ? 'collapsed' : 'visible' }}">
+                            <Label class="list-group-item-heading break" [class.highlight]="current" [text]="breakPeriodLabel"></Label>
                         </StackLayout>
+
+                        <StackLayout class="list-group-item" visibility="{{ showDetails ? 'visible' : 'collapsed' }}">
+                            <Label class="list-group-item-heading" [text]="item.subject"></Label>
+                            <Label class="sub-text" [text]="item.class"></Label>
+                            <Label class="sub-text" [text]="getPeriodNameForLesson(item)"></Label>
+                        </StackLayout>
+                        
                         <StackLayout class="list-group-item list-group-item-sub" visibility="{{ showDetails ? 'visible' : 'collapsed' }}">
                             <GridLayout columns="auto, auto, auto" [class.highlight]="current">
                                 <StackLayout col="0">
@@ -48,12 +46,11 @@
                     </StackLayout>
 
                     <StackLayout col="2" [class.break]="!showDetails" >
-                        <StackLayout style.verticalAlignment="center">
-                            <Label class="icon-homework p-t-30" 
-                                text="{{ homeworkIcon }}" 
-                                visibility="{{ showDetails ? 'visible' : 'collapsed' }}">
-                            </Label>
-                        </StackLayout>
+                        <Label visibility="{{ getHomeworkDueDate(item) ? 'visible' : 'collapsed' }}"
+                            class="icon-homework p-t-30" 
+                            (tap)="onTapHomework(item)"
+                            text="{{ homeworkIcon }}">
+                        </Label>
                     </StackLayout>
                 </GridLayout>
             </ng-template>

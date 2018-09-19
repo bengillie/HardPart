@@ -9,6 +9,7 @@ export class Lesson {
 }
 
 export class Period {
+    id: number;
     name: string;
     startDate: Date;
     endDate: Date;

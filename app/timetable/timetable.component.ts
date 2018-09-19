@@ -1,12 +1,17 @@
 import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core'
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { SwipeGestureEventData } from "ui/gestures";
 
 import { Lesson, Period } from "../model/timetable.model";
 import { Subject, Break } from '~/model/timetable.model';
+import { User } from '~/model/user.model';
 
+import { AppValuesService } from '~/service/appvalues.service';
+import { HomeworkService } from '~/service/homework.service';
 import { LoggingService } from '~/service/logging.service';
 import { TimetableService } from "../service/timetable.service";
+import { Homework } from '~/model/homework.model';
 
 @Component({
     moduleId: module.id,
@@ -19,6 +24,8 @@ export class TimetableComponent implements OnInit, OnDestroy {
     
     breakPeriodLabel = "";
     homeworkIcon = "";
+
+    loggedInUser: User;
     
     lessonDate: Date = new Date();
     startDate: Date = new Date();
@@ -30,21 +37,31 @@ export class TimetableComponent implements OnInit, OnDestroy {
     allPeriods: Period[] = [];
     periodsForDate: Period[] = [];
 
+    allHomeworks: Homework[] = [];
+    allDueHomeworks: Homework[] = [];
+
     current = false;
     hasLesson = true;
+    isDueLesson = false;
     isLoading = true;
     lastLesson = false;
     showDetails = true;
            
     constructor(
+        private appValuesService: AppValuesService,
+        private homeworkService: HomeworkService,
         private loggingService: LoggingService,
+        private router: Router,
         private timetableService: TimetableService,
     ) { }
 
     ngOnInit() { 
+        this.loggedInUser = this.appValuesService.getLoggedInUser();
+
         this.startDate.setDate(this.startDate.getDate() - (this.startDate.getDay() - 7));
         this.endDate.setDate(this.endDate.getDate() - (this.endDate.getDay() + 7));
 
+        this.getAllHomework();
         this.getLessons();
         this.getPeriods();
     }
@@ -58,6 +75,16 @@ export class TimetableComponent implements OnInit, OnDestroy {
         }
     }
 
+    getAllHomework() {
+        this.subscriptions.push(this.homeworkService.getStudentHomework(this.loggedInUser.id)
+            .subscribe(
+                homework => {
+                    this.allHomeworks = homework;
+                }
+            )
+        )
+    }
+
     getBreak(lesson: Lesson) {    
         let breakTime = Break;
         
@@ -65,12 +92,12 @@ export class TimetableComponent implements OnInit, OnDestroy {
         const name = this.getPeriodNameForLesson(lesson);
         
         if ((new Date(lesson.startDate).getHours() < 12) && regexp.test(name)) {
-            this.breakPeriodLabel = breakTime.amBreak;
             this.showDetails = false;
+            this.breakPeriodLabel = breakTime.amBreak;
             return true;
         } else if ((new Date(lesson.startDate).getHours() >= 12) && regexp.test(name)) {
-            this.breakPeriodLabel = breakTime.pmBreak;
             this.showDetails = false;
+            this.breakPeriodLabel = breakTime.pmBreak;
             return true;
         } else {
             this.showDetails =true;
@@ -88,6 +115,25 @@ export class TimetableComponent implements OnInit, OnDestroy {
             this.current = false;
             return false;
         }
+    }
+
+    getHomeworkDueDate(lesson: Lesson): boolean {
+        const dueHomework = this.allHomeworks.find(h =>
+            h.subject == lesson.subject
+        );
+
+        if (dueHomework != undefined) {
+            this.allDueHomeworks.push(dueHomework);
+            let isDue = this.homeworkService.isNearDueDate(dueHomework)
+
+            if (isDue === true) {
+                this.isDueLesson = true;
+                this.homeworkIcon = String.fromCharCode(0xe91f);
+                return true;
+            }
+        }
+
+        return false;
     }
 
     getLessons() {
@@ -249,5 +295,13 @@ export class TimetableComponent implements OnInit, OnDestroy {
         } else {
             this.loggingService.log("Lock Timetable swipe");
         }
+    }
+
+    onTapHomework(lesson: Lesson) {
+        const homework = this.allDueHomeworks.find(h =>
+            h.subject == lesson.subject
+        );
+
+        this.router.navigate([`/homeworkdetails/${homework.id}`]);
     }
 }
