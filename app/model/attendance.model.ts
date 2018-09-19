@@ -3,8 +3,6 @@ export class Attendance {
     date: Date;
     amMark: AttendanceMark;
     pmMark: AttendanceMark;
-    amMarkIcon: string | null;
-    pmMarkIcon: string | null;
 }
 
 export enum AttendanceMark {

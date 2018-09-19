@@ -76,11 +76,6 @@ export class AttendanceComponent implements OnInit, OnDestroy {
 					this.summUnAuthValue = summUnauthAM + summUnauthPM;
 					this.summUnAuthValue = ((this.summUnAuthValue / arrayLength) * 100);
 					this.summUnAuthText = (this.summUnAuthValue.toFixed(2)) + '%';
-
-					for(let x=0; x<this.attendance.length; x++) {
-						this.attendance[x].amMarkIcon = String.fromCharCode(this.attendance[x].amMark);
-						this.attendance[x].pmMarkIcon = String.fromCharCode(this.attendance[x].pmMark);
-					}
 					
 					this.isLoading = false;
 				}
@@ -98,5 +93,9 @@ export class AttendanceComponent implements OnInit, OnDestroy {
 		} else if(attendanceMark === AttendanceMark.unauthorised) {
 			return this.colorUnauthorised;
 		}
+	}
+
+	getIcon(attendanceMark: AttendanceMark): string {
+		return String.fromCharCode(attendanceMark);
 	}
 }
