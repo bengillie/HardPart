@@ -48,7 +48,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
             this.subscriptions.push(this.userService.getStudentItems(currentUser.id)
                 .subscribe(
                     (x) => {
-                        if(x.length > 1) { 
+                        if(x.length > 1) {
                             this.routerExt.navigate([`studentselection`]);
                         } else if(x.length === 1) {
                             this.appValuesService.setSelectedStudent(x[0]);

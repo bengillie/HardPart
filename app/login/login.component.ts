@@ -2,11 +2,10 @@ import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/co
 import { RouterExtensions } from 'nativescript-angular/router'
 import { Subscription } from 'rxjs';
 
-import { Login } from "../model/login.model"
+import { User } from "../model/user.model"
 
 import { AppValuesService } from '../service/appvalues.service';
 import { LoginService } from '../service/login.service';
-import { UserService } from '../service/user.service';
 
 @Component({
     moduleId: module.id,
@@ -17,7 +16,7 @@ import { UserService } from '../service/user.service';
 
 export class LoginComponent implements OnInit, OnDestroy {
     private subscription : Subscription;
-    logIn: Login;
+    logIn: User;
 
     errorMessage = "";
 
@@ -28,16 +27,15 @@ export class LoginComponent implements OnInit, OnDestroy {
     constructor(
         private appValuesService: AppValuesService,
         private loginService: LoginService,
-        private userService: UserService,
         private router: RouterExtensions,
     ) { }
 
     ngOnInit() { 
-        this.logIn = new Login();
-        // this.logIn.username = 'parent';
-        // this.logIn.password = 'parent';
-        // this.logIn.birthdate = '01/01/1950';
-        // this.login();
+        this.logIn = new User();
+        this.logIn.username = 'parent';
+        this.logIn.password = 'parent';
+        this.logIn.birthdate = '01/01/1950';
+        this.login();
     }
 
     ngOnDestroy() {
@@ -79,18 +77,15 @@ export class LoginComponent implements OnInit, OnDestroy {
         return true;
     }
 
-    private checkUser(login: Login): void {
+    private checkUser(login: User): void {
         if ((login === undefined) ||
             (login.username != this.logIn.username) ||
             (login.password != this.logIn.password) ||
             (login.birthdate != this.logIn.birthdate)) {
             this.errorMessage = "User not found";
         } else {
-            this.subscription = this.userService.getUserById(login.id)
-                .subscribe(user => {
-                    this.appValuesService.setLoggedInUser(user);
-                    this.router.navigate([`dashboard`]);
-                })
+            this.appValuesService.setLoggedInUser(login);
+            this.router.navigate([`dashboard`]);
         }
     }
 }

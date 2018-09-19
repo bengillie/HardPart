@@ -4,8 +4,9 @@ export class User {
     mname: string;
     lname: string;
     username: string;
+    password: string;
     parentid: number | null;
-    birthdate: Date;   
+    birthdate: string;   
     usertype: UserType;
 }
 
