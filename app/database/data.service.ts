@@ -3,8 +3,15 @@ import { InMemoryDbService } from 'angular-in-memory-web-api';
 import { Achievement } from '~/model/achievement.model';
 import { Attendance } from '~/model/attendance.model';
 import { Homework, HomeworkStatus } from '../model/homework.model';
+<<<<<<< HEAD
 import { Lesson, Period } from '../model/timetable.model';
 import { Subject } from '~/model/timetable.model';
+=======
+import { Login } from '../model/login.model';
+import { StudentItem } from '~/model/studentitem.model';
+import { User, UserType } from '../model/user.model';
+import { Break, Lesson, Period, Subject } from '~/model/timetable.model';
+>>>>>>> ad94cf35c8a4746411ab469747de56a7d39b7036
 
 export class DataService implements InMemoryDbService {
   createDb() {
@@ -58,7 +65,7 @@ export class DataService implements InMemoryDbService {
       { id: 7, subject: 'Math', type: 'Representing School', date: prevWeekMonday, score: 10 },
       { id: 8, subject: 'Math', type: 'Helping Others', date: prevWeekTuesday, score: 10 },
       { id: 9, subject: 'Science', type: 'Excellent Work', date: prevWeekWednesday, score: 10 },
-      { id: 10, subject: 'Science', type: 'Representing School', date: prevWeekThursday, score: 10 },
+      { id: 10, subject: 'Science', type: 'Leadership', date: prevWeekThursday, score: 10 },
     ];
 
     const attendance: Attendance[] = [
@@ -82,6 +89,8 @@ export class DataService implements InMemoryDbService {
       { id: 18, date: n2WeekSaturday, isPresent: true, isLateAM: false, isLatePM: false, isAbsenceAuthorised: false }
     ];
 
+    dateNow1 = new Date();
+    dateNow2 = new Date();
     const homework: Homework[] = [
       { id: 1, subject: 'Product', 
         task: `Complete the existing products and user profile research so that you are ready to type all the research pages in the first lesson in September. Plan a conclusion for each page (this is the research analysis page but we will be breaking it up in to a paragraph on each page).\n\nYou might also want to write a draft Design Specification as we will complete that in Lesson 2 of Y11.\n\nUse the power point to guide you.`, 
@@ -195,6 +204,15 @@ export class DataService implements InMemoryDbService {
       { id: 33, userId: 1, startDate: new Date(saturday.setHours(9, 0, 0)), endDate: new Date(saturday.setHours(10, 0, 0)), teacher: "Edward Thomas", subject: "Physical Education", class: "11Pe1"},  
     ];
 
+    const login: Login[] = [
+      /* { id: 1, username: 'student1', password: 'password', birthdate: '01/02/1998', usertype: 0 }, */
+      { id: 1, username: '1', password: '1', birthdate: '1' },
+      { id: 2, username: 'student2', password: 'password', birthdate: '02/03/2001' },
+      { id: 3, username: 'parent1', password: 'password', birthdate: '03/03/1978' },
+      { id: 4, username: 'parent2', password: 'password', birthdate: '04/05/1975' },
+      { id: 5, username: 'parent', password: 'parent', birthdate: '01/01/1950' }
+    ];
+    
     const periods: Period[] = [
       { name: "R1", startDate: new Date(monday.setHours(7, 0, 0)), endDate: new Date(monday.setHours(8, 0, 0)) },
       { name: "R2", startDate: new Date(tuesday.setHours(7, 0, 0)), endDate: new Date(tuesday.setHours(8, 0, 0)) },
@@ -263,15 +281,26 @@ export class DataService implements InMemoryDbService {
       { name: "B6", startDate: new Date(saturday.setHours(10, 0, 0)), endDate: new Date(saturday.setHours(10, 30, 0)) },
       { name: "B6", startDate: new Date(saturday.setHours(12, 0, 0)), endDate: new Date(saturday.setHours(13, 0, 0)) },
     ];
-
-    const users = [
-      /* { id: 1, username: 'student1', password: 'password', birthdate: '01/02/1998', usertype: 0 }, */
-      { id: 1, username: '1', password: '1', birthdate: '1', usertype: 0 },
-      { id: 2, username: 'student2', password: 'password', birthdate: '02/03/2001', usertype: 0 },
-      { id: 3, username: 'parent1', password: 'password', birthdate: '03/03/1978', usertype: 1 },
-      { id: 4, username: 'parent2', password: 'password', birthdate: '04/05/1975', usertype: 1 }
-    ];
     
-    return { achievement, attendance, homework, lessons, periods, users }; 
+    dateNow1 = new Date();
+    const user: User[] = [
+      { id: 1, fname: 'Jay', mname: '', lname: 'Smith', username: '', parentid: 5, birthdate: dateNow1, usertype: UserType.student },
+      { id: 2, fname: 'Emily', mname: '', lname: 'Smith', username: '', parentid: 5, birthdate: dateNow1, usertype: UserType.student },
+      { id: 3, fname: 'Grace', mname: '', lname: 'Smith', username: '', parentid: 5, birthdate: dateNow1, usertype: UserType.student },
+      { id: 4, fname: 'Finn', mname: 'Johnson', lname: 'Williams', username: '', parentid: 6, birthdate: dateNow1, usertype: UserType.student },
+      { id: 5, fname: 'Jason', mname: '', lname: 'Smith', username: '', parentid: null, birthdate: dateNow1, usertype: UserType.parent },
+      { id: 6, fname: 'Bon', mname: 'Johnson', lname: 'Williams', username: '', parentid: null, birthdate: dateNow1, usertype: UserType.parent },
+      { id: 7, fname: 'Maria', mname: '', lname: 'Brown', username: '', parentid: null, birthdate: dateNow1, usertype: UserType.parent }
+    ];
+
+    dateNow1 = new Date();
+    const studentSelection: StudentItem[] = [
+      { id: 1, fname: 'Jay', mname: '', lname: 'Smith', parentid: 5, hasIncompleteHomework: true, image: 'https://images.unsplash.com/photo-1510186935664-b09c970b5990?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=7da00386b50335491bd9b0f593bca4f4&auto=format&fit=crop&w=500&q=60' },
+      { id: 2, fname: 'Emily', mname: '', lname: 'Smith', parentid: 5, hasIncompleteHomework: false, image: 'https://images.unsplash.com/photo-1517924250218-eb05042519bc?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=69b3e4f52c48aaa4e113782284c57eb5&auto=format&fit=crop&w=500&q=60' },
+      { id: 3, fname: 'Grace', mname: '', lname: 'Smith', parentid: 5, hasIncompleteHomework: false, image: 'https://images.unsplash.com/photo-1516697702773-80ded84ace68?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=b3602b09e4543ebb1719fae0a3febfb1&auto=format&fit=crop&w=500&q=60' },
+      { id: 4, fname: 'Finn', mname: 'Johnson', lname: 'Williams', parentid: 6, hasIncompleteHomework: false, image: 'https://images.unsplash.com/photo-1513925496875-7b7626998260?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=c68f56d9b1c8d042276d48d771045239&auto=format&fit=crop&w=500&q=60' },
+    ];
+
+    return { achievement, attendance, homework, lessons, login, periods, studentSelection, user }; 
   }
 }

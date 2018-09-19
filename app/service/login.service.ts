@@ -3,17 +3,16 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators'; 
 
-import { UserModel, UserType } from '../model/user.model';
+import { Login } from '../model/login.model';
 
 import { ErrorService } from '../service/error.service';
 import { LoggingService } from '../service/logging.service';
 
 @Injectable()
 export class LoginService {
-    user: UserModel;
-    userType: UserType;
+    login: Login;
 
-    private userUrl = 'api/users';
+    private loginUrl = 'api/login';
 
     constructor(
         private http: HttpClient,
@@ -21,27 +20,19 @@ export class LoginService {
         private logService: LoggingService
     ) { }
 
-    getLoggedInUser(): UserModel {
-        return this.user;
-    }
 
-    getUser(user: UserModel): Observable<UserModel> {
-
+    getUser(login: Login): Observable<Login> {
         let params = new HttpParams();
-        params = params.append('username', user.username);
-        params = params.append('password', user.password);
-        params = params.append('birthdate', user.birthdate.toString());
+        params = params.append('username', login.username);
+        params = params.append('password', login.password);
+        params = params.append('birthdate', login.birthdate.toString());
 
-        return this.http.get<UserModel[]>(this.userUrl, {params: params})
+        return this.http.get<Login[]>(this.loginUrl, {params: params})
         .pipe(
             map(users => users[0]),
-            tap(_ => this.logService.log(`fetched username = ${user.username}`)),
-            catchError(this.errorService.handleError<UserModel>(`getUser username = ${user.username}`))
+            tap(_ => this.logService.log(`fetched username = ${login.username}`)),
+            catchError(this.errorService.handleError<Login>(`getUser username = ${login.username}`))
         );
-    }
-
-    setLoggedInUser(user: UserModel) {
-        this.user = user;
     }
 
 }

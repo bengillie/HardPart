@@ -3,10 +3,11 @@
         <GridLayout rows="*, 55">
             <StackLayout row="1">
                 <StackLayout class="hr-light"></StackLayout>
-                <GridLayout columns="*, *, *">
+                <GridLayout columns="*, *, *, *">
                     <Button col="0" class="icon btnTab" text="{{ iconCodeMenu }}" (tap)="onTabViewClicked(0)" [class.btnTab-active]="tabViewSelectedIndex===0" [class.btnTab-notActive]="tabViewSelectedIndex!==0"></Button>
                     <Button col="1" class="icon btnTab" text="{{ iconCodeHomework }}" (tap)="onTabViewClicked(1)" [class.btnTab-active]="tabViewSelectedIndex===1" [class.btnTab-notActive]="tabViewSelectedIndex!==1"></Button>
-                    <Button col="2" class="icon btnTab" text="{{ iconCodeNotif }}" (tap)="onTabViewClicked(2)" [class.btnTab-active]="tabViewSelectedIndex===2" [class.btnTab-notActive]="tabViewSelectedIndex!==2"></Button>
+                    <Button col="2" class="icon btnTab" text="{{ iconCodeStudentSelection }}" (tap)="onTabViewClicked(2)" [class.btnTab-active]="tabViewSelectedIndex===2" [class.btnTab-notActive]="tabViewSelectedIndex!==2"></Button>
+                    <Button col="3" class="icon btnTab" text="{{ iconCodeNotif }}" (tap)="onTabViewClicked(3)" [class.btnTab-active]="tabViewSelectedIndex===3" [class.btnTab-notActive]="tabViewSelectedIndex!==3"></Button>
                 </GridLayout>
             </StackLayout>
         </GridLayout>

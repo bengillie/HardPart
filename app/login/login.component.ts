@@ -2,8 +2,11 @@ import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/co
 import { RouterExtensions } from 'nativescript-angular/router'
 import { Subscription } from 'rxjs';
 
-import { UserModel } from "../model/user.model"
+import { Login } from "../model/login.model"
+
+import { AppValuesService } from '../service/appvalues.service';
 import { LoginService } from '../service/login.service';
+import { UserService } from '../service/user.service';
 
 @Component({
     moduleId: module.id,
@@ -11,9 +14,10 @@ import { LoginService } from '../service/login.service';
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.less']
 })
+
 export class LoginComponent implements OnInit, OnDestroy {
     private subscription : Subscription;
-    user: UserModel;
+    logIn: Login;
 
     errorMessage = "";
 
@@ -22,12 +26,18 @@ export class LoginComponent implements OnInit, OnDestroy {
     @ViewChild("dob") dob: ElementRef;
 
     constructor(
+        private appValuesService: AppValuesService,
         private loginService: LoginService,
+        private userService: UserService,
         private router: RouterExtensions,
     ) { }
 
     ngOnInit() { 
-        this.user = new UserModel(); 
+        this.logIn = new Login();
+        // this.logIn.username = 'parent';
+        // this.logIn.password = 'parent';
+        // this.logIn.birthdate = '01/01/1950';
+        // this.login();
     }
 
     ngOnDestroy() {
@@ -38,28 +48,28 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     login() {
         this.errorMessage = "";
-        let isValid = this.validInput(this.user);
+        let isValid = this.validInput(this.logIn);
 
         if (isValid != false) {
-            this.subscription = this.loginService.getUser(this.user)
+            this.subscription = this.loginService.getUser(this.logIn)
                 .subscribe(user => {
                     this.checkUser(user);
                 })
         }
     }
 
-    private validInput(user): boolean {
-        if ((!user.username) || (!user.password) || (!user.birthdate)) {
+    private validInput(logIn): boolean {
+        if ((!logIn.username) || (!logIn.password) || (!logIn.birthdate)) {
             this.errorMessage = "Required fields";
-            if (!user.username) {
+            if (!logIn.username) {
                 this.username.nativeElement.borderColor = "red";
             }
             
-            if (!user.password) {
+            if (!logIn.password) {
                 this.password.nativeElement.borderColor = "red";
             } 
             
-            if (!user.birthdate) {
+            if (!logIn.birthdate) {
                 this.dob.nativeElement.borderColor = "red";
             }
             
@@ -69,15 +79,18 @@ export class LoginComponent implements OnInit, OnDestroy {
         return true;
     }
 
-    private checkUser(user: UserModel): void {
-        if ((user === undefined) ||
-            (user.username != this.user.username) ||
-            (user.password != this.user.password) ||
-            (user.birthdate != this.user.birthdate)) {
+    private checkUser(login: Login): void {
+        if ((login === undefined) ||
+            (login.username != this.logIn.username) ||
+            (login.password != this.logIn.password) ||
+            (login.birthdate != this.logIn.birthdate)) {
             this.errorMessage = "User not found";
         } else {
-            this.loginService.setLoggedInUser(user);
-            this.router.navigate([`dashboard`]);
+            this.subscription = this.userService.getUserById(login.id)
+                .subscribe(user => {
+                    this.appValuesService.setLoggedInUser(user);
+                    this.router.navigate([`dashboard`]);
+                })
         }
     }
 }

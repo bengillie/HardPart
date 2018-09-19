@@ -14,6 +14,7 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
     
     iconCodeMenu = "";
     iconCodeHomework = "";
+    iconCodeStudentSelection = "";
     iconCodeNotif = "";
     tabIcon = "";
     tabViewSelectedIndex = 0;
@@ -22,11 +23,11 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
     showNavBar = false;
 
     constructor(
-        private route: Router,
-        private router: RouterExtensions) 
+        private router: Router,
+        private routerExt: RouterExtensions) 
     { }
 
-    ngOnInit() { 
+    ngOnInit() {
         this.getIcon();
         this.getRouteUrl();
     }
@@ -43,25 +44,29 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
     getIcon() {
         this.iconCodeMenu = String.fromCharCode(0xe9bd);
         this.iconCodeHomework = String.fromCharCode(0xe91f);
+        this.iconCodeStudentSelection = String.fromCharCode(0xe972);
         this.iconCodeNotif = String.fromCharCode(0xea08);
     } 
 
     getTabList() {
         if (this.tabViewSelectedIndex === 0) 
         {
-            this.router.navigate(['dashboard']);
+            this.routerExt.navigate(['dashboard']);
         } else if (this.tabViewSelectedIndex === 1) 
         {
-            this.router.navigate([`homework`]);
+            this.routerExt.navigate([`homework`]);
         } else if (this.tabViewSelectedIndex === 2) 
+        {
+            this.routerExt.navigate([`studentselection`]);
+        } else if (this.tabViewSelectedIndex === 3) 
         {
             
         }
     }
 
     getRouteUrl() {
-        this.route.events.subscribe((res) => { 
-            if (this.route.url != '/login') {
+        this.router.events.subscribe((res) => { 
+            if (this.router.url != '/login') {
                 this.showNavBar = true;
             } else {
                 this.showNavBar = false;
