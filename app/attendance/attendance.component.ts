@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Subscription } from 'rxjs';
 
-import { Attendance } from '../model/attendance.model';
+import { Attendance, AttendanceMark } from '../model/attendance.model';
 import { AttendanceService } from '../service/attendance.service';
 
 @Component({
@@ -25,6 +25,11 @@ export class AttendanceComponent implements OnInit, OnDestroy {
 
 	summUnAuthValue = 0;
 	summUnAuthText = '0.00%';
+
+	colorPresent = "#1EB69D";
+	colorLate = "#1EB69D";
+	colorAuthorised = "#ffae42";
+	colorUnauthorised = "#FF4500";
 
 	isLoading = true;
 
@@ -52,20 +57,46 @@ export class AttendanceComponent implements OnInit, OnDestroy {
 				},
 				error => console.log("Error: ", error),
 				() => {
-					let arrayLength = this.attendance.length;
+					let arrayLength = this.attendance.length * 2;
 
-					this.summPresentValue = ((this.attendance.filter(x => x.isPresent === true).length / arrayLength) * 100);
+					let summPresentAM = this.attendance.filter(x => x.amMark === AttendanceMark.present || x.amMark === AttendanceMark.late).length;
+					let summPresentPM = this.attendance.filter(x => x.pmMark === AttendanceMark.present || x.pmMark === AttendanceMark.late).length;
+					this.summPresentValue = summPresentAM + summPresentPM;
+					this.summPresentValue = ((this.summPresentValue / arrayLength) * 100);
 					this.summPresentText = (this.summPresentValue.toFixed(2)) + '%';
 					
-					this.summAuthValue = ((this.attendance.filter(x => x.isPresent === false && x.isAbsenceAuthorised === true).length / arrayLength) * 100);
+					let summAuthAM = this.attendance.filter(x => x.amMark === AttendanceMark.authorised).length;
+					let summAuthPM = this.attendance.filter(x => x.pmMark === AttendanceMark.authorised).length;
+					this.summAuthValue = summAuthAM + summAuthPM;
+					this.summAuthValue = ((this.summAuthValue / arrayLength) * 100);
 					this.summAuthText = (this.summAuthValue.toFixed(2)) + '%';
 
-					this.summUnAuthValue = ((this.attendance.filter(x => x.isPresent === false && x.isAbsenceAuthorised === false).length / arrayLength) * 100);
+					let summUnauthAM = this.attendance.filter(x => x.amMark === AttendanceMark.unauthorised).length;
+					let summUnauthPM = this.attendance.filter(x => x.pmMark === AttendanceMark.unauthorised).length;
+					this.summUnAuthValue = summUnauthAM + summUnauthPM;
+					this.summUnAuthValue = ((this.summUnAuthValue / arrayLength) * 100);
 					this.summUnAuthText = (this.summUnAuthValue.toFixed(2)) + '%';
+
+					for(let x=0; x<this.attendance.length; x++) {
+						this.attendance[x].amMarkIcon = String.fromCharCode(this.attendance[x].amMark);
+						this.attendance[x].pmMarkIcon = String.fromCharCode(this.attendance[x].pmMark);
+					}
 					
 					this.isLoading = false;
 				}
 			)
 		);
+	}
+
+	getColor(attendanceMark: AttendanceMark): string {
+		if(attendanceMark === AttendanceMark.present) {
+			return this.colorPresent;
+		} else if(attendanceMark === AttendanceMark.late) {
+			return this.colorLate;
+		} else if(attendanceMark === AttendanceMark.authorised) {
+			return this.colorAuthorised;
+		} else if(attendanceMark === AttendanceMark.unauthorised) {
+			return this.colorUnauthorised;
+		}
 	}
 }

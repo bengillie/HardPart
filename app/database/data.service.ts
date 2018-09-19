@@ -1,7 +1,7 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
 
 import { Achievement } from '~/model/achievement.model';
-import { Attendance } from '~/model/attendance.model';
+import { Attendance, AttendanceMark } from '~/model/attendance.model';
 import { Homework, HomeworkStatus } from '../model/homework.model';
 import { Login } from '../model/login.model';
 import { StudentItem } from '~/model/studentitem.model';
@@ -65,24 +65,24 @@ export class DataService implements InMemoryDbService {
     ];
 
     const attendance: Attendance[] = [
-      { id: 1, date: monday, isPresent: true, isLateAM: false, isLatePM: false, isAbsenceAuthorised: null },
-      { id: 2, date: tuesday, isPresent: true, isLateAM: true, isLatePM: false, isAbsenceAuthorised: null },
-      { id: 3, date: wednesday, isPresent: true, isLateAM: false, isLatePM: true, isAbsenceAuthorised: null },
-      { id: 4, date: thursday, isPresent: true, isLateAM: true, isLatePM: true, isAbsenceAuthorised: null },
-      { id: 5, date: friday, isPresent: false, isLateAM: false, isLatePM: false, isAbsenceAuthorised: true },
-      { id: 6, date: saturday, isPresent: false, isLateAM: false, isLatePM: false, isAbsenceAuthorised: false },
-      { id: 7, date: nextWeekMonday, isPresent: true, isLateAM: false, isLatePM: false, isAbsenceAuthorised: null },
-      { id: 8, date: nextWeekTuesday, isPresent: true, isLateAM: true, isLatePM: false, isAbsenceAuthorised: null },
-      { id: 9, date: nextWeekWednesday, isPresent: true, isLateAM: false, isLatePM: true, isAbsenceAuthorised: null },
-      { id: 10, date: nextWeekThursday, isPresent: true, isLateAM: true, isLatePM: true, isAbsenceAuthorised: null },
-      { id: 11, date: nextWeekFriday, isPresent: false, isLateAM: false, isLatePM: false, isAbsenceAuthorised: true },
-      { id: 12, date: nextWeekSaturday, isPresent: false, isLateAM: false, isLatePM: false, isAbsenceAuthorised: false },
-      { id: 13, date: n2WeekMonday, isPresent: true, isLateAM: false, isLatePM: false, isAbsenceAuthorised: false },
-      { id: 14, date: n2WeekTuesday, isPresent: true, isLateAM: false, isLatePM: false, isAbsenceAuthorised: false },
-      { id: 15, date: n2WeekWednesday, isPresent: true, isLateAM: true, isLatePM: false, isAbsenceAuthorised: false },
-      { id: 16, date: n2WeekThursday, isPresent: true, isLateAM: false, isLatePM: true, isAbsenceAuthorised: false },
-      { id: 17, date: n2WeekFriday, isPresent: true, isLateAM: true, isLatePM: true, isAbsenceAuthorised: false },
-      { id: 18, date: n2WeekSaturday, isPresent: true, isLateAM: false, isLatePM: false, isAbsenceAuthorised: false }
+      { id: 1, date: monday, amMark: AttendanceMark.present, pmMark: AttendanceMark.present, amMarkIcon: '', pmMarkIcon: '' },
+      { id: 2, date: tuesday, amMark: AttendanceMark.late, pmMark: AttendanceMark.present, amMarkIcon: '', pmMarkIcon: '' },
+      { id: 3, date: wednesday, amMark: AttendanceMark.present, pmMark: AttendanceMark.late, amMarkIcon: '', pmMarkIcon: '' },
+      { id: 4, date: thursday, amMark: AttendanceMark.late, pmMark: AttendanceMark.late, amMarkIcon: '', pmMarkIcon: '' },
+      { id: 5, date: friday, amMark: AttendanceMark.authorised, pmMark: AttendanceMark.authorised, amMarkIcon: '', pmMarkIcon: '' },
+      { id: 6, date: saturday, amMark: AttendanceMark.unauthorised, pmMark: AttendanceMark.unauthorised, amMarkIcon: '', pmMarkIcon: '' },
+      { id: 7, date: nextWeekMonday, amMark: AttendanceMark.present, pmMark: AttendanceMark.present, amMarkIcon: '', pmMarkIcon: '' },
+      { id: 8, date: nextWeekTuesday, amMark: AttendanceMark.late, pmMark: AttendanceMark.present, amMarkIcon: '', pmMarkIcon: '' },
+      { id: 9, date: nextWeekWednesday, amMark: AttendanceMark.present, pmMark: AttendanceMark.late, amMarkIcon: '', pmMarkIcon: '' },
+      { id: 10, date: nextWeekThursday, amMark: AttendanceMark.late, pmMark: AttendanceMark.late, amMarkIcon: '', pmMarkIcon: '' },
+      { id: 11, date: nextWeekFriday, amMark: AttendanceMark.authorised, pmMark: AttendanceMark.authorised, amMarkIcon: '', pmMarkIcon: '' },
+      { id: 12, date: nextWeekSaturday, amMark: AttendanceMark.unauthorised, pmMark: AttendanceMark.unauthorised, amMarkIcon: '', pmMarkIcon: '' },
+      { id: 13, date: n2WeekMonday, amMark: AttendanceMark.present, pmMark: AttendanceMark.present, amMarkIcon: '', pmMarkIcon: '' },
+      { id: 14, date: n2WeekTuesday, amMark: AttendanceMark.present, pmMark: AttendanceMark.present, amMarkIcon: '', pmMarkIcon: '' },
+      { id: 15, date: n2WeekWednesday, amMark: AttendanceMark.late, pmMark: AttendanceMark.present, amMarkIcon: '', pmMarkIcon: '' },
+      { id: 16, date: n2WeekThursday, amMark: AttendanceMark.present, pmMark: AttendanceMark.late, amMarkIcon: '', pmMarkIcon: '' },
+      { id: 17, date: n2WeekFriday, amMark: AttendanceMark.late, pmMark: AttendanceMark.late, amMarkIcon: '', pmMarkIcon: '' },
+      { id: 18, date: n2WeekSaturday, amMark: AttendanceMark.present, pmMark: AttendanceMark.present, amMarkIcon: '', pmMarkIcon: '' },
     ];
 
     dateNow1 = new Date();

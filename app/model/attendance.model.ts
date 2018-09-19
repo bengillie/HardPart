@@ -1,8 +1,15 @@
 export class Attendance {
     id: number;
     date: Date;
-    isPresent: boolean;
-    isLateAM: boolean;
-    isLatePM: boolean;
-    isAbsenceAuthorised: boolean | null;
+    amMark: AttendanceMark;
+    pmMark: AttendanceMark;
+    amMarkIcon: string | null;
+    pmMarkIcon: string | null;
+}
+
+export enum AttendanceMark {
+    present = 0xea10, 
+    late = 0xe94d, 
+    authorised = 0xe94e, 
+    unauthorised = 0xe94f
 }
