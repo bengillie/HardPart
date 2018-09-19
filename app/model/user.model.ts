@@ -5,9 +5,11 @@ export class User {
     lname: string;
     username: string;
     password: string;
-    parentid: number | null;
-    birthdate: string;   
+    birthdate: string;
     usertype: UserType;
+    hasIncompleteHomework: boolean | null;
+    image: string;
+    children: User[];
 }
 
 export enum UserType {
