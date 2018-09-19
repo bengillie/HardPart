@@ -1,13 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'
-import { Location } from '@angular/common';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core'
 import { Subscription } from 'rxjs';
+import { SwipeGestureEventData } from "ui/gestures";
 
 import { Lesson, Period } from "../model/timetable.model";
-import { TimetableService } from "../service/timetable.service";
-import { LoggingService } from '~/service/logging.service';
 import { Subject, Break } from '~/model/timetable.model';
 
-import { SwipeGestureEventData } from "ui/gestures";
+import { LoggingService } from '~/service/logging.service';
+import { TimetableService } from "../service/timetable.service";
 
 @Component({
     moduleId: module.id,
@@ -18,7 +17,8 @@ import { SwipeGestureEventData } from "ui/gestures";
 export class TimetableComponent implements OnInit, OnDestroy {
     private subscriptions : Subscription[] = [];
     
-    breakText = "";
+    breakPeriodLabel = "";
+    homeworkIcon = "";
     
     lessonDate: Date = new Date();
     startDate: Date = new Date();
@@ -33,10 +33,10 @@ export class TimetableComponent implements OnInit, OnDestroy {
     current = false;
     hasLesson = true;
     isLoading = true;
+    lastLesson = false;
     showDetails = true;
            
     constructor(
-        private location: Location,
         private loggingService: LoggingService,
         private timetableService: TimetableService,
     ) { }
@@ -60,17 +60,16 @@ export class TimetableComponent implements OnInit, OnDestroy {
 
     getBreak(lesson: Lesson) {    
         let breakTime = Break;
-        let today = new Date();
-
+        
         const regexp = new RegExp('B');
         const name = this.getPeriodNameForLesson(lesson);
         
         if ((new Date(lesson.startDate).getHours() < 12) && regexp.test(name)) {
-            this.breakText = breakTime.amBreak;
+            this.breakPeriodLabel = breakTime.amBreak;
             this.showDetails = false;
             return true;
         } else if ((new Date(lesson.startDate).getHours() >= 12) && regexp.test(name)) {
-            this.breakText = breakTime.pmBreak;
+            this.breakPeriodLabel = breakTime.pmBreak;
             this.showDetails = false;
             return true;
         } else {
@@ -128,10 +127,6 @@ export class TimetableComponent implements OnInit, OnDestroy {
                     this.isLoading = false;
                 })
         );
-    }
-
-    getPeriodsForDate() {
-
     }
 
     getPeriodNameForLesson(lesson: Lesson): string {
@@ -213,28 +208,46 @@ export class TimetableComponent implements OnInit, OnDestroy {
         }
     }
 
-    goBack(): void {
-		this.location.back();
-    }  
-
     onLeftSwipeClick() {
+        let oneWeekPrev = new Date();
+        oneWeekPrev.setDate(oneWeekPrev.getDate() - (oneWeekPrev.getDay() + 6));
+        
         this.loggingService.log("swipe left");
         this.lessonDate = new Date(this.lessonDate.setDate(this.lessonDate.getDate() - 1));
-        this.getLessonsForDate(this.lessonDate);
+        if (oneWeekPrev < this.lessonDate) {
+            this.getLessonsForDate(this.lessonDate);
+            this.lastLesson = false;
+        } else {
+            this.loggingService.log("Last lesson for the previous week");
+            this.lastLesson = true;
+        }
     }
 
     onRightSwipeClick() {
+        let twoWeeksFuture = new Date();
+        twoWeeksFuture.setDate(twoWeeksFuture.getDate() - (twoWeeksFuture.getDay() - 20));
+
         this.loggingService.log("swipe right");
         this.lessonDate = new Date(this.lessonDate.setDate(this.lessonDate.getDate() + 1));
-        this.getLessonsForDate(this.lessonDate);
+        if (twoWeeksFuture >= this.lessonDate) {
+            this.getLessonsForDate(this.lessonDate);
+            this.lastLesson = false;
+        } else {
+            this.loggingService.log("Last lesson for the next two weeks");
+            this.lastLesson = true;
+        }   
     }   
         
     onSwipe(args: SwipeGestureEventData) {
-        this.loggingService.log("timetable swipe direction" + args.direction.toString());
-        if (args.direction === 1){
-            this.onLeftSwipeClick();
+        if (this.lastLesson === false) {
+            this.loggingService.log("timetable swipe direction" + args.direction.toString());
+            if (args.direction === 1){
+                this.onLeftSwipeClick();
+            } else {
+                this.onRightSwipeClick();
+            }
         } else {
-            this.onRightSwipeClick();
+            this.loggingService.log("Lock Timetable swipe");
         }
     }
 }

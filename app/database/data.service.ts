@@ -4,15 +4,14 @@ import { Achievement } from '~/model/achievement.model';
 import { Attendance } from '~/model/attendance.model';
 import { Homework, HomeworkStatus } from '../model/homework.model';
 import { Lesson, Period } from '../model/timetable.model';
-import { Subject, Break } from '~/model/timetable.model';
+import { Subject } from '~/model/timetable.model';
 
 export class DataService implements InMemoryDbService {
   createDb() {
     var dateNow1 = new Date();
     var dateNow2 = new Date();
     var subject = Subject;
-    var breakTime = Break;
-
+    
     var lessonDate = new Date();
     var p2WeekMonday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) - 13));
     var p2WeekTuesday = new Date(lessonDate.setDate((lessonDate.getDate() - lessonDate.getDay()) + 2));
@@ -155,10 +154,10 @@ export class DataService implements InMemoryDbService {
       { id: 33, userId: 1, startDate: new Date(monday.setHours(7, 0, 0)), endDate: new Date(monday.setHours(8, 0, 0)), teacher: "Matthew Downs", subject: subject.reg, class: "Reg"},
       { id: 1, userId: 1, startDate: new Date(monday.setHours(8, 0, 0)), endDate: new Date(monday.setHours(9, 0, 0)), teacher: "Albert Einstein", subject: subject.science, class: "11Sc1"},
       { id: 2, userId: 1, startDate: new Date(monday.setHours(9, 0, 0)), endDate: new Date(monday.setHours(10, 0, 0)), teacher: "Ferdinand Megellan", subject: subject.history, class: "11Hi1"},
-      { id: 3, userId: 1, startDate: new Date(monday.setHours(10, 0, 0)), endDate: new Date(monday.setHours(10, 30, 0)), teacher: "", subject: breakTime.amBreak, class: ""},
+      { id: 3, userId: 1, startDate: new Date(monday.setHours(10, 0, 0)), endDate: new Date(monday.setHours(10, 30, 0)), teacher: "", subject: "", class: ""},
       { id: 4, userId: 1, startDate: new Date(monday.setHours(10, 30, 0)), endDate: new Date(monday.setHours(11, 0, 0)), teacher: "Ludwig Van Beethoven", subject: subject.music, class: "11Mu1"},
       { id: 5, userId: 1, startDate: new Date(monday.setHours(11, 0, 0)), endDate: new Date(monday.setHours(12, 0, 0)), teacher: "Alan Turing", subject: subject.computing, class: "11Co1"},
-      { id: 6, userId: 1, startDate: new Date(monday.setHours(12, 0, 0)), endDate: new Date(monday.setHours(13, 0, 0)), teacher: "", subject: breakTime.pmBreak, class: ""},
+      { id: 6, userId: 1, startDate: new Date(monday.setHours(12, 0, 0)), endDate: new Date(monday.setHours(13, 0, 0)), teacher: "", subject: "", class: ""},
       { id: 7, userId: 1, startDate: new Date(monday.setHours(13, 0, 0)), endDate: new Date(monday.setHours(14, 0, 0)), teacher: "Harry James Moore", subject: subject.design, class: "ICT1"},
       { id: 8, userId: 1, startDate: new Date(monday.setHours(14, 0, 0)), endDate: new Date(monday.setHours(15, 0, 0)), teacher: "Norbert Heyes", subject: subject.english, class: "11En1"},
       

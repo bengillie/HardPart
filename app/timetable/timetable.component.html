@@ -8,11 +8,16 @@
     <ListView class="list-group" [items]="lessonsForDate" (swipe)="onSwipe($event)" col="1">
         <GridLayout class="gridLayoutLayout" >
             <ng-template let-item="item">
-                <GridLayout columns="10,*">
-                    <StackLayout col="0" #color class="subject-colour" [style.background]="getSubjectColour(item)"></StackLayout>
+                <GridLayout columns="10,*,70">
+                    <StackLayout col="0" #color class="break" [style.background]="getSubjectColour(item)"></StackLayout>
+
                     <StackLayout col="1" [class.highlight]="getCurrentLesson(item)" [class.break]="getBreak(item)">
                         <StackLayout class="list-group-item" >
-                            <Label visibility="{{ showDetails ? 'collapsed' : 'visible' }}" [text]="breakText" [class.break]="!showDetails"></Label>
+                            <Label visibility="{{ showDetails ? 'collapsed' : 'visible' }}" 
+                                class="list-group-item-heading break" 
+                                [class.highlight]="current"
+                                [text]="breakPeriodLabel">
+                            </Label>
                             <StackLayout visibility="{{ showDetails ? 'visible' : 'collapsed' }}">
                                 <Label class="list-group-item-heading" [text]="item.subject"></Label>
                                 <Label class="sub-text" [text]="item.class"></Label>
@@ -39,6 +44,15 @@
                                     <Label [text]="item.teacher"></Label>
                                 </StackLayout>
                             </GridLayout>
+                        </StackLayout>
+                    </StackLayout>
+
+                    <StackLayout col="2" [class.break]="!showDetails" >
+                        <StackLayout style.verticalAlignment="center">
+                            <Label class="icon-homework p-t-30" 
+                                text="{{ homeworkIcon }}" 
+                                visibility="{{ showDetails ? 'visible' : 'collapsed' }}">
+                            </Label>
                         </StackLayout>
                     </StackLayout>
                 </GridLayout>
