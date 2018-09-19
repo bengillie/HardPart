@@ -1,5 +1,6 @@
 export class Homework {
     id: number;
+    studentId: number;
     subject: string;
     task: string;
     createdBy: string;

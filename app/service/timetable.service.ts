@@ -29,8 +29,8 @@ export class TimetableService {
         return this.http.get<Lesson[]>(this.url + "lessons", {params: params})
         .pipe(
             map(lesson => lesson),
-            tap(_ => this.logService.log(`fetched lessons for user id = ${loggedInUser.id.toString()}`)),
-            catchError(this.errorService.handleError<Lesson[]>(`getLesson user id = ${loggedInUser.id.toString()}`))
+            tap(_ => this.logService.log(`fetched lessons for student id = ${loggedInUser.id.toString()}`)),
+            catchError(this.errorService.handleError<Lesson[]>(`getLesson student id = ${loggedInUser.id.toString()}`))
         );
     }
 
