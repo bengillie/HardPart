@@ -1,12 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Location } from '@angular/common';
+import { RouterExtensions } from 'nativescript-angular/router'
 
 import { Subscription } from 'rxjs';
 
 import { User } from '~/model/user.model';
 
 import { AppValuesService } from '../service/appvalues.service';
-import { UserService } from '../service/user.service';
 
 @Component({
 	moduleId: module.id,
@@ -18,6 +17,7 @@ import { UserService } from '../service/user.service';
 export class StudentSelectionComponent implements OnInit, OnDestroy {
 	private subscriptions : Subscription[] = [];
 
+	currentUser: User = new User();
 	students: User[] = [];
 	selectedStudent: User = new User();
 
@@ -26,8 +26,7 @@ export class StudentSelectionComponent implements OnInit, OnDestroy {
 	warningIconCode = String.fromCharCode(0xea08);
 
 	constructor(private appValuesService: AppValuesService,
-		private userService: UserService,
-		private location: Location
+		private routerExt: RouterExtensions
 		) { }
 
 	ngOnInit() {
@@ -52,14 +51,14 @@ export class StudentSelectionComponent implements OnInit, OnDestroy {
 	}
 
 	getStudents() {
-		let currentUser = this.appValuesService.getLoggedInUser();
-		this.students = currentUser.children;
+		this.currentUser = this.appValuesService.getLoggedInUser();
+		this.students = this.currentUser.children;
 		this.isLoading = false;
 	}
 
 	onTap(args: User) {
 		this.selectedStudent = args;
 		this.appValuesService.setSelectedStudent(args);
-		this.location.back();
+		this.routerExt.navigate([`dashboard`]);
 	}
 }

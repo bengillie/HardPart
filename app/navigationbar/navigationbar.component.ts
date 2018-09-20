@@ -3,6 +3,11 @@ import { Router } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router'
 import { Subscription } from 'rxjs';
 
+import { User } from '../model/user.model';
+
+import { AppValuesService } from '../service/appvalues.service';
+import { HelperService } from '../service/helper.service';
+
 @Component({
     moduleId: module.id,
     selector: 'navigation-bar',
@@ -12,6 +17,7 @@ import { Subscription } from 'rxjs';
 export class NavigationBarComponent implements OnInit, OnDestroy {
     private subscriptions : Subscription[] = [];
     
+    currentUser: User = new User();
     iconCodeMenu = "";
     iconCodeHomework = "";
     iconCodeStudentSelection = "";
@@ -21,11 +27,13 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
     title = "";
 
     showNavBar = false;
+    showStudentSelection = false;
 
     constructor(
+        private appValuesService: AppValuesService,
+        private helperService: HelperService,
         private router: Router,
-        private routerExt: RouterExtensions) 
-    { }
+        private routerExt: RouterExtensions) { }
 
     ngOnInit() {
         this.getIcon();
@@ -38,6 +46,17 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
             {
                 subscription.unsubscribe();
             }
+        }
+    }
+
+    gridColumnsGenerator(count: number): string {
+        return this.helperService.gridColumnsGenerator(count);
+    }
+
+    getCurrentUser() {
+        this.currentUser = this.appValuesService.getLoggedInUser();
+        if(this.currentUser) {
+            this.showStudentSelection = this.currentUser.children.length > 1;
         }
     }
 
@@ -71,6 +90,8 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
             } else {
                 this.showNavBar = false;
             }
+            
+            this.getCurrentUser();
         })
     }
 
