@@ -47,18 +47,22 @@ export class HomeworkService {
         return this.http.put(this.url, homework, httpOptions);
     }
 
-	isNearDueDate(homework: Homework) : boolean {
+    isDue(homework: Homework): boolean {
 		if (homework.status === HomeworkStatus.todo) {
 			var dateNow = new Date();
-			
-			if(new Date(homework.dueDate) <= dateNow) {
-				return true;
-			}
-			else {
-				var diff = Math.abs(new Date(Date.parse(homework.dueDate.toString())).getTime() - dateNow.getTime());
-				var diffDays = Math.ceil(diff / (1000 * 3600 * 24)); 
-				return diffDays <= 2;
-			}
+            var diff = new Date(Date.parse(homework.dueDate.toString())).getTime() - dateNow.getTime();
+            var diffDays = Math.ceil(diff / (1000 * 3600 * 24)); 
+            return diffDays < 0;
+        }
+		return false;
+    }
+
+	isNearDueDate(homework: Homework): boolean {
+		if (homework.status === HomeworkStatus.todo) {
+            var dateNow = new Date();
+            var diff = new Date(Date.parse(homework.dueDate.toString())).getTime() - dateNow.getTime();
+            var diffDays = Math.ceil(diff / (1000 * 3600 * 24)); 
+            return diffDays >= 0 && diffDays <= 2;
         }
 		return false;
 	}

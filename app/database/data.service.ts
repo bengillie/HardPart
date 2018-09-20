@@ -3,10 +3,15 @@ import { InMemoryDbService } from 'angular-in-memory-web-api';
 import { Achievement } from '~/model/achievement.model';
 import { Attendance, AttendanceMark } from '~/model/attendance.model';
 import { Homework, HomeworkStatus } from '../model/homework.model';
+<<<<<<< HEAD
 import { Login } from '../model/login.model';
 import { StudentItem } from '~/model/studentitem.model';
 import { User, UserType } from '../model/user.model';
 import { Lesson, Period, Subject } from '~/model/timetable.model';
+=======
+import { Lesson, Period, Subject } from '~/model/timetable.model';
+import { User, UserType } from '../model/user.model';
+>>>>>>> 49422ea34a5b3c3b53a491943617b12f3453c4fa
 
 export class DataService implements InMemoryDbService {
   createDb() {
@@ -218,14 +223,6 @@ export class DataService implements InMemoryDbService {
       { id: 46, userId: 1, startDate: new Date(saturday.setHours(7, 0, 0)), endDate: new Date(saturday.setHours(8, 0, 0)), teacher: "Matthew Downs", subject: "Registration", class: "Reg"},
       { id: 47, userId: 1, startDate: new Date(saturday.setHours(9, 0, 0)), endDate: new Date(saturday.setHours(10, 0, 0)), teacher: "Edward Thomas", subject: "Physical Education", class: "11Pe1"},  
     ];
-
-    const login: Login[] = [
-      { id: 1, username: 'student1', password: 'password', birthdate: '01/02/1998' },
-      { id: 2, username: 'student2', password: 'password', birthdate: '02/03/2001' },
-      { id: 3, username: 'parent1', password: 'password', birthdate: '03/03/1978' },
-      { id: 4, username: 'parent2', password: 'password', birthdate: '04/05/1975' },
-      { id: 5, username: 'parent', password: 'parent', birthdate: '01/01/1950' }
-    ];
     
     const periods: Period[] = [
       { id: 1, name: "R1", startDate: new Date(monday.setHours(7, 0, 0)), endDate: new Date(monday.setHours(8, 0, 0)) },
@@ -298,23 +295,65 @@ export class DataService implements InMemoryDbService {
     
     dateNow1 = new Date();
     const user: User[] = [
-      { id: 1, fname: 'Jay', mname: '', lname: 'Smith', username: '', parentid: 5, birthdate: dateNow1, usertype: UserType.student },
-      { id: 2, fname: 'Emily', mname: '', lname: 'Smith', username: '', parentid: 5, birthdate: dateNow1, usertype: UserType.student },
-      { id: 3, fname: 'Grace', mname: '', lname: 'Smith', username: '', parentid: 5, birthdate: dateNow1, usertype: UserType.student },
-      { id: 4, fname: 'Finn', mname: 'Johnson', lname: 'Williams', username: '', parentid: 6, birthdate: dateNow1, usertype: UserType.student },
-      { id: 5, fname: 'Jason', mname: '', lname: 'Smith', username: '', parentid: null, birthdate: dateNow1, usertype: UserType.parent },
-      { id: 6, fname: 'Bon', mname: 'Johnson', lname: 'Williams', username: '', parentid: null, birthdate: dateNow1, usertype: UserType.parent },
-      { id: 7, fname: 'Maria', mname: '', lname: 'Brown', username: '', parentid: null, birthdate: dateNow1, usertype: UserType.parent }
+      { id: 1, fname: 'Jay', mname: '', lname: 'Smith', username: '1', password: '1', birthdate: '1',
+        usertype: UserType.student, hasIncompleteHomework: true,
+        image: 'https://images.unsplash.com/photo-1510186935664-b09c970b5990?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=7da00386b50335491bd9b0f593bca4f4&auto=format&fit=crop&w=500&q=60',
+        children: []
+      },
+      { id: 2, fname: 'Emily', mname: '', lname: 'Smith', username: 'student2', password: 'password', birthdate: '02/03/2001', 
+        usertype: UserType.student, hasIncompleteHomework: false,
+        image: 'https://images.unsplash.com/photo-1517924250218-eb05042519bc?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=69b3e4f52c48aaa4e113782284c57eb5&auto=format&fit=crop&w=500&q=60',
+        children: []
+      },
+      { id: 3, fname: 'Grace', mname: '', lname: 'Smith', username: 'parent1', password: 'password', birthdate: '03/03/1978', 
+        usertype: UserType.student, hasIncompleteHomework: false,
+        image: 'https://images.unsplash.com/photo-1516697702773-80ded84ace68?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=b3602b09e4543ebb1719fae0a3febfb1&auto=format&fit=crop&w=500&q=60',
+        children: []
+      },
+      { id: 4, fname: 'Finn', mname: 'Johnson', lname: 'Williams', username: 'parent2', password: 'password', birthdate: '04/05/1975', 
+        usertype: UserType.student, hasIncompleteHomework: false,
+        image: 'https://images.unsplash.com/photo-1513925496875-7b7626998260?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=c68f56d9b1c8d042276d48d771045239&auto=format&fit=crop&w=500&q=60',
+        children: []
+      },
+      { id: 5, fname: 'Jason', mname: '', lname: 'Smith', username: 'parent', password: 'parent', birthdate: '01/01/1950', 
+        usertype: UserType.parent, hasIncompleteHomework: null,
+        image: '',
+        children: [
+            { id: 1, fname: 'Jay', mname: '', lname: 'Smith', username: '1', password: '1', birthdate: '1',
+            usertype: UserType.student, hasIncompleteHomework: true,
+            image: 'https://images.unsplash.com/photo-1510186935664-b09c970b5990?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=7da00386b50335491bd9b0f593bca4f4&auto=format&fit=crop&w=500&q=60',
+            children: []
+            },
+            { id: 2, fname: 'Emily', mname: '', lname: 'Smith', username: 'student2', password: 'password', birthdate: '02/03/2001', 
+              usertype: UserType.student, hasIncompleteHomework: false,
+              image: 'https://images.unsplash.com/photo-1517924250218-eb05042519bc?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=69b3e4f52c48aaa4e113782284c57eb5&auto=format&fit=crop&w=500&q=60',
+              children: []
+            },
+            { id: 3, fname: 'Grace', mname: '', lname: 'Smith', username: 'parent1', password: 'password', birthdate: '03/03/1978', 
+              usertype: UserType.student, hasIncompleteHomework: false,
+              image: 'https://images.unsplash.com/photo-1516697702773-80ded84ace68?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=b3602b09e4543ebb1719fae0a3febfb1&auto=format&fit=crop&w=500&q=60',
+              children: []
+            }  
+        ]
+      },
+      { id: 6, fname: 'Bon', mname: 'Johnson', lname: 'Williams', username: '', password: '', birthdate: '01/02/1950', 
+        usertype: UserType.parent, hasIncompleteHomework: null,
+        image: '',
+        children: [
+            { id: 4, fname: 'Finn', mname: 'Johnson', lname: 'Williams', username: 'parent2', password: 'password', birthdate: '04/05/1975', 
+              usertype: UserType.student, hasIncompleteHomework: false,
+              image: 'https://images.unsplash.com/photo-1513925496875-7b7626998260?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=c68f56d9b1c8d042276d48d771045239&auto=format&fit=crop&w=500&q=60',
+              children: []
+            }
+        ]
+      },
+      { id: 7, fname: 'Maria', mname: '', lname: 'Brown', username: '', password: '', birthdate: '02/01/1950', 
+        usertype: UserType.parent, hasIncompleteHomework: null,
+        image: '',
+        children: []
+      }
     ];
 
-    dateNow1 = new Date();
-    const studentSelection: StudentItem[] = [
-      { id: 1, fname: 'Jay', mname: '', lname: 'Smith', parentid: 5, hasIncompleteHomework: true, image: 'https://images.unsplash.com/photo-1510186935664-b09c970b5990?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=7da00386b50335491bd9b0f593bca4f4&auto=format&fit=crop&w=500&q=60' },
-      { id: 2, fname: 'Emily', mname: '', lname: 'Smith', parentid: 5, hasIncompleteHomework: false, image: 'https://images.unsplash.com/photo-1517924250218-eb05042519bc?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=69b3e4f52c48aaa4e113782284c57eb5&auto=format&fit=crop&w=500&q=60' },
-      { id: 3, fname: 'Grace', mname: '', lname: 'Smith', parentid: 5, hasIncompleteHomework: false, image: 'https://images.unsplash.com/photo-1516697702773-80ded84ace68?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=b3602b09e4543ebb1719fae0a3febfb1&auto=format&fit=crop&w=500&q=60' },
-      { id: 4, fname: 'Finn', mname: 'Johnson', lname: 'Williams', parentid: 6, hasIncompleteHomework: false, image: 'https://images.unsplash.com/photo-1513925496875-7b7626998260?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=c68f56d9b1c8d042276d48d771045239&auto=format&fit=crop&w=500&q=60' },
-    ];
-
-    return { achievement, attendance, homework, lessons, login, periods, studentSelection, user }; 
+    return { achievement, attendance, homework, lessons, periods, user }; 
   }
 }

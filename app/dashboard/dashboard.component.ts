@@ -5,7 +5,6 @@ import { Subscription } from 'rxjs';
 import { MenuList } from '~/model/dashboard.model';
 
 import { AppValuesService } from '../service/appvalues.service';
-import { UserService } from '../service/user.service';
 
 @Component({
     moduleId: module.id,
@@ -24,8 +23,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     
     constructor(
         private appValuesService: AppValuesService,
-        private routerExt: RouterExtensions,
-        private userService: UserService) { }
+        private routerExt: RouterExtensions) { }
 
     ngOnInit() {
         this.checkMultiChildren();
@@ -45,26 +43,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
             this.getMenuList();
         } else {
             let currentUser = this.appValuesService.getLoggedInUser();
-            this.subscriptions.push(this.userService.getStudentItems(currentUser.id)
-                .subscribe(
-                    (x) => {
-                        if(x.length > 1) { 
-                            this.routerExt.navigate([`studentselection`]);
-                        } else if(x.length === 1) {
-                            this.appValuesService.setSelectedStudent(x[0]);
-                            this.getMenuList();
-                        }
-                        else {
-                            this.getMenuList();
-                        }
-                    },
-                    () => {},
-                    () => {
-                        this.getMenuList();
-                        this.isLoading = false;
-                    }
-                )
-            )
+            if(currentUser.children.length > 1) {
+                this.routerExt.navigate([`studentselection`]);
+            } else if(currentUser.children.length === 1) {
+                this.appValuesService.setSelectedStudent(currentUser.children[0]);
+                this.getMenuList();
+            }
+            
+            this.getMenuList();
+            this.isLoading = false;
         }
     }
 

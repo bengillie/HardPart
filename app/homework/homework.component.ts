@@ -68,6 +68,10 @@ export class HomeworkComponent implements OnInit, OnDestroy {
 		);
 	}
 
+	isDue(homework: Homework) : boolean {
+		return this.homeworkService.isDue(homework);
+	}
+
 	isNearDueDate(homework: Homework) : boolean {
 		return this.homeworkService.isNearDueDate(homework);
 	}

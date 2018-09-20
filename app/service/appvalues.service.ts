@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 
-import { StudentItem } from '~/model/studentitem.model';
 import { User } from '../model/user.model';
 
 @Injectable()
@@ -8,7 +7,7 @@ export class AppValuesService {
     constructor() { }
     
     currentUser: User;
-    selectedStudent: StudentItem;
+    selectedStudent: User;
     
     getLoggedInUser(): User {
         return this.currentUser;
@@ -17,10 +16,10 @@ export class AppValuesService {
         this.currentUser = user;
     }
 
-    getSelectedStudent() : StudentItem {
+    getSelectedStudent() : User {
         return this.selectedStudent;
     }
-    setSelectedStudent(child: StudentItem) {
+    setSelectedStudent(child: User) {
         this.selectedStudent = child;
     }
 }

@@ -3,7 +3,7 @@ import { Location } from '@angular/common';
 
 import { Subscription } from 'rxjs';
 
-import { StudentItem } from '~/model/studentitem.model';
+import { User } from '~/model/user.model';
 
 import { AppValuesService } from '../service/appvalues.service';
 import { UserService } from '../service/user.service';
@@ -18,9 +18,8 @@ import { UserService } from '../service/user.service';
 export class StudentSelectionComponent implements OnInit, OnDestroy {
 	private subscriptions : Subscription[] = [];
 
-	parentId: number | null;
-	students: StudentItem[] = [];
-	selectedStudent: StudentItem = new StudentItem();
+	students: User[] = [];
+	selectedStudent: User = new User();
 
 	isLoading = true;
 
@@ -54,21 +53,11 @@ export class StudentSelectionComponent implements OnInit, OnDestroy {
 
 	getStudents() {
 		let currentUser = this.appValuesService.getLoggedInUser();
-		this.parentId = currentUser.id;
-		this.subscriptions.push(this.userService.getStudentItems(this.parentId)
-			.subscribe(
-				(x) => {
-					this.students = x;
-				},
-				() => {},
-				() => {
-					this.isLoading = false;
-				}
-			)
-		)
+		this.students = currentUser.children;
+		this.isLoading = false;
 	}
 
-	onTap(args: StudentItem) {
+	onTap(args: User) {
 		this.selectedStudent = args;
 		this.appValuesService.setSelectedStudent(args);
 		this.location.back();

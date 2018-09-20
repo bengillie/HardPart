@@ -14,7 +14,7 @@ import { TimetableComponent } from './timetable/timetable.component';
 
 const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
-    //{ path: '', redirectTo: '/attendance', pathMatch: 'full' },
+    //{ path: '', redirectTo: '/homework', pathMatch: 'full' },
 
     { path: "achievement", component: AchievementComponent},
     { path: "attendance", component: AttendanceComponent},
