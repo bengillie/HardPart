@@ -16,7 +16,7 @@
                             <Label class="list-group-item-heading break" [class.highlight]="current" [text]="breakPeriodLabel"></Label>
                         </StackLayout>
 
-                        <StackLayout class="list-group-item" visibility="{{ showDetails ? 'visible' : 'collapsed' }}">
+                        <StackLayout class="list-group-item" [class.highlight]="current" visibility="{{ showDetails ? 'visible' : 'collapsed' }}">
                             <Label class="list-group-item-heading" [text]="item.subject"></Label>
                             <Label class="sub-text" [text]="item.class"></Label>
                             <Label class="sub-text" [text]="getPeriodNameForLesson(item)"></Label>
@@ -45,7 +45,7 @@
                         </StackLayout>
                     </StackLayout>
 
-                    <StackLayout col="2" [class.break]="!showDetails" >
+                    <StackLayout col="2" [class.break]="!showDetails" [class.highlight]="current">
                         <Label visibility="{{ getHomeworkDueDate(item) ? 'visible' : 'collapsed' }}"
                             class="icon-homework p-t-30" 
                             (tap)="onTapHomework(item)"
