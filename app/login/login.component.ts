@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     ) { }
 
     ngOnInit() { 
+<<<<<<< HEAD
         this.logIn = new User();
         // this.logIn.username = 'parent';
         // this.logIn.password = 'parent';
@@ -39,6 +40,9 @@ export class LoginComponent implements OnInit, OnDestroy {
         // this.logIn.password = 'parent1';
         // this.logIn.birthdate = '01/02/1950';
         // this.login();
+=======
+        this.logIn = new User(); 
+>>>>>>> 45af1bc66f8ab1364395542e6e41f3bce8e12c22
     }
 
     ngOnDestroy() {
