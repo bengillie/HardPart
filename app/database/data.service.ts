@@ -3,15 +3,8 @@ import { InMemoryDbService } from 'angular-in-memory-web-api';
 import { Achievement } from '~/model/achievement.model';
 import { Attendance, AttendanceMark } from '~/model/attendance.model';
 import { Homework, HomeworkStatus } from '../model/homework.model';
-<<<<<<< HEAD
-import { Login } from '../model/login.model';
-import { StudentItem } from '~/model/studentitem.model';
-import { User, UserType } from '../model/user.model';
-import { Lesson, Period, Subject } from '~/model/timetable.model';
-=======
 import { Lesson, Period, Subject } from '~/model/timetable.model';
 import { User, UserType } from '../model/user.model';
->>>>>>> 49422ea34a5b3c3b53a491943617b12f3453c4fa
 
 export class DataService implements InMemoryDbService {
   createDb() {
