@@ -6,11 +6,7 @@ import { Homework, HomeworkStatus } from '../model/homework.model';
 import { Login } from '../model/login.model';
 import { StudentItem } from '~/model/studentitem.model';
 import { User, UserType } from '../model/user.model';
-<<<<<<< HEAD
 import { Lesson, Period, Subject } from '~/model/timetable.model';
-=======
-import { Break, Lesson, Period, Subject } from '~/model/timetable.model';
->>>>>>> 3c8e6542f57f6ee11a018b77c05c904782e613f2
 
 export class DataService implements InMemoryDbService {
   createDb() {
