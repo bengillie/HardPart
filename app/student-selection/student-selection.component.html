@@ -2,17 +2,17 @@
 
 <WrapLayout class="container" orientation="horizontal">
     <StackLayout *ngFor="let item of students" class="selection-item" [class.selection-item-active]="selectedStudent.id === item.id" (tap)="onTap(item)">
-        <GridLayout columns="9*, 1*" rows="10*, 3*">
-            <Image col="0" [colSpan]="item.hasIncompleteHomework ? 1 : 2"  row="0" [src]="item.image" class="selection-item-image" stretch="aspectFit" 
-                verticalAlignment="center" horizontalAlignment="center">
+        <GridLayout rows="10*, 3*">
+            <Image row="0" class="selection-item-image" 
+                [src]="item.image" stretch="aspectFit" verticalAlignment="center" horizontalAlignment="center">
             </Image>
-            <Label *ngIf="item.hasIncompleteHomework" col="1" row="0" class="icon warningIconCode" [text]="warningIconCode" 
-                verticalAlignment="top" horizontalAlignment="right"
-            ></Label>
 
-            <StackLayout col="0" [colSpan]="item.hasIncompleteHomework ? 1 : 2" row="1" class="item-stackText">
+            <StackLayout row="1" class="item-stackText" orientation="horizontal" verticalAlignment="center" horizontalAlignment="center">
                 <Label class="item-textheader" [text]="item.fname + ' ' + item.lname"
                     verticalAlignment="center" horizontalAlignment="center">
+                </Label>
+                <Label *ngIf="item.hasIncompleteHomework" class="icon warningIconCode" [class.warningIconCode-active]="selectedStudent.id === item.id" [text]="warningIconCode" 
+                    verticalAlignment="top" horizontalAlignment="right">
                 </Label>
             </StackLayout>
         </GridLayout>

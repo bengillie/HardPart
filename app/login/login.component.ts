@@ -47,6 +47,10 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
     }
 
+    forgotPassword() {
+        this.router.navigate([`forgotpassword`]);
+    }
+
     login() {
         this.errorMessage = "";
         let isValid = this.validInput(this.logIn);

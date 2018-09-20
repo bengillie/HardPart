@@ -85,11 +85,8 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
 
     getRouteUrl() {
         this.router.events.subscribe((res) => { 
-            if (this.router.url != '/login') {
-                this.showNavBar = true;
-            } else {
-                this.showNavBar = false;
-            }
+            let excludedPages: string[] = ['/login', '/forgotpassword'];
+            this.showNavBar  = excludedPages.filter(x => this.router.url === x).length === 0;
             
             this.getCurrentUser();
         })
