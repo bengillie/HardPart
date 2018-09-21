@@ -3,15 +3,8 @@ import { InMemoryDbService } from 'angular-in-memory-web-api';
 import { Achievement } from '~/model/achievement.model';
 import { Attendance, AttendanceMark } from '~/model/attendance.model';
 import { Homework, HomeworkStatus } from '../model/homework.model';
-<<<<<<< HEAD
-import { Login } from '../model/login.model';
-import { StudentItem } from '~/model/studentitem.model';
-import { User, UserType } from '../model/user.model';
-import { Lesson, Period, Subject } from '~/model/timetable.model';
-=======
 import { Lesson, Period, Subject } from '~/model/timetable.model';
 import { User, UserType } from '../model/user.model';
->>>>>>> 49422ea34a5b3c3b53a491943617b12f3453c4fa
 
 export class DataService implements InMemoryDbService {
   createDb() {
@@ -190,7 +183,7 @@ export class DataService implements InMemoryDbService {
       { id: 17, userId: 1, startDate: new Date(tuesday.setHours(13, 0, 0)), endDate: new Date(tuesday.setHours(14, 0, 0)), teacher: "Harry James Moore", subject: subject.geography, class: "ICT1"},
       { id: 18, userId: 1, startDate: new Date(tuesday.setHours(14, 0, 0)), endDate: new Date(tuesday.setHours(15, 0, 0)), teacher: "Norbert Heyes", subject: subject.languages, class: "11En1"},
       
-      { id: 19, userId: 1, startDate: new Date(wednesday.setHours(7, 0, 0)), endDate: new Date(wednesday.setHours(8, 0, 0)), teacher: "Matthew Downs", subject: "Registration", class: "Reg"},
+      { id: 19, userId: 1, startDate: new Date(wednesday.setHours(7, 0, 0)), endDate: new Date(wednesday.setHours(8, 0, 0)), teacher: "Matthew Downs", subject: "Wednesday Registration", class: "Reg"},
       { id: 20, userId: 1, startDate: new Date(wednesday.setHours(8, 0, 0)), endDate: new Date(wednesday.setHours(9, 0, 0)), teacher: "Albert Einstein", subject: subject.science, class: "11Sc1"},
       { id: 21, userId: 1, startDate: new Date(wednesday.setHours(9, 0, 0)), endDate: new Date(wednesday.setHours(10, 0, 0)), teacher: "Edward Thomas", subject: "Physical Education", class: "11Pe1"},
       { id: 22, userId: 1, startDate: new Date(wednesday.setHours(10, 0, 0)), endDate: new Date(wednesday.setHours(10, 30, 0)), teacher: "", subject: "", class: ""},
@@ -200,7 +193,7 @@ export class DataService implements InMemoryDbService {
       { id: 26, userId: 1, startDate: new Date(wednesday.setHours(13, 0, 0)), endDate: new Date(wednesday.setHours(14, 0, 0)), teacher: "Harry James Moore", subject: subject.geography, class: "ICT1"},
       { id: 27, userId: 1, startDate: new Date(wednesday.setHours(14, 0, 0)), endDate: new Date(wednesday.setHours(15, 0, 0)), teacher: "Norbert Heyes", subject: subject.languages, class: "11En1"},
 
-      { id: 28, userId: 1, startDate: new Date(thursday.setHours(7, 0, 0)), endDate: new Date(thursday.setHours(8, 0, 0)), teacher: "Matthew Downs", subject: "Registration", class: "Reg"},
+      { id: 28, userId: 1, startDate: new Date(thursday.setHours(7, 0, 0)), endDate: new Date(thursday.setHours(8, 0, 0)), teacher: "Matthew Downs", subject: "Thursday Registration", class: "Reg"},
       { id: 29, userId: 1, startDate: new Date(thursday.setHours(8, 0, 0)), endDate: new Date(thursday.setHours(9, 0, 0)), teacher: "Albert Einstein", subject: "Science", class: "11Sc1"},
       { id: 30, userId: 1, startDate: new Date(thursday.setHours(9, 0, 0)), endDate: new Date(thursday.setHours(10, 0, 0)), teacher: "Ferdinand Megellan", subject: "History", class: "11Hi1"},
       { id: 31, userId: 1, startDate: new Date(thursday.setHours(10, 0, 0)), endDate: new Date(thursday.setHours(10, 30, 0)), teacher: "", subject: "", class: ""},
@@ -210,7 +203,7 @@ export class DataService implements InMemoryDbService {
       { id: 35, userId: 1, startDate: new Date(thursday.setHours(13, 0, 0)), endDate: new Date(thursday.setHours(14, 0, 0)), teacher: "Harry James Moore", subject: "Design and Technology", class: "ICT1"},
       { id: 36, userId: 1, startDate: new Date(thursday.setHours(14, 0, 0)), endDate: new Date(thursday.setHours(15, 0, 0)), teacher: "Norbert Heyes", subject: "English", class: "11En1"},
       
-      { id: 37, userId: 1, startDate: new Date(friday.setHours(7, 0, 0)), endDate: new Date(friday.setHours(8, 0, 0)), teacher: "Matthew Downs", subject: "Registration", class: "Reg"},
+      { id: 37, userId: 1, startDate: new Date(friday.setHours(7, 0, 0)), endDate: new Date(friday.setHours(8, 0, 0)), teacher: "Matthew Downs", subject: "Friday Registration", class: "Reg"},
       { id: 38, userId: 1, startDate: new Date(friday.setHours(8, 0, 0)), endDate: new Date(friday.setHours(9, 0, 0)), teacher: "Albert Einstein", subject: "Science", class: "11Sc1"},
       { id: 39, userId: 1, startDate: new Date(friday.setHours(9, 0, 0)), endDate: new Date(friday.setHours(10, 0, 0)), teacher: "Ferdinand Megellan", subject: "History", class: "11Hi1"},
       { id: 40, userId: 1, startDate: new Date(friday.setHours(10, 0, 0)), endDate: new Date(friday.setHours(10, 30, 0)), teacher: "", subject: "", class: ""},
@@ -220,7 +213,7 @@ export class DataService implements InMemoryDbService {
       { id: 44, userId: 1, startDate: new Date(friday.setHours(13, 0, 0)), endDate: new Date(friday.setHours(14, 0, 0)), teacher: "Harry James Moore", subject: "Design and Technology", class: "ICT1"},
       { id: 45, userId: 1, startDate: new Date(friday.setHours(14, 0, 0)), endDate: new Date(friday.setHours(15, 0, 0)), teacher: "Norbert Heyes", subject: "English", class: "11En1"},
 
-      { id: 46, userId: 1, startDate: new Date(saturday.setHours(7, 0, 0)), endDate: new Date(saturday.setHours(8, 0, 0)), teacher: "Matthew Downs", subject: "Registration", class: "Reg"},
+      { id: 46, userId: 1, startDate: new Date(saturday.setHours(7, 0, 0)), endDate: new Date(saturday.setHours(8, 0, 0)), teacher: "Matthew Downs", subject: "Saturday Registration", class: "Reg"},
       { id: 47, userId: 1, startDate: new Date(saturday.setHours(9, 0, 0)), endDate: new Date(saturday.setHours(10, 0, 0)), teacher: "Edward Thomas", subject: "Physical Education", class: "11Pe1"},  
     ];
     

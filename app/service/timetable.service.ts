@@ -38,13 +38,13 @@ export class TimetableService {
         let params = new HttpParams();
         params = params.append('startDate', startDate.toString());
         params = params.append('endDate', endDate.toString());
-
+        
         // TODO - only get periods between a set of dates by passing in params.
         return this.http.get<Period[]>(this.url + "periods")
         .pipe(
             map(periods => periods),
-            tap(_ => this.logService.log(`fetched period = ${startDate.toString()}`)),
-            catchError(this.errorService.handleError<Period[]>(`getPeriod period = ${startDate.toString()}`))
+            tap(_ => this.logService.log(`fetched period = ${startDate.toString()} to ${endDate.toString()}`)),
+            catchError(this.errorService.handleError<Period[]>(`getPeriod period = ${startDate.toString()} to ${endDate.toString()}`))
         );
     }
 }

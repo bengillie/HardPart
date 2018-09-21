@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core'
+import { Component, OnInit, OnDestroy } from '@angular/core'
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { SwipeGestureEventData } from "ui/gestures";
+import { SelectedIndexChangedEventData } from "tns-core-modules/ui/tab-view";
 
 import { Lesson, Period } from "../model/timetable.model";
 import { Subject, Break } from '~/model/timetable.model';
@@ -46,6 +47,11 @@ export class TimetableComponent implements OnInit, OnDestroy {
     isLoading = true;
     lastLesson = false;
     showDetails = true;
+
+    // region tab view time table
+    tabDate = [];
+    tabSelectedIndex: number;
+    // end region
            
     constructor(
         private appValuesService: AppValuesService,
@@ -53,13 +59,19 @@ export class TimetableComponent implements OnInit, OnDestroy {
         private loggingService: LoggingService,
         private router: Router,
         private timetableService: TimetableService,
-    ) { }
+    ) { 
+        this.tabSelectedIndex = 0;
+    }
 
     ngOnInit() { 
         this.loggedInUser = this.appValuesService.getLoggedInUser();
 
-        this.startDate.setDate(this.startDate.getDate() - (this.startDate.getDay() - 7));
-        this.endDate.setDate(this.endDate.getDate() - (this.endDate.getDay() + 7));
+        this.startDate.setDate(this.startDate.getDate() - (this.startDate.getDay() + 7));
+        this.endDate.setDate(this.endDate.getDate() - (this.endDate.getDay() - 7));
+
+        // region tab view time table
+        this.getDate();
+        // end region
 
         this.getAllHomework();
         this.getLessons();
@@ -124,7 +136,7 @@ export class TimetableComponent implements OnInit, OnDestroy {
 
         if (dueHomework != undefined) {
             this.allDueHomeworks.push(dueHomework);
-            let isDue = this.homeworkService.isNearDueDate(dueHomework)
+            let isDue = this.homeworkService.isDue(dueHomework)
 
             if (isDue === true) {
                 this.isDueLesson = true;
@@ -304,4 +316,36 @@ export class TimetableComponent implements OnInit, OnDestroy {
 
         this.router.navigate([`/homeworkdetails/${homework.id}`]);
     }
+
+
+    // region tab view time table
+    getDate() {
+        // one week previous date
+        let minDate = new Date();
+        minDate.setDate(minDate.getDate() - (minDate.getDay() + 7));
+
+        // two weeks future date
+        let maxDate = new Date();
+        maxDate.setDate(maxDate.getDate() - (maxDate.getDay() - 6));
+
+        let ctr = 0;
+        let tabItemDate = new Date();
+        do {
+            tabItemDate = new Date(minDate.setDate(minDate.getDate() + 1));
+            this.tabDate.push(tabItemDate);
+            
+            if (tabItemDate.getDate() === this.lessonDate.getDate()) {
+                this.tabSelectedIndex = ctr;
+            } else {
+                ctr++;
+            }
+        } while (tabItemDate < maxDate);
+    }
+    
+    onTabSwipe(args: SelectedIndexChangedEventData) {
+        if (args.oldIndex !== -1) {
+            this.getLessonsForDate(this.tabDate[args.newIndex]);
+        }
+    }
+    // end region
 }
