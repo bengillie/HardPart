@@ -14,8 +14,8 @@ import { StudentSelectionComponent } from './student-selection/student-selection
 import { TimetableComponent } from './timetable/timetable.component';
 
 const routes: Routes = [
-    //{ path: '', redirectTo: '/login', pathMatch: 'full' },
-    { path: '', redirectTo: '/forgotpassword', pathMatch: 'full' },
+    { path: '', redirectTo: '/login', pathMatch: 'full' },
+    //{ path: '', redirectTo: '/forgotpassword', pathMatch: 'full' },
 
     { path: "achievement", component: AchievementComponent},
     { path: "attendance", component: AttendanceComponent},
