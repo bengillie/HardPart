@@ -1,6 +1,6 @@
 <ActionBar android:title="Achievement"></ActionBar>
 
-<GridLayout rows="auto, auto, *">
+<GridLayout *ngIf="!isLoading" rows="auto, auto, *">
     <WrapLayout row="0" class="container-total" orientation="horizontal">
         <GridLayout *ngFor="let item of groupedAchievements; let i = index;" rows="4*, auto, *"
             class="layout-total" horizontalAlignment="center">

@@ -6,6 +6,7 @@ export class User {
     username: string;
     password: string;
     birthdate: string;
+    email: string;
     usertype: UserType;
     hasIncompleteHomework: boolean | null;
     image: string;
