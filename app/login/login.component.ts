@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         // this.logIn.password = 'parent';
         // this.logIn.birthdate = '01/01/1950';
         // this.logIn.username = 'parent1';
-        // this.logIn.password = 'parent1';
+        // this.logIn.password = 'parent';
         // this.logIn.birthdate = '01/02/1950';
         // this.login();
     }

@@ -1,0 +1,8 @@
+<ActionBar>
+    <NavigationButton *ngIf="hasNavigationBack === 'true'" text="Go Back" android.systemIcon="ic_menu_back" (tap)="goBack()"></NavigationButton>
+    <GridLayout columns="3*, *">
+        <Label col="0" class="lbl-title" [text]="title" verticalAlignment="center" horizontalAlignment="left"></Label>
+        <Image *ngIf="currentUser" col="1" class="displaypicture" [src]="currentUser.image" stretch="aspectFill" horizontalAlignment="right">
+        </Image>
+    </GridLayout>
+</ActionBar>

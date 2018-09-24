@@ -10,6 +10,7 @@ import { registerElement } from 'nativescript-angular/element-registry'
 
 import { AppComponent } from "./app.component";
 import { AchievementComponent } from '~/achievement/achievement.component';
+import { ActionbarComponent } from '~/actionbar/actionbar.component';
 import { AttendanceComponent } from "./attendance/attendance.component";
 import { DashboardComponent } from "~/dashboard/dashboard.component";
 import { ForgotPasswordComponent } from "~/forgot-password/forgot-password.component";
@@ -55,6 +56,7 @@ registerElement('AnimatedCircle', () => require('nativescript-animated-circle').
         AppComponent,
 
         AchievementComponent,
+        ActionbarComponent,
         AttendanceComponent,
         DashboardComponent,
         ForgotPasswordComponent,
