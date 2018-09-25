@@ -1,6 +1,5 @@
-<ActionBar visibility="{{ homework ? 'visible' : 'collapse' }}" title="{{ homework.subject }}">
-    <NavigationButton text="Go Back" android.systemIcon="ic_menu_back" (tap)="goBack()"></NavigationButton>
-</ActionBar>
+<actionbar visibility="{{ homework ? 'visible' : 'collapse' }}" title="{{ homework.subject }}" hasNavigationBack="true">
+</actionbar>
 
 <StackLayout *ngIf="!isLoading">
     <StackLayout id="container" class="body" 

@@ -1,10 +1,10 @@
-<ActionBar android:title="{{currentUser.children.length > 1 ? 'Child Selection' : 'Student Selection'}}"></ActionBar>
+<actionbar title="{{currentUser.children.length > 1 ? 'Child Selection' : 'Student Selection'}}" hasNavigationBack="true"></actionbar>
 
 <WrapLayout class="container" orientation="horizontal">
     <StackLayout *ngFor="let item of students" class="selection-item" [class.selection-item-active]="selectedStudent.id === item.id" (tap)="onTap(item)">
         <GridLayout rows="10*, 3*">
             <Image row="0" class="selection-item-image" 
-                [src]="item.image" stretch="aspectFit" verticalAlignment="center" horizontalAlignment="center">
+                [src]="item.image" stretch="aspectFill" verticalAlignment="center" horizontalAlignment="center">
             </Image>
 
             <StackLayout row="1" class="item-stackText" orientation="horizontal" verticalAlignment="center" horizontalAlignment="center">
