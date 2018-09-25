@@ -6,6 +6,7 @@ import { AppRoutingModule } from "./app.routing";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
 import { NativeScriptModule } from "nativescript-angular/nativescript.module";
 import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
+import { NativeScriptUISideDrawerModule } from "nativescript-ui-sidedrawer/angular";
 import { registerElement } from 'nativescript-angular/element-registry'
 
 import { AppComponent } from "./app.component";
@@ -50,7 +51,8 @@ registerElement('AnimatedCircle', () => require('nativescript-animated-circle').
         HttpClientInMemoryWebApiModule.forRoot(
             DataService, { dataEncapsulation: false }
         ),
-        NativeScriptUIListViewModule
+        NativeScriptUIListViewModule,
+        NativeScriptUISideDrawerModule
     ],
     declarations: [
         AppComponent,

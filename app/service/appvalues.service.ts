@@ -22,4 +22,9 @@ export class AppValuesService {
     setSelectedStudent(child: User) {
         this.selectedStudent = child;
     }
+
+    clearValues() {
+        this.currentUser = undefined;
+        this.selectedStudent = undefined;
+    }
 }

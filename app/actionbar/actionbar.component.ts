@@ -1,7 +1,9 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 
+import { RadSideDrawer } from 'nativescript-ui-sidedrawer';
 import { Subscription } from 'rxjs';
+import * as app from "tns-core-modules/application";
 
 import { User } from '~/model/user.model';
 
@@ -19,6 +21,7 @@ export class ActionbarComponent implements OnInit, OnDestroy {
 	@Input() hasNavigationBack: boolean;
 
 	private subscriptions : Subscription[] = [];
+	sideDrawer = <RadSideDrawer>app.getRootView();
 
 	currentUser: User;
 	
@@ -47,5 +50,9 @@ export class ActionbarComponent implements OnInit, OnDestroy {
 
 	goBack() {
 		this.location.back();
+	}
+
+	openSidedrawer() {
+		this.sideDrawer.showDrawer();
 	}
 }

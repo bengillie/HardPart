@@ -1,10 +1,26 @@
 <!-- https://docs.nativescript.org/angular/core-concepts/angular-navigation.html#page-router-outlet -->
-
-<GridLayout rows="*,auto">
-    <page-router-outlet></page-router-outlet>
-
-    <StackLayout row="1" orientation="horizontal"]>
-        <navigation-bar></navigation-bar>
+<RadSideDrawer drawerLocation="right">
+    <StackLayout #sideDrawer tkDrawerContent class="sidedrawer">
+        <GridLayout *ngIf="currentUser" columns="auto, *" class="sidedrawerHeader">
+            <Image col="0" class="displaypicture" [src]="currentUser.image" stretch="aspectFill"></Image>
+            <Label col="1" [text]="currentUser.fname + ' ' + currentUser.lname" class="sidedrawerHeaderLabel"></Label>
+        </GridLayout>
+        <StackLayout class="hr-light"></StackLayout>
+        <StackLayout class="sidedrawerNavLinks">
+            <StackLayout class="navLink" orientation="horizontal" (tap)='tapSettings()'>
+                <Label col="0" class="icon navIcon" [text]="iconSettings"></Label>
+                <Label col="2" class="navLabel" text="Settings"></Label>
+            </StackLayout>
+            <StackLayout class="navLink" orientation="horizontal" (tap)='tapLogout()'>
+                <Label col="0" class="icon navIcon" [text]="iconLogout"></Label>
+                <Label col="2" class="navLabel" text="Logout"></Label>
+            </StackLayout>
+        </StackLayout>
     </StackLayout>
-</GridLayout>
+    
+    <GridLayout tkMainContent rows="*, auto" >
+        <page-router-outlet row="0"></page-router-outlet>
+        <navigation-bar row="1"></navigation-bar>
+    </GridLayout>
+</RadSideDrawer>
 
