@@ -1,71 +1,67 @@
 <ActionBar title="Time Table"></ActionBar>
 
 <TabView id="tabViewContainer" 
-    [(ngModel)]="tabSelectedIndex"
-    selectedIndex="{{ tabSelectedIndex }}" 
-    (selectedIndexChanged)="onTabSwipe($event)" 
-    androidOffscreenTabLimit="0"
-    >
+    selectedIndex="{{ tabSelectedIndex }}"
+    (selectedIndexChanged)="onTabSwipe($event)">
+
     <ng-container *ngFor="let tabDate of tabDate">
         <StackLayout *tabItem="{title: tabDate | date: 'EEEE\ndd'}">
             <ng-container *ngIf="hasLesson; else noLesson">
                 <ListView class="list-group" [items]="lessonsForDate">
-                    <GridLayout class="gridLayoutLayout">
-                        <ng-template let-item="item">
-                            <GridLayout columns="10,*,70">
-                                <StackLayout col="0" #color class="break" [style.background]="getSubjectColour(item)"></StackLayout>
-            
-                                <StackLayout col="1" [class.highlight]="getCurrentLesson(item)" [class.break]="getBreak(item)">
-                                    <StackLayout class="list-group-item" visibility="{{ showDetails ? 'collapsed' : 'visible' }}">
-                                        <Label class="list-group-item-heading break" [class.highlight]="current" [text]="breakPeriodLabel"></Label>
-                                    </StackLayout>
-            
-                                    <StackLayout class="list-group-item" [class.highlight]="current" visibility="{{ showDetails ? 'visible' : 'collapsed' }}">
-                                        <Label class="list-group-item-heading" [text]="item.subject"></Label>
-                                        <Label class="sub-text" [text]="item.class"></Label>
-                                        <Label class="sub-text" [text]="getPeriodNameForLesson(item)"></Label>
-                                    </StackLayout>
-                                    
-                                    <StackLayout class="list-group-item list-group-item-sub" visibility="{{ showDetails ? 'visible' : 'collapsed' }}">
-                                        <GridLayout columns="auto, auto, auto" [class.highlight]="current">
-                                            <StackLayout col="0">
-                                                <Label [text]="item.startDate | date: 'HH:mm'"></Label>
-                                            </StackLayout>
-                                            <StackLayout col="1">
-                                                <Label text=" - "></Label>
-                                            </StackLayout>
-                                            <StackLayout col="2">
-                                                <Label [text]="item.endDate | date: 'HH:mm'"></Label>
-                                            </StackLayout>
-                                        </GridLayout>
-                                        <GridLayout columns="auto, auto" [class.highlight]="current">
-                                            <StackLayout col="0">
-                                                <Label text="Teacher: "></Label>
-                                            </StackLayout>
-                                            <StackLayout col="1">
-                                                <Label [text]="item.teacher"></Label>
-                                            </StackLayout>
-                                        </GridLayout>
-                                    </StackLayout>
+                    <ng-template let-item="item">
+                        <GridLayout columns="8,*,70" rows="*" class="gridLayoutLayout">
+                            <StackLayout col="0" #color class="break" [style.background]="getSubjectColour(item)"></StackLayout>
+        
+                            <StackLayout col="1" [class.highlight]="getCurrentLesson(item)" [class.break]="getBreak(item)">
+                                <StackLayout class="list-group-item" visibility="{{ showDetails ? 'collapsed' : 'visible' }}">
+                                    <Label class="list-group-item-heading break" [class.highlight]="current" [text]="breakPeriodLabel"></Label>
                                 </StackLayout>
-            
-                                <StackLayout col="2" [class.break]="!showDetails" [class.highlight]="current">
-                                    <Label visibility="{{ getHomeworkDueDate(item) ? 'visible' : 'collapsed' }}"
-                                        class="icon-homework p-t-30" 
-                                        (tap)="onTapHomework(item)"
-                                        text="{{ homeworkIcon }}">
-                                    </Label>
+        
+                                <StackLayout class="list-group-item" [class.highlight]="current" visibility="{{ showDetails ? 'visible' : 'collapsed' }}">
+                                    <Label class="list-group-item-heading" [text]="item.subject"></Label>
+                                    <Label class="sub-text" [text]="item.class"></Label>
+                                    <Label class="sub-text" [text]="getPeriodNameForLesson(item)"></Label>
                                 </StackLayout>
-                            </GridLayout>
-                        </ng-template>
-                    </GridLayout>
+                                
+                                <StackLayout class="list-group-item list-group-item-sub" visibility="{{ showDetails ? 'visible' : 'collapsed' }}">
+                                    <GridLayout columns="auto, auto, auto" [class.highlight]="current">
+                                        <StackLayout col="0">
+                                            <Label [text]="item.startDate | date: 'HH:mm'"></Label>
+                                        </StackLayout>
+                                        <StackLayout col="1">
+                                            <Label text=" - "></Label>
+                                        </StackLayout>
+                                        <StackLayout col="2">
+                                            <Label [text]="item.endDate | date: 'HH:mm'"></Label>
+                                        </StackLayout>
+                                    </GridLayout>
+                                    <GridLayout columns="auto, auto" [class.highlight]="current">
+                                        <StackLayout col="0">
+                                            <Label text="Teacher: "></Label>
+                                        </StackLayout>
+                                        <StackLayout col="1">
+                                            <Label [text]="item.teacher"></Label>
+                                        </StackLayout>
+                                    </GridLayout>
+                                </StackLayout>
+                            </StackLayout>
+        
+                            <StackLayout col="2" [class.break]="!showDetails" [class.highlight]="current">
+                                <Label visibility="{{ getHomeworkDueDate(item) ? 'visible' : 'collapsed' }}"
+                                    class="icon-homework p-t-30" 
+                                    (tap)="onTapHomework(item)"
+                                    text="{{ homeworkIcon }}">
+                                </Label>
+                            </StackLayout>
+                        </GridLayout>
+                    </ng-template>
                 </ListView>
             </ng-container>
 
             <ng-template #noLesson>
                 <StackLayout col="1">
                     <GridLayout rows="*" columns="*" >
-                        <Label class="lbl-nolesson" row="0" style.verticalAlignment="center" text="You have no lessons today"></Label>
+                        <Label class="lbl-nolesson" row="0" col="0" style.verticalAlignment="center" text="You have no lessons today"></Label>
                     </GridLayout>
                 </StackLayout>
             </ng-template>

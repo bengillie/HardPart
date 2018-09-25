@@ -1,7 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core'
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { SwipeGestureEventData } from "ui/gestures";
 import { SelectedIndexChangedEventData } from "tns-core-modules/ui/tab-view";
 
 import { Lesson, Period } from "../model/timetable.model";
@@ -46,12 +45,10 @@ export class TimetableComponent implements OnInit, OnDestroy {
     isDueLesson = false;
     isLoading = true;
     lastLesson = false;
-    showDetails = true;
-
-    // region tab view time table
+    showDetails = false;
+    
     tabDate = [];
     tabSelectedIndex: number;
-    // end region
            
     constructor(
         private appValuesService: AppValuesService,
@@ -59,9 +56,7 @@ export class TimetableComponent implements OnInit, OnDestroy {
         private loggingService: LoggingService,
         private router: Router,
         private timetableService: TimetableService,
-    ) { 
-        this.tabSelectedIndex = 0;
-    }
+    ) { }
 
     ngOnInit() { 
         this.loggedInUser = this.appValuesService.getLoggedInUser();
@@ -69,10 +64,7 @@ export class TimetableComponent implements OnInit, OnDestroy {
         this.startDate.setDate(this.startDate.getDate() - (this.startDate.getDay() + 7));
         this.endDate.setDate(this.endDate.getDate() - (this.endDate.getDay() - 7));
 
-        // region tab view time table
         this.getDate();
-        // end region
-
         this.getAllHomework();
         this.getLessons();
         this.getPeriods();
@@ -97,24 +89,28 @@ export class TimetableComponent implements OnInit, OnDestroy {
         )
     }
 
-    getBreak(lesson: Lesson) {    
-        let breakTime = Break;
-        
+    getBreak(lesson: Lesson): boolean {    
+        let breakTimeName = Break;
+
+        this.breakPeriodLabel = "";
+                
         const regexp = new RegExp('B');
         const name = this.getPeriodNameForLesson(lesson);
         
         if ((new Date(lesson.startDate).getHours() < 12) && regexp.test(name)) {
+            this.breakPeriodLabel = breakTimeName.amBreak;
             this.showDetails = false;
-            this.breakPeriodLabel = breakTime.amBreak;
             return true;
-        } else if ((new Date(lesson.startDate).getHours() >= 12) && regexp.test(name)) {
+        } 
+        
+        if ((new Date(lesson.startDate).getHours() >= 12) && regexp.test(name)) {
+            this.breakPeriodLabel = breakTimeName.pmBreak;
             this.showDetails = false;
-            this.breakPeriodLabel = breakTime.pmBreak;
             return true;
-        } else {
-            this.showDetails =true;
-            return false;
         }
+        
+        this.showDetails =true;
+        return false;
     }
 
     getCurrentLesson(lesson: Lesson): boolean {
@@ -127,6 +123,26 @@ export class TimetableComponent implements OnInit, OnDestroy {
             this.current = false;
             return false;
         }
+    }
+
+    getDate() {
+        // one week previous date
+        let minDate = new Date();
+        minDate.setDate(minDate.getDate() - (minDate.getDay() + 7));
+
+        // two weeks future date
+        let maxDate = new Date();
+        maxDate.setDate(maxDate.getDate() - (maxDate.getDay() - 20));
+
+        let tabItemDate = new Date();
+        do {
+            tabItemDate = new Date(minDate.setDate(minDate.getDate() + 1));
+            this.tabDate.push(tabItemDate);
+            
+            if (tabItemDate.getDate() === this.lessonDate.getDate()) {
+                this.tabSelectedIndex = this.tabDate.findIndex(x => x === tabItemDate) - 1;
+            }
+        } while (tabItemDate < maxDate);
     }
 
     getHomeworkDueDate(lesson: Lesson): boolean {
@@ -149,7 +165,6 @@ export class TimetableComponent implements OnInit, OnDestroy {
     }
 
     getLessons() {
-        this.isLoading = true;
         this.subscriptions.push(this.timetableService.getLessons()
             .subscribe(
                 lessons => {
@@ -160,13 +175,14 @@ export class TimetableComponent implements OnInit, OnDestroy {
 
                     this.allLessons = lessons;
                     this.getLessonsForDate(this.lessonDate);
-                    this.isLoading = false;
+                    this.tabSelectedIndex++;
                 },
             )
         );
     }
 
     getLessonsForDate(date: Date) {
+        this.isLoading = true;
         if (!this.allLessons) {
             this.lessonsForDate = [];
             return;
@@ -174,15 +190,14 @@ export class TimetableComponent implements OnInit, OnDestroy {
 
         this.lessonsForDate = this.allLessons.filter(l => new Date(l.startDate).toDateString() === date.toDateString());
         this.getTotalLesson();
+        this.isLoading = false;
     }
 
     getPeriods() {
-        this.isLoading = true;
         this.subscriptions.push(
             this.timetableService.getPeriods(new Date(this.startDate), new Date(this.endDate))
                 .subscribe(p => { 
                     this.allPeriods = p;
-                    this.isLoading = false;
                 })
         );
     }
@@ -219,42 +234,56 @@ export class TimetableComponent implements OnInit, OnDestroy {
 
         switch (lesson.subject) {
             case subject.art: {
-                return color = "#8B0000";
+                color = "#8B0000";
+                break;
             }
             case subject.computing: {
-                return color = "#8B4513";
+                color = "#8B4513";
+                break;
             }
             case subject.design: {
-                return color = "#808000";
+                color = "#808000";
+                break;
             }
             case subject.english: {
-                return color = "#2ECCFA";
+                color = "#2ECCFA";
+                break;
             }
             case subject.geography: {
-                return color = "#FA58F4";
+                color = "#FA58F4";
+                break;
             }
             case subject.history: {
-                return color = "#04B404";
+                color = "#04B404";
+                break;
             }
             case subject.languages: {
-                return color = "#BF00FF";
+                color = "#BF00FF";
+                break;
             }
             case subject.math: {
-                return color = "#FF8000";
+                color = "#FF8000";
+                break;
             }
             case subject.music: {
-                return color = "#642EFE";
+                color = "#642EFE";
+                break;
             }
             case subject.pe: {
-                return color = "#FFFF00";
+                color = "#FFFF00";
+                break;
             }
             case subject.reg: {
-                return color = "#086A87";
+                color = "#086A87";
+                break;
             }
             case subject.science: {
-                return color = "#FF0000";
+                color = "#FF0000";
+                break;
             }
         }
+
+        return color;
     }
 
     getTotalLesson() {
@@ -266,46 +295,9 @@ export class TimetableComponent implements OnInit, OnDestroy {
         }
     }
 
-    onLeftSwipeClick() {
-        let oneWeekPrev = new Date();
-        oneWeekPrev.setDate(oneWeekPrev.getDate() - (oneWeekPrev.getDay() + 6));
-        
-        this.loggingService.log("swipe left");
-        this.lessonDate = new Date(this.lessonDate.setDate(this.lessonDate.getDate() - 1));
-        if (oneWeekPrev < this.lessonDate) {
-            this.getLessonsForDate(this.lessonDate);
-            this.lastLesson = false;
-        } else {
-            this.loggingService.log("Last lesson for the previous week");
-            this.lastLesson = true;
-        }
-    }
-
-    onRightSwipeClick() {
-        let twoWeeksFuture = new Date();
-        twoWeeksFuture.setDate(twoWeeksFuture.getDate() - (twoWeeksFuture.getDay() - 20));
-
-        this.loggingService.log("swipe right");
-        this.lessonDate = new Date(this.lessonDate.setDate(this.lessonDate.getDate() + 1));
-        if (twoWeeksFuture >= this.lessonDate) {
-            this.getLessonsForDate(this.lessonDate);
-            this.lastLesson = false;
-        } else {
-            this.loggingService.log("Last lesson for the next two weeks");
-            this.lastLesson = true;
-        }   
-    }   
-        
-    onSwipe(args: SwipeGestureEventData) {
-        if (this.lastLesson === false) {
-            this.loggingService.log("timetable swipe direction" + args.direction.toString());
-            if (args.direction === 1){
-                this.onLeftSwipeClick();
-            } else {
-                this.onRightSwipeClick();
-            }
-        } else {
-            this.loggingService.log("Lock Timetable swipe");
+    onTabSwipe(args: SelectedIndexChangedEventData) {        
+        if (args.oldIndex !== -1) {
+            this.getLessonsForDate(this.tabDate[args.newIndex]);
         }
     }
 
@@ -316,36 +308,4 @@ export class TimetableComponent implements OnInit, OnDestroy {
 
         this.router.navigate([`/homeworkdetails/${homework.id}`]);
     }
-
-
-    // region tab view time table
-    getDate() {
-        // one week previous date
-        let minDate = new Date();
-        minDate.setDate(minDate.getDate() - (minDate.getDay() + 7));
-
-        // two weeks future date
-        let maxDate = new Date();
-        maxDate.setDate(maxDate.getDate() - (maxDate.getDay() - 6));
-
-        let ctr = 0;
-        let tabItemDate = new Date();
-        do {
-            tabItemDate = new Date(minDate.setDate(minDate.getDate() + 1));
-            this.tabDate.push(tabItemDate);
-            
-            if (tabItemDate.getDate() === this.lessonDate.getDate()) {
-                this.tabSelectedIndex = ctr;
-            } else {
-                ctr++;
-            }
-        } while (tabItemDate < maxDate);
-    }
-    
-    onTabSwipe(args: SelectedIndexChangedEventData) {
-        if (args.oldIndex !== -1) {
-            this.getLessonsForDate(this.tabDate[args.newIndex]);
-        }
-    }
-    // end region
 }
