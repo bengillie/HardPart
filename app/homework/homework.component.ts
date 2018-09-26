@@ -7,7 +7,7 @@ import { RadListViewComponent } from "nativescript-ui-listview/angular";
 
 import { View } from 'tns-core-modules/ui/core/view';
 
-import { Homework, HomeworkStatus } from '../model/homework.model';
+import { Homework, HomeworkDeadlineStatus, HomeworkStatus } from '../model/homework.model';
 import { HomeworkService } from '../service/homework.service';
 
 @Component({
@@ -55,9 +55,9 @@ export class HomeworkComponent implements OnInit, OnDestroy {
 			this.homeworkService.getHomeworks()
 			.subscribe(
 				x => {
-					this.homeworks = x.filter(all => all.status !== HomeworkStatus.removed).sort(this.sortHomeworkByDueDate);
-					this.homeworks_todo = this.homeworks.filter(all => all.status === HomeworkStatus.todo).sort(this.sortHomeworkByDueDate);
-					this.homeworks_done = this.homeworks.filter(all => all.status === HomeworkStatus.done).sort(this.sortHomeworkByDueDate);
+					this.homeworks = x.filter(all => all.status !== HomeworkStatus.removed);
+					this.homeworks_todo = this.homeworks.filter(all => all.status === HomeworkStatus.todo);
+					this.homeworks_done = this.homeworks.filter(all => all.status === HomeworkStatus.done);
 					this.sortHomeworkList();
 				},
 				error => console.log("Error: ", error),
@@ -67,13 +67,9 @@ export class HomeworkComponent implements OnInit, OnDestroy {
 			)
 		);
 	}
-
-	isDue(homework: Homework) : boolean {
-		return this.homeworkService.isDue(homework);
-	}
-
-	isNearDueDate(homework: Homework) : boolean {
-		return this.homeworkService.isNearDueDate(homework);
+	
+	getHomeworkDeadlineStatus(homework: Homework): HomeworkDeadlineStatus {
+		return this.homeworkService.getHomeworkDeadlineStatus(homework);
 	}
 
 	sortHomeworkList() {

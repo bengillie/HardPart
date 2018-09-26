@@ -18,9 +18,11 @@
         </StackLayout>
     </StackLayout>
     
-    <GridLayout tkMainContent rows="*, auto" >
+    <GridLayout tkMainContent rows="*, auto">
         <page-router-outlet row="0"></page-router-outlet>
-        <navigation-bar row="1"></navigation-bar>
+        <StackLayout row="1">
+            <navigation-bar></navigation-bar>
+        </StackLayout>
     </GridLayout>
 </RadSideDrawer>
 

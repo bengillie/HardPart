@@ -26,11 +26,11 @@ export class ActionbarComponent implements OnInit, OnDestroy {
 	currentUser: User;
 	
 	constructor(private appValuesService: AppValuesService,
-		private location: Location) { }
-
-	ngOnInit() {
-		this.getCurrentUser();
+		private location: Location) {
+			this.getCurrentUser();
 	}
+
+	ngOnInit() { }
 
 	ngOnDestroy() {
 		if (this.subscriptions) {
@@ -45,6 +45,7 @@ export class ActionbarComponent implements OnInit, OnDestroy {
 		this.currentUser = this.appValuesService.getLoggedInUser();
 		if(this.currentUser.image === '') {
 			this.currentUser.image = '~/images/silhouette.jpg';
+			this.appValuesService.setLoggedInUser(this.currentUser);
 		}
 	}
 

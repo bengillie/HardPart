@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ViewChild, AfterViewInit, OnInit, OnDestroy } from "@angular/core";
+import { Component, ViewChild, AfterViewInit, OnInit, OnDestroy } from "@angular/core";
 import { Router } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router';
 
@@ -27,7 +27,6 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     currentUser: User = new User();
 
     constructor(private appValuesService: AppValuesService,
-        private changeDetectionRef: ChangeDetectorRef,
         private router: Router,
         private routerExt: RouterExtensions) { }
 
@@ -37,7 +36,6 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
     ngAfterViewInit() {
         this.sideDrawer = this.drawerComponent.sideDrawer;
-        this.changeDetectionRef.detectChanges();
     }
 
 	ngOnDestroy() {
