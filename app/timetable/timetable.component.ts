@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { SelectedIndexChangedEventData } from "tns-core-modules/ui/tab-view";
 
-import { Lesson, Period } from "../model/timetable.model";
+import { Lesson, Period, TimetableTab } from "../model/timetable.model";
 import { Subject, Break } from '~/model/timetable.model';
 import { User } from '~/model/user.model';
 
@@ -31,15 +31,17 @@ export class TimetableComponent implements OnInit, OnDestroy {
     startDate: Date = new Date();
     endDate: Date = new Date();
 
+    allHomeworks: Homework[] = [];
+    allDueHomeworks: Homework[] = [];
+
     allLessons: Lesson[] = [];
     lessonsForDate: Lesson[] = [];
 
     allPeriods: Period[] = [];
-    periodsForDate: Period[] = [];
+    periodsForDate: Period[] = [];    
 
-    allHomeworks: Homework[] = [];
-    allDueHomeworks: Homework[] = [];
-
+    tabDates: TimetableTab[] = [];
+    
     current = false;
     hasLesson = true;
     isDueLesson = false;
@@ -47,7 +49,7 @@ export class TimetableComponent implements OnInit, OnDestroy {
     lastLesson = false;
     showDetails = false;
     
-    tabDate = [];
+    dateRange = [];
     tabSelectedIndex: number;
            
     constructor(
@@ -62,12 +64,12 @@ export class TimetableComponent implements OnInit, OnDestroy {
         this.loggedInUser = this.appValuesService.getLoggedInUser();
 
         this.startDate.setDate(this.startDate.getDate() - (this.startDate.getDay() + 7));
-        this.endDate.setDate(this.endDate.getDate() - (this.endDate.getDay() - 7));
+        this.endDate.setDate(this.endDate.getDate() - (this.endDate.getDay() - 14));
 
-        this.getDate();
         this.getAllHomework();
+        this.getLessonsDateRange();
         this.getLessons();
-        this.getPeriods();
+        this.getPeriods();        
     }
 
     ngOnDestroy() {
@@ -89,7 +91,7 @@ export class TimetableComponent implements OnInit, OnDestroy {
         )
     }
 
-    getBreak(lesson: Lesson): boolean {    
+    getBreakPeriod(lesson: Lesson): boolean {    
         let breakTimeName = Break;
 
         this.breakPeriodLabel = "";
@@ -125,26 +127,6 @@ export class TimetableComponent implements OnInit, OnDestroy {
         }
     }
 
-    getDate() {
-        // one week previous date
-        let minDate = new Date();
-        minDate.setDate(minDate.getDate() - (minDate.getDay() + 7));
-
-        // two weeks future date
-        let maxDate = new Date();
-        maxDate.setDate(maxDate.getDate() - (maxDate.getDay() - 20));
-
-        let tabItemDate = new Date();
-        do {
-            tabItemDate = new Date(minDate.setDate(minDate.getDate() + 1));
-            this.tabDate.push(tabItemDate);
-            
-            if (tabItemDate.getDate() === this.lessonDate.getDate()) {
-                this.tabSelectedIndex = this.tabDate.findIndex(x => x === tabItemDate) - 1;
-            }
-        } while (tabItemDate < maxDate);
-    }
-
     getHomeworkDueDate(lesson: Lesson): boolean {
         const dueHomework = this.allHomeworks.find(h =>
             h.subject == lesson.subject
@@ -172,25 +154,44 @@ export class TimetableComponent implements OnInit, OnDestroy {
                     {
                         return new Date(obj1.startDate).getHours() - new Date(obj2.startDate).getHours();
                     });
-
+                    
                     this.allLessons = lessons;
-                    this.getLessonsForDate(this.lessonDate);
+                    //this.getLessonsForDate(this.lessonDate);
+                    this.getTabDateLesson();
                     this.tabSelectedIndex++;
                 },
             )
         );
     }
 
+    getLessonsDateRange() {
+        // one week previous date
+        let minDate = new Date();
+        minDate.setDate(minDate.getDate() - (minDate.getDay() + 7));
+
+        // two weeks future date
+        let maxDate = new Date();
+        maxDate.setDate(maxDate.getDate() - (maxDate.getDay() - 13));
+                
+        let tabItemDate = new Date();
+        do {
+            tabItemDate = new Date(minDate.setDate(minDate.getDate() + 1));
+            this.dateRange.push(tabItemDate);
+            
+            if (tabItemDate.getDate() === this.lessonDate.getDate()) {
+                this.tabSelectedIndex = this.dateRange.findIndex(x => x == tabItemDate);
+            }
+        } while (tabItemDate < maxDate);
+    }
+
     getLessonsForDate(date: Date) {
-        this.isLoading = true;
         if (!this.allLessons) {
             this.lessonsForDate = [];
             return;
         }
-
+        
         this.lessonsForDate = this.allLessons.filter(l => new Date(l.startDate).toDateString() === date.toDateString());
         this.getTotalLesson();
-        this.isLoading = false;
     }
 
     getPeriods() {
@@ -286,6 +287,19 @@ export class TimetableComponent implements OnInit, OnDestroy {
         return color;
     }
 
+    getTabDateLesson() {
+        for (let tabDate of this.dateRange) {
+            this.getLessonsForDate(tabDate);
+            let timetableTab = new TimetableTab;
+
+            timetableTab.date = tabDate;
+            timetableTab.lessons = this.lessonsForDate;
+            this.tabDates.push(timetableTab);
+        }
+
+        this.isLoading = false;
+    }
+
     getTotalLesson() {
         if (this.lessonsForDate.length === 0) {
             this.hasLesson = false;
@@ -297,7 +311,7 @@ export class TimetableComponent implements OnInit, OnDestroy {
 
     onTabSwipe(args: SelectedIndexChangedEventData) {        
         if (args.oldIndex !== -1) {
-            this.getLessonsForDate(this.tabDate[args.newIndex]);
+            //this.getLessonsForDate(this.tabDate[args.newIndex]);
         }
     }
 

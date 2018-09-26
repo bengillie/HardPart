@@ -1,3 +1,8 @@
+export enum Break {
+    amBreak = "Morning Break",
+    pmBreak = "Afternoon Break"
+}
+
 export class Lesson {
     id: number;
     userId: number;
@@ -30,7 +35,7 @@ export enum Subject {
     science = "Science", 
 }
 
-export enum Break {
-    amBreak = "Morning Break",
-    pmBreak = "Afternoon Break"
-}
+export class TimetableTab {
+    date: Date;
+    lessons: Lesson[];
+} 

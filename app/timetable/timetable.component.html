@@ -4,15 +4,15 @@
     selectedIndex="{{ tabSelectedIndex }}"
     (selectedIndexChanged)="onTabSwipe($event)">
 
-    <ng-container *ngFor="let tabDate of tabDate">
-        <StackLayout *tabItem="{title: tabDate | date: 'EEEE\ndd'}">
+    <ng-container *ngFor="let tabDate of tabDates">
+        <StackLayout *tabItem="{title: tabDate.date | date: 'EEEE\ndd'}">
             <ng-container *ngIf="hasLesson; else noLesson">
-                <ListView class="list-group" [items]="lessonsForDate">
+                <ListView class="list-group" [items]="tabDate.lessons">
                     <ng-template let-item="item">
                         <GridLayout columns="8,*,70" rows="*" class="gridLayoutLayout">
                             <StackLayout col="0" #color class="break" [style.background]="getSubjectColour(item)"></StackLayout>
         
-                            <StackLayout col="1" [class.highlight]="getCurrentLesson(item)" [class.break]="getBreak(item)">
+                            <StackLayout col="1" [class.highlight]="getCurrentLesson(item)" [class.break]="getBreakPeriod(item)">
                                 <StackLayout class="list-group-item" visibility="{{ showDetails ? 'collapsed' : 'visible' }}">
                                     <Label class="list-group-item-heading break" [class.highlight]="current" [text]="breakPeriodLabel"></Label>
                                 </StackLayout>
