@@ -10,6 +10,12 @@ export class Homework {
     status: HomeworkStatus;
 }
 
+export enum HomeworkDeadlineStatus {
+    good = "good",
+    nearDueDate = "nearDueDate",
+    overDue = "overDue"
+}
+
 export enum HomeworkStatus {
     todo = "TODO",
     done = "DONE",

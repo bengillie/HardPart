@@ -5,7 +5,7 @@ import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
 
 import { HomeworkService } from '../service/homework.service';
-import { Homework } from '../model/homework.model';
+import { Homework, HomeworkDeadlineStatus } from '../model/homework.model';
 
 @Component({
 	moduleId: module.id,
@@ -36,7 +36,8 @@ export class HomeworkDetailComponent implements OnInit, OnDestroy {
             {
                 subscription.unsubscribe();
             }
-        }
+	   
+		}
 	}
 
 	getHomework(): void {
@@ -53,12 +54,8 @@ export class HomeworkDetailComponent implements OnInit, OnDestroy {
 			)
 		)
 	}
-
-	goBack(): void {
-		this.location.back();
-	}
-
-	isNearDueDate(homework: Homework) : boolean {
-		return this.homeworkService.isNearDueDate(homework);
+	
+	getHomeworkDeadlineStatus(homework: Homework): HomeworkDeadlineStatus {
+		return this.homeworkService.getHomeworkDeadlineStatus(homework);
 	}
 }

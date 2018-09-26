@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-import { Homework, HomeworkStatus } from '../model/homework.model';
+import { Homework, HomeworkDeadlineStatus, HomeworkStatus } from '../model/homework.model';
 
 import { ErrorService } from '../service/error.service';
 import { LoggingService } from '../service/logging.service';
@@ -31,6 +31,20 @@ export class HomeworkService {
         return this.http.get<Homework>(url);
     }
 
+    getHomeworkDeadlineStatus(homework: Homework): HomeworkDeadlineStatus {
+		if (homework.status === HomeworkStatus.todo) {
+			var dateNow = new Date();
+            var diff = new Date(Date.parse(homework.dueDate.toString())).getTime() - dateNow.getTime();
+            var diffDays = Math.ceil(diff / (1000 * 3600 * 24));
+            if(diffDays >= 0 && diffDays <= 2){
+                return HomeworkDeadlineStatus.nearDueDate;
+            } else if(diffDays < 0) {
+                return HomeworkDeadlineStatus.overDue;
+            }
+        }
+		return HomeworkDeadlineStatus.good;
+    }
+
     getStudentHomework(studentId: number): Observable<Homework[]> {
         let params = new HttpParams();
         params = params.append('studentId', studentId.toString());
@@ -47,23 +61,11 @@ export class HomeworkService {
         return this.http.put(this.url, homework, httpOptions);
     }
 
-    isDue(homework: Homework): boolean {
-		if (homework.status === HomeworkStatus.todo) {
-			var dateNow = new Date();
-            var diff = new Date(Date.parse(homework.dueDate.toString())).getTime() - dateNow.getTime();
-            var diffDays = Math.ceil(diff / (1000 * 3600 * 24)); 
-            return diffDays < 0;
-        }
-		return false;
-    }
+    // isOverdue(homework: Homework): boolean {
+	// 	return this.getHomeworkDeadlineStatus(homework) === HomeworkDeadlineStatus.overDue;
+    // }
 
-	isNearDueDate(homework: Homework): boolean {
-		if (homework.status === HomeworkStatus.todo) {
-            var dateNow = new Date();
-            var diff = new Date(Date.parse(homework.dueDate.toString())).getTime() - dateNow.getTime();
-            var diffDays = Math.ceil(diff / (1000 * 3600 * 24)); 
-            return diffDays >= 0 && diffDays <= 2;
-        }
-		return false;
-	}
+	// isNearDueDate(homework: Homework): boolean {
+	// 	return this.getHomeworkDeadlineStatus(homework) === HomeworkDeadlineStatus.nearDueDate;
+	// }
 }

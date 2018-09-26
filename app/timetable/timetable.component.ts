@@ -11,7 +11,7 @@ import { AppValuesService } from '~/service/appvalues.service';
 import { HomeworkService } from '~/service/homework.service';
 import { LoggingService } from '~/service/logging.service';
 import { TimetableService } from "../service/timetable.service";
-import { Homework } from '~/model/homework.model';
+import { Homework, HomeworkDeadlineStatus } from '~/model/homework.model';
 
 @Component({
     moduleId: module.id,
@@ -152,9 +152,9 @@ export class TimetableComponent implements OnInit, OnDestroy {
 
         if (dueHomework != undefined) {
             this.allDueHomeworks.push(dueHomework);
-            let isDue = this.homeworkService.isDue(dueHomework)
+            let isOverdue = this.homeworkService.getHomeworkDeadlineStatus(dueHomework) === HomeworkDeadlineStatus.overDue;
 
-            if (isDue === true) {
+            if (isOverdue === true) {
                 this.isDueLesson = true;
                 this.homeworkIcon = String.fromCharCode(0xe91f);
                 return true;
