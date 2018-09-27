@@ -1,8 +1,3 @@
-export enum Break {
-    amBreak = "Morning Break",
-    pmBreak = "Afternoon Break"
-}
-
 export class Lesson {
     id: number;
     userId: number;
@@ -11,6 +6,7 @@ export class Lesson {
     teacher: string;
     subject: string;
     class: string;
+    break: boolean;
 }
 
 export class Period {
