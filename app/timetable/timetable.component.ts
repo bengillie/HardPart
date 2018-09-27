@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core'
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { SelectedIndexChangedEventData } from "tns-core-modules/ui/tab-view";
 
 import { Lesson, Period, TimetableTab } from "../model/timetable.model";
 import { Subject } from '~/model/timetable.model';
@@ -65,16 +66,15 @@ export class TimetableComponent implements OnInit, AfterViewInit, OnDestroy {
         this.getAllHomework();
         this.getLessonsDateRange();
         this.getLessons();
-        this.getPeriods();   
-
+        this.getPeriods();
      }
 
     ngOnInit() {         
-
+        // this.tabSelectedIndex = 5;
     }
 
     ngAfterViewInit() {
-        // this.tabSelectedIndex++;
+        // setTimeout(() => { this.tabSelectedIndex = 5; }, 200);
     }
 
     ngOnDestroy() {
@@ -95,30 +95,6 @@ export class TimetableComponent implements OnInit, AfterViewInit, OnDestroy {
             )
         )
     }
-
-    // getBreakPeriod(lesson: Lesson): boolean {    
-    //     let breakTimeName = Break;
-
-    //     this.breakPeriodLabel = "";
-                
-    //     const regexp = new RegExp('B');
-    //     const name = this.getPeriodNameForLesson(lesson);
-        
-    //     if ((new Date(lesson.startDate).getHours() < 12) && regexp.test(name)) {
-    //         this.breakPeriodLabel = breakTimeName.amBreak;
-    //         this.showDetails = false;
-    //         return true;
-    //     } 
-        
-    //     if ((new Date(lesson.startDate).getHours() >= 12) && regexp.test(name)) {
-    //         this.breakPeriodLabel = breakTimeName.pmBreak;
-    //         this.showDetails = false;
-    //         return true;
-    //     }
-        
-    //     this.showDetails =true;
-    //     return false;
-    // }
 
     getCurrentLesson(lesson: Lesson): boolean {
         let today = new Date();
@@ -181,9 +157,6 @@ export class TimetableComponent implements OnInit, AfterViewInit, OnDestroy {
             tabItemDate = new Date(minDate.setDate(minDate.getDate() + 1));
             this.dateRange.push(tabItemDate);
             
-            if (tabItemDate.getDate() === this.lessonDate.getDate()) {
-                this.tabSelectedIndex = this.dateRange.findIndex(x => x == tabItemDate);
-            }
         } while (tabItemDate < maxDate);
     }
 
@@ -300,6 +273,19 @@ export class TimetableComponent implements OnInit, AfterViewInit, OnDestroy {
         }
 
         this.isLoading = false;
+    }
+
+    onTabSwipe(args: SelectedIndexChangedEventData) {        
+        if (args.oldIndex !== -1) {
+            return;
+        }
+
+        for (let tabDate of this.tabDates) {
+            if (tabDate.date.getDate() === this.lessonDate.getDate()) {
+                setTimeout(() => {this.tabSelectedIndex = this.dateRange.findIndex(x => x == tabDate.date);}, 200);
+                return;
+            }
+        }   
     }
 
     onTapHomework(lesson: Lesson) {
