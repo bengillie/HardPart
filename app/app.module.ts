@@ -19,6 +19,7 @@ import { HomeworkComponent } from './homework/homework.component';
 import { HomeworkDetailComponent } from './homework-detail/homework-detail.component';
 import { LoginComponent } from "./login/login.component";
 import { NavigationBarComponent } from "~/navigationbar/navigationbar.component";
+import { NotificationsComponent } from "~/notifications/notifications.component";
 import { StudentSelectionComponent } from "~/student-selection/student-selection.component";
 import { TimetableComponent } from "./timetable/timetable.component";
 
@@ -56,7 +57,6 @@ registerElement('AnimatedCircle', () => require('nativescript-animated-circle').
     ],
     declarations: [
         AppComponent,
-
         AchievementComponent,
         ActionbarComponent,
         AttendanceComponent,
@@ -65,6 +65,7 @@ registerElement('AnimatedCircle', () => require('nativescript-animated-circle').
         HomeworkComponent,
         HomeworkDetailComponent,
         NavigationBarComponent,
+        NotificationsComponent,
         LoginComponent,
         StudentSelectionComponent,
         TimetableComponent
