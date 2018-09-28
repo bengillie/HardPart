@@ -2,7 +2,7 @@
 
 <GridLayout *ngIf="!isLoading" rows="3*, auto, 8*">
     <GridLayout row="0" rows="*, auto">        
-        <GridLayout row="0" columns="*, *, *" class="summary">
+        <GridLayout row="0" columns="*, *, *" class="summary">  
             <GridLayout col="0" rows="3*, 6*, 2*">
                 <Label row="1" class="lbl-percentage-short" [text]="summAuthText"
                     verticalAlignment="center" horizontalAlignment="center">
@@ -44,7 +44,7 @@
                 <Label row="1" class="summaryLegendText" text="Present"
                     verticalAlignment="bottom" horizontalAlignment="center"></Label>
             </GridLayout>
-
+<!-- 
             <GridLayout col="2" rows="3*, 6*, 2*">
                 <Label row="1" class="lbl-percentage-short" [text]="summUnAuthText"
                     verticalAlignment="center" horizontalAlignment="center">
@@ -64,7 +64,16 @@
                 </AnimatedCircle>
                 <Label row="2" class="summaryLegendText-short" text="Unauthorised"
                     verticalAlignment="bottom" horizontalAlignment="center"></Label>
-            </GridLayout>
+            </GridLayout> 
+-->
+
+            <GridLayout col="2" rows="3*, 6*, 2*">
+                    <progressbar-circular row="1"
+                        [progress]="summUnAuthValue">
+                    </progressbar-circular>
+                    <Label row="2" class="summaryLegendText-short" text="Unauthorised"
+                        verticalAlignment="bottom" horizontalAlignment="center"></Label>
+                </GridLayout>  
         </GridLayout>
     </GridLayout>
 
