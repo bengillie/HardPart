@@ -1,6 +1,6 @@
 <actionbar title="Time Table" hasNavigationBack="true"></actionbar>
 
-<TabView id="tabViewContainer" [(ngModel)]="tabSelectedIndex" (selectedIndexChanged)="onTabSwipe($event)">
+<TabView [(ngModel)]="tabSelectedIndex" (selectedIndexChanged)="onTabSwipe($event)">
 
     <ng-container *ngFor="let tabDate of tabDates">
         <StackLayout *tabItem="{title: tabDate.date | date: 'EEEE\ndd'}">
@@ -56,7 +56,7 @@
                 </ListView>
             </ng-container>
 
-            <ng-container #noLesson *ngIf="!tabDate.lessons || tabDate.lessons.length == 0">
+            <ng-container *ngIf="!tabDate.lessons || tabDate.lessons.length == 0">
                 <StackLayout col="1">
                     <GridLayout rows="*" columns="*" >
                         <Label class="lbl-nolesson" row="0" col="0" style.verticalAlignment="center" text="You have no lessons today"></Label>

@@ -9,7 +9,6 @@ import { User } from '~/model/user.model';
 
 import { AppValuesService } from '~/service/appvalues.service';
 import { HomeworkService } from '~/service/homework.service';
-import { LoggingService } from '~/service/logging.service';
 import { TimetableService } from "../service/timetable.service";
 import { Homework, HomeworkDeadlineStatus } from '~/model/homework.model';
 
@@ -19,7 +18,7 @@ import { Homework, HomeworkDeadlineStatus } from '~/model/homework.model';
     templateUrl: './timetable.component.html',
     styleUrls: ['./timetable.component.less']
 })
-export class TimetableComponent implements OnInit, AfterViewInit, OnDestroy {
+export class TimetableComponent implements OnInit, OnDestroy {
     private subscriptions : Subscription[] = [];
     
     homeworkIcon = "";
@@ -54,7 +53,6 @@ export class TimetableComponent implements OnInit, AfterViewInit, OnDestroy {
     constructor(
         private appValuesService: AppValuesService,
         private homeworkService: HomeworkService,
-        private loggingService: LoggingService,
         private router: Router,
         private timetableService: TimetableService,
     ) {
@@ -69,13 +67,7 @@ export class TimetableComponent implements OnInit, AfterViewInit, OnDestroy {
         this.getPeriods();
      }
 
-    ngOnInit() {         
-        // this.tabSelectedIndex = 5;
-    }
-
-    ngAfterViewInit() {
-        // setTimeout(() => { this.tabSelectedIndex = 5; }, 200);
-    }
+    ngOnInit() { }
 
     ngOnDestroy() {
         if (this.subscriptions) {
@@ -128,7 +120,7 @@ export class TimetableComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     getLessons() {
-        this.subscriptions.push(this.timetableService.getLessons()
+        this.subscriptions.push(this.timetableService.getLessons(this.dateRange)
             .subscribe(
                 lessons => {
                     lessons = lessons.sort ((obj1: Lesson, obj2: Lesson)  =>
@@ -148,16 +140,15 @@ export class TimetableComponent implements OnInit, AfterViewInit, OnDestroy {
         let minDate = new Date();
         minDate.setDate(minDate.getDate() - (minDate.getDay() + 7));
 
-        // two weeks future date
+        // one week future date
         let maxDate = new Date();
         maxDate.setDate(maxDate.getDate() - (maxDate.getDay() - 13));
                 
         let tabItemDate = new Date();
-        do {
+        while (tabItemDate < maxDate) {
             tabItemDate = new Date(minDate.setDate(minDate.getDate() + 1));
-            this.dateRange.push(tabItemDate);
-            
-        } while (tabItemDate < maxDate);
+            this.dateRange.push(tabItemDate.toString()); 
+        }
     }
 
     getLessonsForDate(date: Date) {
@@ -264,7 +255,7 @@ export class TimetableComponent implements OnInit, AfterViewInit, OnDestroy {
 
     getTabDateLesson() {
         for (let tabDate of this.dateRange) {
-            this.getLessonsForDate(tabDate);
+            this.getLessonsForDate(new Date(tabDate));
             let timetableTab = new TimetableTab;
 
             timetableTab.date = tabDate;
@@ -281,7 +272,7 @@ export class TimetableComponent implements OnInit, AfterViewInit, OnDestroy {
         }
 
         for (let tabDate of this.tabDates) {
-            if (tabDate.date.getDate() === this.lessonDate.getDate()) {
+            if (new Date(tabDate.date).getDate() === this.lessonDate.getDate()) {
                 setTimeout(() => {this.tabSelectedIndex = this.dateRange.findIndex(x => x == tabDate.date);}, 200);
                 return;
             }
@@ -292,7 +283,7 @@ export class TimetableComponent implements OnInit, AfterViewInit, OnDestroy {
         const homework = this.allDueHomeworks.find(h =>
             h.subject == lesson.subject
         );
-
+        
         this.router.navigate([`/homeworkdetails/${homework.id}`]);
     }
 }
