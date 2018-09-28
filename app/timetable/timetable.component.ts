@@ -3,13 +3,12 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { SelectedIndexChangedEventData } from "tns-core-modules/ui/tab-view";
 
-import { Lesson, Period } from "../model/timetable.model";
-import { Subject, Break } from '~/model/timetable.model';
+import { Lesson, Period, TimetableTab } from "../model/timetable.model";
+import { Subject } from '~/model/timetable.model';
 import { User } from '~/model/user.model';
 
 import { AppValuesService } from '~/service/appvalues.service';
 import { HomeworkService } from '~/service/homework.service';
-import { LoggingService } from '~/service/logging.service';
 import { TimetableService } from "../service/timetable.service";
 import { Homework, HomeworkDeadlineStatus } from '~/model/homework.model';
 
@@ -22,7 +21,6 @@ import { Homework, HomeworkDeadlineStatus } from '~/model/homework.model';
 export class TimetableComponent implements OnInit, OnDestroy {
     private subscriptions : Subscription[] = [];
     
-    breakPeriodLabel = "";
     homeworkIcon = "";
 
     loggedInUser: User;
@@ -31,15 +29,17 @@ export class TimetableComponent implements OnInit, OnDestroy {
     startDate: Date = new Date();
     endDate: Date = new Date();
 
+    allHomeworks: Homework[] = [];
+    allDueHomeworks: Homework[] = [];
+
     allLessons: Lesson[] = [];
     lessonsForDate: Lesson[] = [];
 
     allPeriods: Period[] = [];
-    periodsForDate: Period[] = [];
+    periodsForDate: Period[] = [];    
 
-    allHomeworks: Homework[] = [];
-    allDueHomeworks: Homework[] = [];
-
+    tabDates: TimetableTab[] = [];
+    
     current = false;
     hasLesson = true;
     isDueLesson = false;
@@ -47,28 +47,27 @@ export class TimetableComponent implements OnInit, OnDestroy {
     lastLesson = false;
     showDetails = false;
     
-    tabDate = [];
+    dateRange = [];
     tabSelectedIndex: number;
            
     constructor(
         private appValuesService: AppValuesService,
         private homeworkService: HomeworkService,
-        private loggingService: LoggingService,
         private router: Router,
         private timetableService: TimetableService,
-    ) { }
-
-    ngOnInit() { 
+    ) {
         this.loggedInUser = this.appValuesService.getLoggedInUser();
 
         this.startDate.setDate(this.startDate.getDate() - (this.startDate.getDay() + 7));
-        this.endDate.setDate(this.endDate.getDate() - (this.endDate.getDay() - 7));
+        this.endDate.setDate(this.endDate.getDate() - (this.endDate.getDay() - 14));
 
-        this.getDate();
         this.getAllHomework();
+        this.getLessonsDateRange();
         this.getLessons();
         this.getPeriods();
-    }
+     }
+
+    ngOnInit() { }
 
     ngOnDestroy() {
         if (this.subscriptions) {
@@ -89,30 +88,6 @@ export class TimetableComponent implements OnInit, OnDestroy {
         )
     }
 
-    getBreak(lesson: Lesson): boolean {    
-        let breakTimeName = Break;
-
-        this.breakPeriodLabel = "";
-                
-        const regexp = new RegExp('B');
-        const name = this.getPeriodNameForLesson(lesson);
-        
-        if ((new Date(lesson.startDate).getHours() < 12) && regexp.test(name)) {
-            this.breakPeriodLabel = breakTimeName.amBreak;
-            this.showDetails = false;
-            return true;
-        } 
-        
-        if ((new Date(lesson.startDate).getHours() >= 12) && regexp.test(name)) {
-            this.breakPeriodLabel = breakTimeName.pmBreak;
-            this.showDetails = false;
-            return true;
-        }
-        
-        this.showDetails =true;
-        return false;
-    }
-
     getCurrentLesson(lesson: Lesson): boolean {
         let today = new Date();
 
@@ -123,26 +98,6 @@ export class TimetableComponent implements OnInit, OnDestroy {
             this.current = false;
             return false;
         }
-    }
-
-    getDate() {
-        // one week previous date
-        let minDate = new Date();
-        minDate.setDate(minDate.getDate() - (minDate.getDay() + 7));
-
-        // two weeks future date
-        let maxDate = new Date();
-        maxDate.setDate(maxDate.getDate() - (maxDate.getDay() - 20));
-
-        let tabItemDate = new Date();
-        do {
-            tabItemDate = new Date(minDate.setDate(minDate.getDate() + 1));
-            this.tabDate.push(tabItemDate);
-            
-            if (tabItemDate.getDate() === this.lessonDate.getDate()) {
-                this.tabSelectedIndex = this.tabDate.findIndex(x => x === tabItemDate) - 1;
-            }
-        } while (tabItemDate < maxDate);
     }
 
     getHomeworkDueDate(lesson: Lesson): boolean {
@@ -165,32 +120,44 @@ export class TimetableComponent implements OnInit, OnDestroy {
     }
 
     getLessons() {
-        this.subscriptions.push(this.timetableService.getLessons()
+        this.subscriptions.push(this.timetableService.getLessons(this.dateRange)
             .subscribe(
                 lessons => {
                     lessons = lessons.sort ((obj1: Lesson, obj2: Lesson)  =>
                     {
                         return new Date(obj1.startDate).getHours() - new Date(obj2.startDate).getHours();
                     });
-
+                    
                     this.allLessons = lessons;
-                    this.getLessonsForDate(this.lessonDate);
-                    this.tabSelectedIndex++;
+                    this.getTabDateLesson();
                 },
             )
         );
     }
 
+    getLessonsDateRange() {
+        // one week previous date
+        let minDate = new Date();
+        minDate.setDate(minDate.getDate() - (minDate.getDay() + 7));
+
+        // one week future date
+        let maxDate = new Date();
+        maxDate.setDate(maxDate.getDate() - (maxDate.getDay() - 13));
+                
+        let tabItemDate = new Date();
+        while (tabItemDate < maxDate) {
+            tabItemDate = new Date(minDate.setDate(minDate.getDate() + 1));
+            this.dateRange.push(tabItemDate.toString()); 
+        }
+    }
+
     getLessonsForDate(date: Date) {
-        this.isLoading = true;
         if (!this.allLessons) {
             this.lessonsForDate = [];
             return;
         }
-
+        
         this.lessonsForDate = this.allLessons.filter(l => new Date(l.startDate).toDateString() === date.toDateString());
-        this.getTotalLesson();
-        this.isLoading = false;
     }
 
     getPeriods() {
@@ -286,26 +253,37 @@ export class TimetableComponent implements OnInit, OnDestroy {
         return color;
     }
 
-    getTotalLesson() {
-        if (this.lessonsForDate.length === 0) {
-            this.hasLesson = false;
+    getTabDateLesson() {
+        for (let tabDate of this.dateRange) {
+            this.getLessonsForDate(new Date(tabDate));
+            let timetableTab = new TimetableTab;
+
+            timetableTab.date = tabDate;
+            timetableTab.lessons = this.lessonsForDate;
+            this.tabDates.push(timetableTab);
         }
-        else {
-            this.hasLesson = true;
-        }
+
+        this.isLoading = false;
     }
 
     onTabSwipe(args: SelectedIndexChangedEventData) {        
         if (args.oldIndex !== -1) {
-            this.getLessonsForDate(this.tabDate[args.newIndex]);
+            return;
         }
+
+        for (let tabDate of this.tabDates) {
+            if (new Date(tabDate.date).getDate() === this.lessonDate.getDate()) {
+                setTimeout(() => {this.tabSelectedIndex = this.dateRange.findIndex(x => x == tabDate.date);}, 200);
+                return;
+            }
+        }   
     }
 
     onTapHomework(lesson: Lesson) {
         const homework = this.allDueHomeworks.find(h =>
             h.subject == lesson.subject
         );
-
+        
         this.router.navigate([`/homeworkdetails/${homework.id}`]);
     }
 }

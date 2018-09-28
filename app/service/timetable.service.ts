@@ -21,10 +21,12 @@ export class TimetableService {
         private logService: LoggingService
     ) { }
     
-    getLessons(): Observable<Lesson[]> {
+    getLessons(dateRange: string[]): Observable<Lesson[]> {
         const loggedInUser: User = this.appValuesService.getLoggedInUser();
         let params = new HttpParams();
         params = params.append('userId', loggedInUser.id.toString());
+        params = params.append('startDate', JSON.stringify(dateRange));
+        params = params.append('endDate', JSON.stringify(dateRange));
         
         return this.http.get<Lesson[]>(this.url + "lessons", {params: params})
         .pipe(
@@ -47,4 +49,18 @@ export class TimetableService {
             catchError(this.errorService.handleError<Period[]>(`getPeriod period = ${startDate.toString()} to ${endDate.toString()}`))
         );
     }
+
+    /* getPeriods(dateRange: string[]): Observable<Period[]> {
+        let params = new HttpParams();
+        params = params.append('startDate', JSON.stringify(dateRange));
+        params = params.append('endDate', JSON.stringify(dateRange));
+        
+        // TODO - only get periods between a set of dates by passing in params.
+        return this.http.get<Period[]>(this.url + "periods", {params: params})
+        .pipe(
+            map(periods => periods),
+            tap(_ => this.logService.log(`fetched period from ${dateRange[0]} to ${dateRange[dateRange.length-1]}`)),
+            catchError(this.errorService.handleError<Period[]>(`getPeriods(): period = ${dateRange[0]} to ${dateRange[dateRange.length-1]}`))
+        );
+    } */
 }

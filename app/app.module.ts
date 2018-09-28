@@ -21,6 +21,7 @@ import { HomeworkDetailComponent } from './homework-detail/homework-detail.compo
 import { LoginComponent } from "./login/login.component";
 import { NavigationBarComponent } from "~/navigationbar/navigationbar.component";
 import { ProgressbarCircularComponent } from "~/progressbar-circular/progressbar-circular.component";
+import { NotificationsComponent } from "~/notifications/notifications.component";
 import { StudentSelectionComponent } from "~/student-selection/student-selection.component";
 import { TimetableComponent } from "./timetable/timetable.component";
 
@@ -59,7 +60,6 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
     ],
     declarations: [
         AppComponent,
-
         AchievementComponent,
         ActionbarComponent,
         AttendanceComponent,
@@ -68,6 +68,7 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
         HomeworkComponent,
         HomeworkDetailComponent,
         NavigationBarComponent,
+        NotificationsComponent,
         LoginComponent,
         ProgressbarCircularComponent,
         StudentSelectionComponent,
