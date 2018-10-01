@@ -1,70 +1,43 @@
 <actionbar title="Attendance" hasNavigationBack="true"></actionbar>
 
-<GridLayout *ngIf="!isLoading" rows="3*, auto, 8*">
+<GridLayout [visibility]="isLoading ? 'collapse' : 'visible'" rows="3*, auto, 8*">
     <GridLayout row="0" rows="*, auto">        
         <GridLayout row="0" columns="*, *, *" class="summary">
             <GridLayout col="0" rows="3*, 6*, 2*">
-                <Label row="1" class="lbl-percentage-short" [text]="summAuthText"
-                    verticalAlignment="center" horizontalAlignment="center">
-                </Label>
-                <AnimatedCircle row="1"
-                    animated="true"
-                    animateFrom="0"
-                    backgroundColor="transparent"
-                    [barColor]="colorAuthorised"
-                    fillColor="transparent"
-                    rimColor="#c0c0c0"
-                    width="100%"
-                    height="100%"
-                    clockwise="true"
-                    rimWidth="10"
-                    [progress]="summAuthValue">
-                </AnimatedCircle>
-                <Label row="2" class="summaryLegendText-short" text="Authorised"
+                <StackLayout row="1">
+                    <progressbar-circular
+                        [fillColor]="colorAuthorised"
+                        [progress]="summAuthValue"
+                        [text]="summAuthText">
+                    </progressbar-circular>
+                </StackLayout>
+                <Label row="2" class="summaryLegendText" text="Authorised"
                     verticalAlignment="bottom" horizontalAlignment="center"></Label>
-            </GridLayout>
+            </GridLayout> 
 
             <GridLayout col="1" rows="9*, 2*">
-                <Label row="0" class="lbl-percentage" [text]="summPresentText"
-                    verticalAlignment="center" horizontalAlignment="center">
-                </Label>
-                <AnimatedCircle row="0"
-                    animated="true"
-                    animateFrom="0"
-                    backgroundColor="transparent"
-                    [barColor]="colorPresent"
-                    fillColor="transparent"
-                    rimColor="#c0c0c0"
-                    width="100%"
-                    height="100%"
-                    clockwise="true"
-                    rimWidth="16"
-                    [progress]="summPresentValue">
-                </AnimatedCircle>
+                <StackLayout row="0">
+                    <progressbar-circular
+                        [fillColor]="colorPresent"
+                        [progress]="summPresentValue"
+                        [text]="summPresentText">
+                    </progressbar-circular>
+                </StackLayout>
                 <Label row="1" class="summaryLegendText" text="Present"
                     verticalAlignment="bottom" horizontalAlignment="center"></Label>
             </GridLayout>
 
             <GridLayout col="2" rows="3*, 6*, 2*">
-                <Label row="1" class="lbl-percentage-short" [text]="summUnAuthText"
-                    verticalAlignment="center" horizontalAlignment="center">
-                </Label>
-                <AnimatedCircle row="1"
-                    animated="true"
-                    animateFrom="0"
-                    backgroundColor="transparent"
-                    [barColor]="colorUnauthorised"
-                    fillColor="transparent"
-                    rimColor="#c0c0c0"
-                    width="100%"
-                    height="100%"
-                    clockwise="true"
-                    rimWidth="10"
-                    [progress]="summUnAuthValue">
-                </AnimatedCircle>
-                <Label row="2" class="summaryLegendText-short" text="Unauthorised"
+                <StackLayout row="1">
+                    <progressbar-circular
+                        [fillColor]="colorUnauthorised"
+                        [progress]="summUnAuthValue"
+                        [text]="summUnAuthText">
+                    </progressbar-circular>
+                </StackLayout>
+                <Label row="2" class="summaryLegendText" text="Unauthorised"
                     verticalAlignment="bottom" horizontalAlignment="center"></Label>
-            </GridLayout>
+            </GridLayout>  
         </GridLayout>
     </GridLayout>
 

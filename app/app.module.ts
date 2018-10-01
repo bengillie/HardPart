@@ -5,9 +5,10 @@ import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { AppRoutingModule } from "./app.routing";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
 import { NativeScriptModule } from "nativescript-angular/nativescript.module";
+import { NativeScriptUIGaugeModule } from "nativescript-ui-gauge/angular"
 import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
 import { NativeScriptUISideDrawerModule } from "nativescript-ui-sidedrawer/angular";
-import { registerElement } from 'nativescript-angular/element-registry'
+// import { registerElement } from 'nativescript-angular/element-registry'
 
 import { AppComponent } from "./app.component";
 import { AchievementComponent } from '~/achievement/achievement.component';
@@ -19,6 +20,7 @@ import { HomeworkComponent } from './homework/homework.component';
 import { HomeworkDetailComponent } from './homework-detail/homework-detail.component';
 import { LoginComponent } from "./login/login.component";
 import { NavigationBarComponent } from "~/navigationbar/navigationbar.component";
+import { ProgressbarCircularComponent } from "~/progressbar-circular/progressbar-circular.component";
 import { StudentSelectionComponent } from "~/student-selection/student-selection.component";
 import { TimetableComponent } from "./timetable/timetable.component";
 
@@ -36,7 +38,7 @@ import { UserService } from './service/user.service';
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 
-registerElement('AnimatedCircle', () => require('nativescript-animated-circle').AnimatedCircle);
+// registerElement('AnimatedCircle', () => require('nativescript-animated-circle').AnimatedCircle);
 
 @NgModule({
     bootstrap: [
@@ -51,6 +53,7 @@ registerElement('AnimatedCircle', () => require('nativescript-animated-circle').
         HttpClientInMemoryWebApiModule.forRoot(
             DataService, { dataEncapsulation: false }
         ),
+        NativeScriptUIGaugeModule,
         NativeScriptUIListViewModule,
         NativeScriptUISideDrawerModule
     ],
@@ -66,6 +69,7 @@ registerElement('AnimatedCircle', () => require('nativescript-animated-circle').
         HomeworkDetailComponent,
         NavigationBarComponent,
         LoginComponent,
+        ProgressbarCircularComponent,
         StudentSelectionComponent,
         TimetableComponent
     ],

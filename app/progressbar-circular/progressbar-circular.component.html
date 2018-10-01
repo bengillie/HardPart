@@ -1,0 +1,17 @@
+<RadRadialGauge [title]="title">
+    <TitleStyle tkRadialGaugeTitleStyle [textColor]="textColor"></TitleStyle>
+    <RadialScale #scale tkRadialGaugeScales startAngle="-90" sweepAngle="360">
+        <ScaleStyle tkRadialScaleStyle ticksVisible="false" labelsVisible="false" lineThickness="0">
+        </ScaleStyle>
+
+        <RadialBarIndicator tkRadialScaleIndicators minimum="0" maximum="100">
+            <BarIndicatorStyle tkRadialBarIndicatorStyle [fillColor]="fillBackgroundColor" cap="Round" [barWidth]="barWidth">
+            </BarIndicatorStyle>
+        </RadialBarIndicator>
+
+        <RadialBarIndicator tkRadialScaleIndicators minimum="0" [maximum]="progress" [isAnimated]="isAnimated" [animationDuration]="animationDuration">
+            <BarIndicatorStyle tkRadialBarIndicatorStyle [fillColor]="fillColor" cap="Round" [barWidth]="barWidth">
+            </BarIndicatorStyle>
+        </RadialBarIndicator>
+    </RadialScale>
+</RadRadialGauge>
