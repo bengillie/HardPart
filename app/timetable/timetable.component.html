@@ -1,29 +1,27 @@
 <actionbar title="Time Table" hasNavigationBack="true"></actionbar>
 
-<TabView id="tabViewContainer" 
-    selectedIndex="{{ tabSelectedIndex }}"
-    (selectedIndexChanged)="onTabSwipe($event)">
+<TabView [(ngModel)]="tabSelectedIndex" (selectedIndexChanged)="onTabSwipe($event)">
 
-    <ng-container *ngFor="let tabDate of tabDate">
-        <StackLayout *tabItem="{title: tabDate | date: 'EEEE\ndd'}">
-            <ng-container *ngIf="hasLesson; else noLesson">
-                <ListView class="list-group" [items]="lessonsForDate">
+    <ng-container *ngFor="let tabDate of tabDates">
+        <StackLayout *tabItem="{title: tabDate.date | date: 'EEEE\ndd'}">
+            <ng-container *ngIf="tabDate.lessons && tabDate.lessons.length != 0">
+                <ListView class="list-group" [items]="tabDate.lessons">
                     <ng-template let-item="item">
                         <GridLayout columns="8,*,70" rows="*" class="gridLayoutLayout">
                             <StackLayout col="0" #color class="break" [style.background]="getSubjectColour(item)"></StackLayout>
         
-                            <StackLayout col="1" [class.highlight]="getCurrentLesson(item)" [class.break]="getBreak(item)">
-                                <StackLayout class="list-group-item" visibility="{{ showDetails ? 'collapsed' : 'visible' }}">
-                                    <Label class="list-group-item-heading break" [class.highlight]="current" [text]="breakPeriodLabel"></Label>
+                            <StackLayout col="1" [class.highlight]="getCurrentLesson(item)" [class.break]="item.break">
+                                <StackLayout class="list-group-item" visibility="{{ item.break ? 'visible' : 'collapsed' }}">
+                                    <Label class="list-group-item-heading break" [class.highlight]="current" [text]="getPeriodNameForLesson(item)"></Label>
                                 </StackLayout>
         
-                                <StackLayout class="list-group-item" [class.highlight]="current" visibility="{{ showDetails ? 'visible' : 'collapsed' }}">
+                                <StackLayout class="list-group-item" [class.highlight]="current" visibility="{{ item.break ? 'collapsed' : 'visible' }}">
                                     <Label class="list-group-item-heading" [text]="item.subject"></Label>
                                     <Label class="sub-text" [text]="item.class"></Label>
                                     <Label class="sub-text" [text]="getPeriodNameForLesson(item)"></Label>
                                 </StackLayout>
                                 
-                                <StackLayout class="list-group-item list-group-item-sub" visibility="{{ showDetails ? 'visible' : 'collapsed' }}">
+                                <StackLayout class="list-group-item list-group-item-sub" visibility="{{ item.break ? 'collapsed' : 'visible' }}">
                                     <GridLayout columns="auto, auto, auto" [class.highlight]="current">
                                         <StackLayout col="0">
                                             <Label [text]="item.startDate | date: 'HH:mm'"></Label>
@@ -46,7 +44,7 @@
                                 </StackLayout>
                             </StackLayout>
         
-                            <StackLayout col="2" [class.break]="!showDetails" [class.highlight]="current">
+                            <StackLayout col="2" [class.break]="item.break" [class.highlight]="current">
                                 <Label visibility="{{ getHomeworkDueDate(item) ? 'visible' : 'collapsed' }}"
                                     class="icon-homework p-t-30" 
                                     (tap)="onTapHomework(item)"
@@ -58,13 +56,13 @@
                 </ListView>
             </ng-container>
 
-            <ng-template #noLesson>
+            <ng-container *ngIf="!tabDate.lessons || tabDate.lessons.length == 0">
                 <StackLayout col="1">
                     <GridLayout rows="*" columns="*" >
                         <Label class="lbl-nolesson" row="0" col="0" style.verticalAlignment="center" text="You have no lessons today"></Label>
                     </GridLayout>
                 </StackLayout>
-            </ng-template>
+            </ng-container>
         </StackLayout>
     </ng-container>
 </TabView>

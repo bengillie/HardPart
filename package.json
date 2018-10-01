@@ -40,6 +40,7 @@
     "nativescript-dev-less": "0.0.11",
     "nativescript-dev-typescript": "~0.7.0",
     "nativescript-dev-webpack": "^0.15.1",
+    "tns-platform-declarations": "^4.2.1",
     "typescript": "~2.7.2"
   },
   "readme": "NativeScript Application"

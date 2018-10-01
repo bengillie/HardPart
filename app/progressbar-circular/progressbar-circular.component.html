@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <RadRadialGauge [title]="title">
     <TitleStyle tkRadialGaugeTitleStyle [textColor]="textColor"></TitleStyle>
     <RadialScale #scale tkRadialGaugeScales startAngle="-90" sweepAngle="360">
@@ -15,3 +16,25 @@
         </RadialBarIndicator>
     </RadialScale>
 </RadRadialGauge>
+=======
+<!-- <GridLayout [height]="height" [width]="height"> -->
+    <RadRadialGauge>
+        <RadialScale #scale tkRadialGaugeScales startAngle="-90" sweepAngle="360">
+            <ScaleStyle tkRadialScaleStyle ticksVisible="false" labelsVisible="false" lineThickness="0">
+            </ScaleStyle>
+            
+
+            <RadialBarIndicator tkRadialScaleIndicators minimum="0" maximum="100">
+                <BarIndicatorStyle tkRadialBarIndicatorStyle [fillColor]="fillBackgroundColor" cap="Round" barWidth="0.1"></BarIndicatorStyle>
+                <!-- <BarIndicatorStyle tkRadialBarIndicatorStyle fillColor="#efeff4" cap="Round" barWidth="0.1"></BarIndicatorStyle> -->
+            </RadialBarIndicator>
+
+            <!-- <RadialBarIndicator tkRadialScaleIndicators minimum="0" [maximum]="value" isAnimated="true">
+                <BarIndicatorStyle tkRadialBarIndicatorStyle fillColor="#FDA458" cap="Round" barWidth="0.1">
+                </BarIndicatorStyle>
+            </RadialBarIndicator> -->
+        </RadialScale>
+    </RadRadialGauge>
+    <!-- <Label [text]="text" [color]="textColor" [fontSize]="textSize" class="m-x-auto m-y-auto" [marginTop]="offset"></Label> -->
+<!-- </GridLayout> -->
+>>>>>>> 8dc51bb81ab9046ffa5564f0c0aff3fb21b2a43a

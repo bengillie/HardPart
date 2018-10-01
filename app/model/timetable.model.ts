@@ -6,6 +6,7 @@ export class Lesson {
     teacher: string;
     subject: string;
     class: string;
+    break: boolean;
 }
 
 export class Period {
@@ -30,7 +31,7 @@ export enum Subject {
     science = "Science", 
 }
 
-export enum Break {
-    amBreak = "Morning Break",
-    pmBreak = "Afternoon Break"
-}
+export class TimetableTab {
+    date: Date;
+    lessons: Lesson[];
+} 

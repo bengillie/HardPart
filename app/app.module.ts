@@ -20,6 +20,7 @@ import { HomeworkComponent } from './homework/homework.component';
 import { HomeworkDetailComponent } from './homework-detail/homework-detail.component';
 import { LoginComponent } from "./login/login.component";
 import { NavigationBarComponent } from "~/navigationbar/navigationbar.component";
+import { NotificationsComponent } from "~/notifications/notifications.component";
 import { ProgressbarCircularComponent } from "~/progressbar-circular/progressbar-circular.component";
 import { StudentSelectionComponent } from "~/student-selection/student-selection.component";
 import { TimetableComponent } from "./timetable/timetable.component";
@@ -31,8 +32,8 @@ import { DataService }  from './database/data.service';
 import { ErrorService } from './service/error.service';
 import { HelperService } from './service/helper.service';
 import { HomeworkService } from "~/service/homework.service";
-import { LoginService } from './service/login.service';
 import { LoggingService } from './service/logging.service';
+import { LoginService } from './service/login.service';
 import { TimetableService } from './service/timetable.service';
 import { UserService } from './service/user.service';
 
@@ -59,7 +60,6 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
     ],
     declarations: [
         AppComponent,
-
         AchievementComponent,
         ActionbarComponent,
         AttendanceComponent,
@@ -67,8 +67,9 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
         ForgotPasswordComponent,
         HomeworkComponent,
         HomeworkDetailComponent,
-        NavigationBarComponent,
         LoginComponent,
+        NavigationBarComponent,
+        NotificationsComponent,
         ProgressbarCircularComponent,
         StudentSelectionComponent,
         TimetableComponent
@@ -80,8 +81,8 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
         ErrorService,
         HelperService,
         HomeworkService,
-        LoginService,
         LoggingService,
+        LoginService,
         TimetableService,
         UserService
     ],

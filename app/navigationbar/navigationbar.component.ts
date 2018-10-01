@@ -79,7 +79,7 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
             this.routerExt.navigate([`studentselection`]);
         } else if (this.tabViewSelectedIndex === 3) 
         {
-            
+            this.routerExt.navigate(['notifications']);
         }
     }
 
