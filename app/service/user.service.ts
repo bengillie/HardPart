@@ -1,37 +1,23 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 import { User } from '../model/user.model';
-
-const httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
+import { HttpService } from '../service/httpservice.service';
 
 @Injectable()
 export class UserService {
-    private url = 'api/user';
-
-    constructor(private http: HttpClient) { }
+    constructor(private httpService: HttpService) { }
 
     getUserByEmailAddress(emailAddress: string): Observable<User> {
-        let params = new HttpParams();
-        params = params.append('email', encodeURIComponent(emailAddress));
-
-        return this.http.get<User[]>(this.url, {params: params})
-            .pipe(
-                map(x => x[0])
-            );
+        return this.httpService.getUserByEmailAddress(emailAddress);
     }
 
     getUserById(userId: number) : Observable<User> {
-        const url = `${this.url}/${userId}`;
-        return this.http.get<User>(url);
+        return this.httpService.getUserById(userId);
     }
 
     updateUser (user: User): Observable<any> {
-        return this.http.put(this.url, user, httpOptions);
+        return this.httpService.updateUser(user);
     }
 }

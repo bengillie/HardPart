@@ -1,17 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
 import { Attendance } from '../model/attendance.model';
+import { HttpService } from '../service/httpservice.service';
 
 @Injectable()
 export class AttendanceService {
-    private url = 'api/attendance';
-
-    constructor(private http: HttpClient) { }
+    constructor(private httpService: HttpService) { }
 
     getUserAttendance() : Observable<Attendance[]> {
-        return this.http.get<Attendance[]>(this.url);
+        return this.httpService.getUserAttendance();
     }
 }

@@ -8,7 +8,6 @@ import { NativeScriptModule } from "nativescript-angular/nativescript.module";
 import { NativeScriptUIGaugeModule } from "nativescript-ui-gauge/angular"
 import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
 import { NativeScriptUISideDrawerModule } from "nativescript-ui-sidedrawer/angular";
-// import { registerElement } from 'nativescript-angular/element-registry'
 
 import { AppComponent } from "./app.component";
 import { AchievementComponent } from '~/achievement/achievement.component';
@@ -31,6 +30,7 @@ import { AttendanceService } from '~/service/attendance.service';
 import { DataService }  from './database/data.service';
 import { ErrorService } from './service/error.service';
 import { HelperService } from './service/helper.service';
+import { HttpService } from './service/httpservice.service';
 import { HomeworkService } from "~/service/homework.service";
 import { LoggingService } from './service/logging.service';
 import { LoginService } from './service/login.service';
@@ -38,8 +38,6 @@ import { TimetableService } from './service/timetable.service';
 import { UserService } from './service/user.service';
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-
-// registerElement('AnimatedCircle', () => require('nativescript-animated-circle').AnimatedCircle);
 
 @NgModule({
     bootstrap: [
@@ -80,6 +78,7 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
         AttendanceService,
         ErrorService,
         HelperService,
+        HttpService,
         HomeworkService,
         LoggingService,
         LoginService,

@@ -19,8 +19,8 @@ export class AppValuesService {
     getSelectedStudent() : User {
         return this.selectedStudent;
     }
-    setSelectedStudent(child: User) {
-        this.selectedStudent = child;
+    setSelectedStudent(student: User) {
+        this.selectedStudent = student;
     }
 
     clearValues() {

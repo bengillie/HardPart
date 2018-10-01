@@ -162,7 +162,7 @@ export class DataService implements InMemoryDbService {
       },
     ];
 
-    const lessons: Lesson[] = [
+    const lesson: Lesson[] = [
       { id: 1, userId: 1, startDate: new Date(monday.setHours(7, 0, 0)), endDate: new Date(monday.setHours(8, 0, 0)), teacher: "Matthew Downs", subject: subject.reg, class: "Reg", break: false},
       { id: 2, userId: 1, startDate: new Date(monday.setHours(8, 0, 0)), endDate: new Date(monday.setHours(9, 0, 0)), teacher: "Albert Einstein", subject: subject.science, class: "11Sc1", break: false},
       { id: 3, userId: 1, startDate: new Date(monday.setHours(9, 0, 0)), endDate: new Date(monday.setHours(10, 0, 0)), teacher: "Ferdinand Megellan", subject: subject.history, class: "11Hi1", break: false},
@@ -217,7 +217,7 @@ export class DataService implements InMemoryDbService {
       { id: 47, userId: 1, startDate: new Date(saturday.setHours(9, 0, 0)), endDate: new Date(saturday.setHours(10, 0, 0)), teacher: "Edward Thomas", subject: "Physical Education", class: "11Pe1", break: false},  
     ];
     
-    const periods: Period[] = [
+    const period: Period[] = [
       { id: 1, name: "R1", startDate: new Date(monday.setHours(7, 0, 0)), endDate: new Date(monday.setHours(8, 0, 0)) },
       { id: 2, name: "R2", startDate: new Date(tuesday.setHours(7, 0, 0)), endDate: new Date(tuesday.setHours(8, 0, 0)) },
       { id: 3, name: "R3", startDate: new Date(wednesday.setHours(7, 0, 0)), endDate: new Date(wednesday.setHours(8, 0, 0)) },
@@ -336,6 +336,6 @@ export class DataService implements InMemoryDbService {
       }
     ];
 
-    return { achievement, attendance, homework, lessons, periods, user }; 
+    return { achievement, attendance, homework, lesson, period, user }; 
   }
 }
