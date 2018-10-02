@@ -44,7 +44,7 @@ export class ActionbarComponent implements OnInit, OnDestroy {
 	getCurrentUser() {
 		this.currentUser = this.appValuesService.getLoggedInUser();
 		if(this.currentUser.image === '') {
-			this.currentUser.image = '~/images/silhouette.jpg';
+			this.currentUser.image = '~/images/silhouette.png';
 			this.appValuesService.setLoggedInUser(this.currentUser);
 		}
 	}

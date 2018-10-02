@@ -47,6 +47,10 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
+    decode_URIComponent(args): string {
+        return decodeURIComponent(args);
+    }
+
     getRouteUrl() {
         this.router.events.subscribe((res) => {
             this.getCurrentUser();
