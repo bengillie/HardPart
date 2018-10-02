@@ -15,7 +15,7 @@ export class HttpService {
 
     get<T>(url: string, params?: HttpParams): Observable<T> {
         const fullUrl = this.baseUrl + url;
-        return this.http.get<T>(fullUrl, params === undefined ? undefined : {params: params});
+        return this.http.get<T>(fullUrl, {params: params});
     }
 
     put(url: string, model: any): Observable<any> {
