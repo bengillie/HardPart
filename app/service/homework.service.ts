@@ -1,20 +1,30 @@
 import { Injectable } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
 
+import { catchError, map, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 import { Homework, HomeworkDeadlineStatus, HomeworkStatus } from '../model/homework.model';
+
+import { ErrorService } from '../service/error.service';
 import { HttpService } from '../service/httpservice.service';
+import { LoggingService } from '../service/logging.service';
 
 @Injectable()
 export class HomeworkService {
-    constructor(private httpService: HttpService) { }
+    url = "homework";
+
+    constructor(private errorService: ErrorService,
+        private httpService: HttpService,
+        private logService: LoggingService) { }
 
     getHomeworks (): Observable<Homework[]> {
-        return this.httpService.getHomeworks();
+        return this.httpService.get<Homework[]>(this.url);
     }
 
     getHomework (id: number): Observable<Homework> {
-        return this.httpService.getHomework(id);
+        const newUrl = `${this.url}/${id}`;
+        return this.httpService.get<Homework>(newUrl);
     }
 
     getHomeworkDeadlineStatus(homework: Homework): HomeworkDeadlineStatus {
@@ -32,10 +42,18 @@ export class HomeworkService {
     }
 
     getStudentHomework(studentId: number): Observable<Homework[]> {
-        return this.httpService.getStudentHomework(studentId);
+        let params = new HttpParams();
+        params = params.append('studentId', studentId.toString());
+        
+        return this.httpService.get<Homework[]>(this.url, params)
+        .pipe(
+            map(homework => homework),
+            tap(_ => this.logService.log(`fetched homework for student id = ${studentId.toString()}`)),
+            catchError(this.errorService.handleError<Homework[]>(`getStudentHomework student id = ${studentId.toString()}`))
+        );
     }
 
     updateUserHomework(homework: Homework): Observable<any> {
-        return this.httpService.updateUserHomework(homework);
+        return this.httpService.put(this.url, homework);
     }
 }

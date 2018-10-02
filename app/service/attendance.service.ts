@@ -7,9 +7,11 @@ import { HttpService } from '../service/httpservice.service';
 
 @Injectable()
 export class AttendanceService {
+    url = "attendance";
+
     constructor(private httpService: HttpService) { }
 
     getUserAttendance() : Observable<Attendance[]> {
-        return this.httpService.getUserAttendance();
+        return this.httpService.get<Attendance[]>(this.url);
     }
 }

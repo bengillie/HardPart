@@ -7,9 +7,11 @@ import { HttpService } from '../service/httpservice.service';
 
 @Injectable()
 export class AchievementService {
+    url = "achievement";
+
     constructor(private httpService: HttpService) { }
 
     getUserAchievements() : Observable<Achievement[]> {
-        return this.httpService.getUserAchievements();
+        return this.httpService.get<Achievement[]>(this.url);
     }
 }
