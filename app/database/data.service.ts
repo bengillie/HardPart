@@ -299,49 +299,71 @@ export class DataService implements InMemoryDbService {
     dateNow1 = new Date();
     const user: User[] = [
       { id: 1, fname: 'Jay', mname: '', lname: 'Smith', username: '1', password: '1', birthdate: '1', 
-        email: encodeURIComponent('jaysmith@email.com'), usertype: UserType.student, hasIncompleteHomework: true, image: '~/images/dp1.jpg',
+        phoneprimary: '9123', phonesecondary: '0123',
+        emailprimary: encodeURIComponent('jaysmith@email.com'), emailsecondary: encodeURIComponent('jaysmith2@email.com'),
+        isfirsttime: false, usertype: UserType.student, hasIncompleteHomework: true, image: '~/images/dp1.jpg',
         children: []
       },
       { id: 2, fname: 'Emily', mname: '', lname: 'Smith', username: 'student1', password: 'password', birthdate: '02/03/2001', 
-        email: encodeURIComponent('emilysmith@email.com'), usertype: UserType.student, hasIncompleteHomework: false, image: '~/images/dp2.jpg',
+        phoneprimary: '9234', phonesecondary: '',
+        emailprimary: encodeURIComponent('emilysmith@email.com'), emailsecondary: encodeURIComponent('emilysmith2@email.com'),
+        isfirsttime: true, usertype: UserType.student, hasIncompleteHomework: false, image: '~/images/dp2.jpg',
         children: []
       },
-      { id: 3, fname: 'Grace', mname: '', lname: 'Smith', username: 'student2', password: 'password', birthdate: '03/03/1978', 
-        email: encodeURIComponent('gracesmith@email.com'), usertype: UserType.student, hasIncompleteHomework: false, image: '~/images/dp3.jpg',
+      { id: 3, fname: 'Grace', mname: '', lname: 'Smith', username: 'student2', password: 'password', birthdate: '03/03/1978',
+        phoneprimary: '9345', phonesecondary: '0345', 
+        emailprimary: encodeURIComponent('gracesmith@email.com'), emailsecondary: encodeURIComponent('gracesmith2@email.com'),
+        isfirsttime: false, usertype: UserType.student, hasIncompleteHomework: false, image: '~/images/dp3.jpg',
         children: []
       },
       { id: 4, fname: 'Finn', mname: 'Johnson', lname: 'Williams', username: 'student3', password: 'password', birthdate: '04/05/1975', 
-        email: encodeURIComponent('finnwilliams@email.com'), usertype: UserType.student, hasIncompleteHomework: false, image: '~/images/dp4.jpg',
+        phoneprimary: '9456', phonesecondary: '',
+        emailprimary: encodeURIComponent('finnwilliams@email.com'), emailsecondary: encodeURIComponent('finnwilliams2@email.com'),
+        isfirsttime: false, usertype: UserType.student, hasIncompleteHomework: false, image: '~/images/dp4.jpg',
         children: []
       },
       { id: 5, fname: 'Jason', mname: '', lname: 'Smith', username: 'parent', password: 'parent', birthdate: '01/01/1950', 
-        email: encodeURIComponent('jasonsmith@email.com'), usertype: UserType.parent, hasIncompleteHomework: null, image: '~/images/dp5.jpg',
+        phoneprimary: '9567', phonesecondary: '0567',
+        emailprimary: encodeURIComponent('jasonsmith@email.com'), emailsecondary: encodeURIComponent('jasonsmith2@email.com'),
+        isfirsttime: false, usertype: UserType.parent, hasIncompleteHomework: null, image: '~/images/dp5.jpg',
         children: [
             { id: 1, fname: 'Jay', mname: '', lname: 'Smith', username: '1', password: '1', birthdate: '1', 
-              email: encodeURIComponent('jaysmith@email.com'), usertype: UserType.student, hasIncompleteHomework: true, image: '~/images/dp1.jpg',
+              emailprimary: encodeURIComponent('jaysmith@email.com'), emailsecondary: encodeURIComponent('jaysmith2@email.com'),
+              phoneprimary: '9123', phonesecondary: '0123',
+              isfirsttime: false, usertype: UserType.student, hasIncompleteHomework: true, image: '~/images/dp1.jpg',
               children: []
             },
             { id: 2, fname: 'Emily', mname: '', lname: 'Smith', username: 'student1', password: 'password', birthdate: '02/03/2001', 
-              email: encodeURIComponent('emilysmith@email.com'), usertype: UserType.student, hasIncompleteHomework: false, image: '~/images/dp2.jpg',
+              phoneprimary: '9234', phonesecondary: '',
+              emailprimary: encodeURIComponent('emilysmith@email.com'), emailsecondary: encodeURIComponent('emilysmith2@email.com'),
+              isfirsttime: true, usertype: UserType.student, hasIncompleteHomework: false, image: '~/images/dp2.jpg',
               children: []
             },
-            { id: 3, fname: 'Grace', mname: '', lname: 'Smith', username: 'student2', password: 'password', birthdate: '03/03/1978', 
-              email: encodeURIComponent('gracesmith@email.com'), usertype: UserType.student, hasIncompleteHomework: false, image: '~/images/dp3.jpg',
+            { id: 3, fname: 'Grace', mname: '', lname: 'Smith', username: 'student2', password: 'password', birthdate: '03/03/1978',
+              phoneprimary: '9345', phonesecondary: '0345', 
+              emailprimary: encodeURIComponent('gracesmith@email.com'), emailsecondary: encodeURIComponent('gracesmith2@email.com'),
+              isfirsttime: false, usertype: UserType.student, hasIncompleteHomework: false, image: '~/images/dp3.jpg',
               children: []
             }  
         ]
       },
-      { id: 6, fname: 'Bon', mname: 'Johnson', lname: 'Williams', username: 'parent1', password: 'parent', birthdate: '01/02/1950', 
-        email: encodeURIComponent('bonwilliams@email.com'), usertype: UserType.parent, hasIncompleteHomework: null, image: '',
+      { id: 6, fname: 'Bon', mname: 'Johnson', lname: 'Williams', username: 'parent1', password: 'parent', birthdate: '01/02/1950',
+        phoneprimary: '9678', phonesecondary: '', 
+        emailprimary: encodeURIComponent('bonwilliams@email.com'), emailsecondary: encodeURIComponent('bonwilliams2@email.com'),
+        isfirsttime: true, usertype: UserType.parent, hasIncompleteHomework: null, image: '',
         children: [
-            { id: 4, fname: 'Finn', mname: 'Johnson', lname: 'Williams', username: 'student3', password: 'password', birthdate: '04/05/1975', 
-              email: encodeURIComponent('finnwilliams@email.com'), usertype: UserType.student, hasIncompleteHomework: false, image: '~/images/dp4.jpg',
+            { id: 4, fname: 'Finn', mname: 'Johnson', lname: 'Williams', username: 'student3', password: 'password', birthdate: '04/05/1975',
+              phoneprimary: '9456', phonesecondary: '', 
+              emailprimary: encodeURIComponent('finnwilliams@email.com'), emailsecondary: encodeURIComponent('finnwilliams2@email.com'),
+              isfirsttime: false, usertype: UserType.student, hasIncompleteHomework: false, image: '~/images/dp4.jpg',
               children: []
             }
         ]
       },
-      { id: 7, fname: 'Maria', mname: '', lname: 'Brown', username: 'parent2', password: 'parent', birthdate: '02/01/1950', 
-        email: encodeURIComponent('mariabrown@email.com'), usertype: UserType.parent, hasIncompleteHomework: null, image: '',
+      { id: 7, fname: 'Maria', mname: '', lname: 'Brown', username: 'parent2', password: 'parent', birthdate: '02/01/1950',
+        phoneprimary: '9789', phonesecondary: '0789', 
+        emailprimary: encodeURIComponent('mariabrown@email.com'), emailsecondary: encodeURIComponent('mariabrown2@email.com'),
+        isfirsttime: false, usertype: UserType.parent, hasIncompleteHomework: null, image: '',
         children: []
       }
     ];

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { RouterExtensions } from 'nativescript-angular/router'
 
 import { Subscription } from 'rxjs';
