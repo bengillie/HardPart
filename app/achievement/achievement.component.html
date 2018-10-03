@@ -1,6 +1,6 @@
 <actionbar title="Achievement" hasNavigationBack="true"></actionbar>
 
-<GridLayout *ngIf="!isLoading" rows="auto, auto, *">
+<GridLayout [visibility]="isLoading ? 'collapse' : 'visible'" rows="auto, auto, *">
     <WrapLayout row="0" class="container-total" orientation="horizontal">
         <GridLayout *ngFor="let item of groupedAchievements; let i = index;" rows="4*, auto, *"
             class="layout-total" horizontalAlignment="center">

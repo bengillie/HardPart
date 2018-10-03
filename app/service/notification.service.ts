@@ -14,12 +14,12 @@ export class NotificationService {
         private httpService: HttpService
     ) { }
 
-    getNotification(): Observable<Notification[]> {
-        const loggedInUser: User = this.appValuesService.getLoggedInUser();
-        return this.httpService.getNotification(loggedInUser);
-    }
+    // getNotification(): Observable<Notification[]> {
+    //     const loggedInUser: User = this.appValuesService.getLoggedInUser();
+    //     return this.httpService.getNotification(loggedInUser);
+    // }
 
-    updateNotification(notification: Notification): Observable<any> {
-        return this.httpService.updateNotification(notification);
-    }
+    // updateNotification(notification: Notification): Observable<any> {
+    //     return this.httpService.updateNotification(notification);
+    // }
 }

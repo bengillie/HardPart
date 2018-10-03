@@ -1,8 +1,8 @@
 <!-- https://docs.nativescript.org/angular/core-concepts/angular-navigation.html#page-router-outlet -->
 <RadSideDrawer drawerLocation="right">
-    <GridLayout #sideDrawer tkDrawerContent rows="auto, auto, *" class="sidedrawer">
-        <GridLayout row="0" *ngIf="currentUser" rows="2*, *" class="sidedrawerHeader">
-            <Image row="0" class="displaypicture" [src]="currentUser.image" stretch="aspectFill"></Image>
+    <GridLayout *ngIf="currentUser" #sideDrawer tkDrawerContent rows="auto, auto, *" class="sidedrawer">
+        <GridLayout row="0" rows="2*, *" class="sidedrawerHeader">
+            <Image row="0" class="displaypicture" [class.displaypicture-silhouette]="currentUser.image === '~/images/silhouette.png'" [src]="currentUser.image" stretch="aspectFill"></Image>
             <StackLayout row="1">
                 <Label [text]="currentUser.fname + ' ' + currentUser.lname" class="sidedrawerHeaderLabel"></Label>
                 <Label [text]="decode_URIComponent(currentUser.email)" class="sidedrawerSubHeaderLabel"></Label>
