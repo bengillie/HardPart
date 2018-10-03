@@ -203,12 +203,12 @@ var DataService = /** @class */ (function () {
             { id: 47, userId: 1, startDate: new Date(saturday.setHours(9, 0, 0)), endDate: new Date(saturday.setHours(10, 0, 0)), teacher: "Edward Thomas", subject: "Physical Education", class: "11Pe1", break: false },
         ];
         var notification = [
-            { id: 1, userId: 1, title: "Homework Overdue", message: "Math Homework due: 02/01/2018  for Mrs. Potts", image: "url('~/images/homeworkOverdueImage.png')", isSeen: false },
-            { id: 2, userId: 1, title: "Late in Registration", message: "Late on 10/01/2018", image: "url('~/images/homeworkOverdueImage.png')", isSeen: false },
-            { id: 3, userId: 1, title: "Unauthorized Absence", message: "Absent on 10/02/2018", image: "url('~/images/homeworkOverdueImage.png')", isSeen: false },
-            { id: 4, userId: 1, title: "Homework Near Due Date", message: "Science Homework due: 02/01/2018  for Mr. Fixit", image: "url('~/images/homeworkOverdueImage.png')", isSeen: false },
-            { id: 5, userId: 1, title: "Non-uniform Day", message: "Non-uniform day on 10/03/2018", image: "url('~/images/homeworkOverdueImage.png')", isSeen: false },
-            { id: 6, userId: 1, title: "Class Suspension", message: "School is shut because of the typhoon on 10/05/2018", image: "url('~/images/homeworkOverdueImage.png')", isSeen: false },
+            { id: 1, userId: 1, title: "Homework Overdue", message: "Math Homework due: 02/01/2018  for Mrs. Potts", image: "~/images/notif_homework.png", isSeen: false },
+            { id: 2, userId: 1, title: "Late Registration", message: "Late on 10/01/2018", image: "~/images/notif_late.png", isSeen: false },
+            { id: 3, userId: 1, title: "Unauthorized Absence", message: "Absent on 10/02/2018", image: "~/images/notif_absent.png", isSeen: false },
+            { id: 4, userId: 1, title: "Homework Near Due Date", message: "Science Homework due: 02/01/2018  for Mr. Fixit", image: "~/images/notif_homework.png", isSeen: false },
+            { id: 5, userId: 1, title: "Non-uniform Day", message: "Non-uniform day on 10/03/2018", image: "~/images/notif_non-uniform.png", isSeen: false },
+            { id: 6, userId: 1, title: "Class Suspension", message: "School is shut because of the typhoon on 10/05/2018", image: "~/images/notif_noclass.png", isSeen: false },
         ];
         var period = [
             { id: 1, name: "R1", startDate: new Date(monday.setHours(7, 0, 0)), endDate: new Date(monday.setHours(8, 0, 0)) },

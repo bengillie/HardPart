@@ -1,18 +1,27 @@
 <actionbar title="Notifications" hasNavigationBack="true"></actionbar>
 
 <GridLayout *ngIf="!isLoading">
-    <RadListView #listView_notif class="list-group" [items]="allNotification" selectionBehavior="None"
+    <RadListView #listView_notif 
+        class="list-group" 
+        [items]="allNotification" 
+        selectionBehavior="None"
         (itemSwipeProgressStarted)="onSwipeCellStarted($event)" 
-        (itemTap)="onItemTap($event)"
         swipeActions="true">           
         <ng-template let-item="item">
             <StackLayout col="1" class="listItemStackLayout">
-                <StackLayout orientation="horizontal">
-                    <Label [text]="item.title" class="list-group-item"></Label>
-                </StackLayout>
-                <StackLayout class="list-group-item list-group-item-sub">
-                    <Label [text]="item.message" ></Label>
-                </StackLayout>
+                <GridLayout columns="50, *">
+                    <StackLayout col="0" class="m-l-10" style.verticalAlignment="center">
+                        <Image class="imageNotif" [src]="item.image"></Image>
+                    </StackLayout>
+                    <StackLayout col="1">
+                        <StackLayout orientation="horizontal">
+                            <Label [text]="item.title" class="list-group-item"></Label>
+                        </StackLayout>
+                        <StackLayout class="list-group-item list-group-item-sub">
+                            <Label [text]="item.message" ></Label>
+                        </StackLayout>
+                    </StackLayout>
+                </GridLayout>
                 <StackLayout class="hr-light"></StackLayout>
             </StackLayout>
         </ng-template>

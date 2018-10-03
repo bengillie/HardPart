@@ -3,10 +3,12 @@ import { Router } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router'
 import { Subscription } from 'rxjs';
 
+import { Notification } from '~/model/notification.model';
 import { User } from '../model/user.model';
 
 import { AppValuesService } from '../service/appvalues.service';
 import { HelperService } from '../service/helper.service';
+import { NotificationService } from '~/service/notification.service';
 
 @Component({
     moduleId: module.id,
@@ -16,7 +18,7 @@ import { HelperService } from '../service/helper.service';
 })
 export class NavigationBarComponent implements OnInit, OnDestroy {
     private subscriptions : Subscription[] = [];
-    
+
     currentUser: User = new User();
     iconCodeMenu = "";
     iconCodeHomework = "";
@@ -25,6 +27,7 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
     tabIcon = "";
     tabViewSelectedIndex = 0;
     title = "";
+    totalNotif = 0;
 
     showNavBar = false;
     showStudentSelection = false;
@@ -32,6 +35,7 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
     constructor(
         private appValuesService: AppValuesService,
         private helperService: HelperService,
+        private notificationService: NotificationService,
         private router: Router,
         private routerExt: RouterExtensions) { }
 
@@ -47,16 +51,13 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
                 subscription.unsubscribe();
             }
         }
-    }
-
-    gridColumnsGenerator(count: number): string {
-        return this.helperService.gridColumnsGenerator(count);
-    }
+    }  
 
     getCurrentUser() {
         this.currentUser = this.appValuesService.getLoggedInUser();
         if(this.currentUser) {
             this.showStudentSelection = this.currentUser.children.length > 1;
+            this.getNotification();
         }
     }
 
@@ -66,6 +67,17 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
         this.iconCodeStudentSelection = String.fromCharCode(0xe972);
         this.iconCodeNotif = String.fromCharCode(0xea08);
     } 
+
+    getNotification() {
+        this.subscriptions.push(this.notificationService.getNotification()
+            .subscribe(
+                notification => {
+                    this.appValuesService.setNotification(notification);
+                    this.totalNotif = notification.length;
+                }
+            ),
+        )
+    }
 
     getTabList() {
         if (this.tabViewSelectedIndex === 0) 
@@ -90,6 +102,10 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
             
             this.getCurrentUser();
         })
+    }
+
+    gridColumnsGenerator(count: number): string {
+        return this.helperService.gridColumnsGenerator(count);
     }
 
     onTabViewClicked(args){ 
