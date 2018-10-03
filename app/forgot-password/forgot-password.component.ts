@@ -36,10 +36,17 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 	passwordNew = '';
 	user: User = new User();
 
+	successfulIconCode = String.fromCharCode(0xea10);
+
 	constructor(private userService: UserService,
 		private routerExt: RouterExtensions) { }
 
-	ngOnInit() { }
+	ngOnInit() { 
+		// this.emailAddress = "jasonsmith@email.com";
+		// this.code = "12345";
+		// this.passwordConfirm = "test123";
+		// this.passwordNew = "test123";
+	}
 
 	ngOnDestroy() {
 		if (this.subscriptions) {
@@ -75,6 +82,9 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 					(x) => {
 						this.pageState = pageState.confirmation;
 						this.pageStates.push(this.pageState);
+						setTimeout(() => {
+							this.backToLogin();
+						}, 3000);
 				})
 			);
 		}

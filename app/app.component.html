@@ -1,12 +1,15 @@
 <!-- https://docs.nativescript.org/angular/core-concepts/angular-navigation.html#page-router-outlet -->
 <RadSideDrawer drawerLocation="right">
-    <StackLayout #sideDrawer tkDrawerContent class="sidedrawer">
-        <GridLayout *ngIf="currentUser" columns="auto, *" class="sidedrawerHeader">
-            <Image col="0" class="displaypicture" [src]="currentUser.image" stretch="aspectFill"></Image>
-            <Label col="1" [text]="currentUser.fname + ' ' + currentUser.lname" class="sidedrawerHeaderLabel"></Label>
+    <GridLayout #sideDrawer tkDrawerContent rows="auto, auto, *" class="sidedrawer">
+        <GridLayout row="0" *ngIf="currentUser" rows="2*, *" class="sidedrawerHeader">
+            <Image row="0" class="displaypicture" [src]="currentUser.image" stretch="aspectFill"></Image>
+            <StackLayout row="1">
+                <Label [text]="currentUser.fname + ' ' + currentUser.lname" class="sidedrawerHeaderLabel"></Label>
+                <Label [text]="decode_URIComponent(currentUser.email)" class="sidedrawerSubHeaderLabel"></Label>
+            </StackLayout>
         </GridLayout>
-        <StackLayout class="hr-light"></StackLayout>
-        <StackLayout class="sidedrawerNavLinks">
+        <StackLayout row="1" class="hr-light"></StackLayout>
+        <StackLayout row="2" class="sidedrawerNavLinks">
             <StackLayout class="navLink" orientation="horizontal" (tap)='tapSettings()'>
                 <Label col="0" class="icon navIcon" [text]="iconSettings"></Label>
                 <Label col="2" class="navLabel" text="Settings"></Label>
@@ -16,7 +19,7 @@
                 <Label col="2" class="navLabel" text="Logout"></Label>
             </StackLayout>
         </StackLayout>
-    </StackLayout>
+    </GridLayout>
     
     <GridLayout tkMainContent rows="*, auto">
         <page-router-outlet row="0"></page-router-outlet>
