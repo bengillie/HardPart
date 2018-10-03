@@ -8,6 +8,7 @@ import { Achievement } from '../model/achievement.model';
 import { Attendance } from '../model/attendance.model';
 import { Homework, HomeworkDeadlineStatus, HomeworkStatus } from '../model/homework.model';
 import { Lesson, Period } from '../model/timetable.model';
+import { Notification } from '~/model/notification.model';
 import { User } from '../model/user.model';
 
 import { ErrorService } from '../service/error.service';
@@ -23,6 +24,7 @@ export class HttpService {
     private url_attendance = 'api/attendance';
     private url_homework = 'api/homework';
     private url_lesson = 'api/lesson';
+    private url_notification = 'api/notification';
     private url_period = 'api/period';
     private url_user = 'api/user';
 
@@ -82,6 +84,25 @@ export class HttpService {
             tap(_ => this.logService.log(`fetched username = ${login.username}`)),
             catchError(this.errorService.handleError<User>(`getUser username = ${login.username}`))
         );
+    }
+    //#endregion
+
+    //#region Notification
+    getNotification(loggedInUser: User): Observable<Notification[]> {
+        let params = new HttpParams();
+        params = params.append('userId', JSON.stringify(loggedInUser.id));
+        params = params.append('isSeen', JSON.stringify(false));
+
+        return this.http.get<Notification[]>(this.url_notification, {params: params})
+        .pipe(
+            map(notification => notification),
+            tap(_ => this.logService.log(`fetched notification for student id = ${loggedInUser.id.toString()}`)),
+            catchError(this.errorService.handleError<Notification[]>(`getNotification(): student id = ${loggedInUser.id.toString()}`))
+        );
+    }
+
+    updateNotification(notification: Notification): Observable<any> {
+        return this.http.put(this.url_notification, notification, httpOptions);
     }
     //#endregion
 

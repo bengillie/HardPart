@@ -3,6 +3,7 @@ import { InMemoryDbService } from 'angular-in-memory-web-api';
 import { Achievement } from '~/model/achievement.model';
 import { Attendance, AttendanceMark } from '~/model/attendance.model';
 import { Homework, HomeworkStatus } from '../model/homework.model';
+import { Notification } from '~/model/notification.model';
 import { Lesson, Period, Subject } from '~/model/timetable.model';
 import { User, UserType } from '../model/user.model';
 
@@ -216,6 +217,15 @@ export class DataService implements InMemoryDbService {
       { id: 46, userId: 1, startDate: new Date(saturday.setHours(7, 0, 0)), endDate: new Date(saturday.setHours(8, 0, 0)), teacher: "Matthew Downs", subject: subject.reg, class: "Reg", break: false},
       { id: 47, userId: 1, startDate: new Date(saturday.setHours(9, 0, 0)), endDate: new Date(saturday.setHours(10, 0, 0)), teacher: "Edward Thomas", subject: "Physical Education", class: "11Pe1", break: false},  
     ];
+
+    const notification: Notification[] = [
+      { id: 1, userId: 1, title: "Homework Overdue", message: "Math Homework due: 02/01/2018  for Mrs. Potts", image: "url('~/images/homeworkOverdueImage.png')", isSeen: false },
+      { id: 2, userId: 1, title: "Late in Registration", message: "Late on 10/01/2018", image: "url('~/images/homeworkOverdueImage.png')", isSeen: false },
+      { id: 3, userId: 1, title: "Unauthorized Absence", message: "Absent on 10/02/2018", image: "url('~/images/homeworkOverdueImage.png')", isSeen: false },
+      { id: 4, userId: 1, title: "Homework Near Due Date", message: "Science Homework due: 02/01/2018  for Mr. Fixit", image: "url('~/images/homeworkOverdueImage.png')", isSeen: false },
+      { id: 5, userId: 1, title: "Non-uniform Day", message: "Non-uniform day on 10/03/2018", image: "url('~/images/homeworkOverdueImage.png')", isSeen: false },
+      { id: 6, userId: 1, title: "Class Suspension", message: "School is shut because of the typhoon on 10/05/2018", image: "url('~/images/homeworkOverdueImage.png')", isSeen: false },
+    ]
     
     const period: Period[] = [
       { id: 1, name: "R1", startDate: new Date(monday.setHours(7, 0, 0)), endDate: new Date(monday.setHours(8, 0, 0)) },
@@ -336,6 +346,6 @@ export class DataService implements InMemoryDbService {
       }
     ];
 
-    return { achievement, attendance, homework, lesson, period, user }; 
+    return { achievement, attendance, homework, lesson, notification, period, user }; 
   }
 }

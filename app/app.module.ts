@@ -19,7 +19,7 @@ import { HomeworkComponent } from './homework/homework.component';
 import { HomeworkDetailComponent } from './homework-detail/homework-detail.component';
 import { LoginComponent } from "./login/login.component";
 import { NavigationBarComponent } from "~/navigationbar/navigationbar.component";
-import { NotificationsComponent } from "~/notifications/notifications.component";
+import { NotificationComponent } from "~/notification/notification.component";
 import { ProgressbarCircularComponent } from "~/progressbar-circular/progressbar-circular.component";
 import { StudentSelectionComponent } from "~/student-selection/student-selection.component";
 import { TimetableComponent } from "./timetable/timetable.component";
@@ -34,6 +34,7 @@ import { HttpService } from './service/httpservice.service';
 import { HomeworkService } from "~/service/homework.service";
 import { LoggingService } from './service/logging.service';
 import { LoginService } from './service/login.service';
+import { NotificationService } from '~/service/notification.service';
 import { TimetableService } from './service/timetable.service';
 import { UserService } from './service/user.service';
 
@@ -67,7 +68,7 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
         HomeworkDetailComponent,
         LoginComponent,
         NavigationBarComponent,
-        NotificationsComponent,
+        NotificationComponent,
         ProgressbarCircularComponent,
         StudentSelectionComponent,
         TimetableComponent
@@ -82,6 +83,7 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
         HomeworkService,
         LoggingService,
         LoginService,
+        NotificationService,
         TimetableService,
         UserService
     ],
