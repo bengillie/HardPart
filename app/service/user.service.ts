@@ -13,9 +13,18 @@ export class UserService {
 
     constructor(private httpService: HttpService) { }
 
-    getUserByEmailAddress(emailAddress: string): Observable<User> {
+    getUserByPrimaryEmail(emailAddress: string): Observable<User> {
         let params = new HttpParams();
         params = params.append('emailprimary', encodeURIComponent(emailAddress));
+
+        return this.httpService.get<User[]>(this.url, params)
+            .pipe(
+                map(x => x[0])
+            );
+    }
+
+    getUserBySecondaryEmail(emailAddress: string): Observable<User> {
+        let params = new HttpParams();
         params = params.append('emailsecondary', encodeURIComponent(emailAddress));
 
         return this.httpService.get<User[]>(this.url, params)

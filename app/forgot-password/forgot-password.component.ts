@@ -136,12 +136,25 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 			this.errorMessageEmailAddress = 'Invalid email address.';
 		} 
 		else {
-			this.subscriptions.push(this.userService.getUserByEmailAddress(this.emailAddress)
+			this.subscriptions.push(this.userService.getUserByPrimaryEmail(this.emailAddress)
 				.subscribe(
 					(x) => {
 						this.user = x;
 						if(!this.user) {
-							this.errorMessageEmailAddress = 'Email address not found.';
+							this.subscriptions.push(this.userService.getUserBySecondaryEmail(this.emailAddress)
+								.subscribe(
+									(y) => {
+										this.user = y;
+										if(!this.user) {
+											this.errorMessageEmailAddress = 'Email address not found.';
+										} else {
+											this.pageState = pageState.enterCode;
+											this.pageStates.push(this.pageState);
+											this.errorMessageEmailAddress = '';
+										}
+									}
+								)
+							)
 						} else {
 							this.pageState = pageState.enterCode;
 							this.pageStates.push(this.pageState);
