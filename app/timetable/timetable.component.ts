@@ -162,7 +162,7 @@ export class TimetableComponent implements OnInit, OnDestroy {
 
     getPeriods() {
         this.subscriptions.push(
-            this.timetableService.getPeriods(new Date(this.startDate), new Date(this.endDate))
+            this.timetableService.getPeriods(this.dateRange)
                 .subscribe(p => { 
                     this.allPeriods = p;
                 })

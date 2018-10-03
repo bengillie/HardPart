@@ -26,10 +26,16 @@
                         [class.btnTab-notActive]="tabViewSelectedIndex!==2">
                     </Button>
                     <Button [col]="!showStudentSelection ? 2 : 3" 
-                        class="icon btnTab" text="{{ iconCodeNotif }}" 
+                        class="icon btnTab" 
                         (tap)="onTabViewClicked(3)" 
                         [class.btnTab-active]="tabViewSelectedIndex===3" 
                         [class.btnTab-notActive]="tabViewSelectedIndex!==3">
+                        <FormattedString>
+                            <Span text="{{ iconCodeNotif }}"></Span>
+                            <ng-container *ngIf="totalNotif > 0">
+                                <Span class="notif m-b-20" text=" {{ totalNotif }}" verticalAlignment="top" dock="top"></Span>
+                            </ng-container>
+                        </FormattedString>
                     </Button>
                 </GridLayout>
             </StackLayout>

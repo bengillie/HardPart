@@ -50,16 +50,17 @@ export class NotificationComponent implements OnInit, OnDestroy {
     }
 
     getNotification() {
-        this.subscriptions.push(this.notificationService.getNotification()
+        this.allNotification = this.appValuesService.getNotification();
+        this.isLoading = false;
+        /* this.subscriptions.push(this.notificationService.getNotification()
             .subscribe(
                 notification => {
-                    /* this.allNotification = notification.sort((a, b) => a.title < b.title ? -1 : 1); */
-                    this.allNotification = notification;
+                    this.allNotification = notification.sort((a, b) => a.id < b.id ? -1 : 1);
                     this.totalNotif = this.allNotification.length;
                     this.isLoading = false;
                 }
             ),
-        )
+        ) */
     }
 
     onDelete() {
@@ -73,14 +74,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
         this.allNotification.splice(this.itemIndex, 1);
         this.listView_notif.listView.notifySwipeToExecuteFinished();
 	}
-    
-    onItemTap(args) {
-        let notification = this.allNotification[args.index];
-        console.log('Title: ' + notification.title + ' Message: ' + notification.message);
-
-        /* this.router.navigate([`/homeworkdetails/${homework.id}`]); */
-    }
-    
+        
     onSwipeCellStarted(args: SwipeActionsEventData) {
         this.itemIndex = args.index;
 
