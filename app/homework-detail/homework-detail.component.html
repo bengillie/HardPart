@@ -1,7 +1,7 @@
 <actionbar visibility="{{ homework ? 'visible' : 'collapse' }}" title="{{ homework.subject }}" hasNavigationBack="true">
 </actionbar>
 
-<StackLayout *ngIf="!isLoading">
+<StackLayout [visibility]="isLoading ? 'collapse' : 'visible'">
     <StackLayout id="container" class="body" 
         visibility="{{ homework.subject ? 'visible' : 'collapse' }}">
 

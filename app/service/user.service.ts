@@ -15,7 +15,8 @@ export class UserService {
 
     getUserByEmailAddress(emailAddress: string): Observable<User> {
         let params = new HttpParams();
-        params = params.append('email', encodeURIComponent(emailAddress));
+        params = params.append('emailprimary', encodeURIComponent(emailAddress));
+        params = params.append('emailsecondary', encodeURIComponent(emailAddress));
 
         return this.httpService.get<User[]>(this.url, params)
             .pipe(
