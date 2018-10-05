@@ -30,9 +30,9 @@ export class LoginComponent implements OnInit, OnDestroy {
         private router: RouterExtensions,
     ) { }
 
-    ngOnInit() { 
+    ngOnInit() {
         this.logIn = new User();
-        
+
         // this.logIn.username = 'parent';
         // this.logIn.password = 'parent';
         // this.logIn.birthdate = '01/01/1950';
@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         // this.logIn.password = 'parent';
         // this.logIn.birthdate = '01/02/1950';
 
-        //this.login();
+        // this.login();
     }
 
     ngOnDestroy() {
@@ -80,15 +80,15 @@ export class LoginComponent implements OnInit, OnDestroy {
             if (!logIn.username) {
                 this.username.nativeElement.borderColor = "red";
             }
-            
+
             if (!logIn.password) {
                 this.password.nativeElement.borderColor = "red";
-            } 
-            
+            }
+
             if (!logIn.birthdate) {
                 this.dob.nativeElement.borderColor = "red";
             }
-            
+
             return false;
         }
 
@@ -103,7 +103,12 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.errorMessage = "User not found";
         } else {
             this.appValuesService.setLoggedInUser(login);
-            this.router.navigate([`dashboard`]);
+
+            if(login.isfirsttime) {
+                this.router.navigate([`updatesecuritydetails`]);
+            } else {
+                this.router.navigate([`dashboard`]);
+            }
         }
     }
 }

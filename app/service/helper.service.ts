@@ -30,4 +30,14 @@ export class HelperService {
         }
         return result;
     }
+
+	isAlphaNumeric(args): boolean {
+		var re = /^(?=.*?[a-z])(?=.*?\d)[a-z\d]+$/i;
+		return re.test(String(args).toLowerCase());
+	}
+
+	validateEmail(email): boolean {
+		var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		return re.test(String(email).toLowerCase());
+	}
 }

@@ -1,0 +1,11 @@
+<actionbar [title]="title"></actionbar>
+
+<StackLayout [visibility]="isLoading ? 'collapse' : 'visible'" class="container" (tap)="goToNext()">
+    <StackLayout class="container-image" [style]="'background-color:' + icondBackgroundColor" verticalAlignment="center">
+        <Label class="icon iconCode" [text]="iconCode" horizontalAlignment="center" ></Label>
+    </StackLayout>
+    
+    <Label class="message" [style]="'color:' + messageHeaderColor" [text]="messageHeader" horizontalAlignment="center"></Label>
+    <Label class="message-sub" [text]="messageSub" horizontalAlignment="center"></Label> -->
+</StackLayout>
+<ActivityIndicator [busy]="isLoading" horizontalAlignment="center"></ActivityIndicator>

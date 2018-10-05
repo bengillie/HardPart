@@ -302,47 +302,55 @@ export class DataService implements InMemoryDbService {
         phoneprimary: '9123', phonesecondary: '0123',
         emailprimary: encodeURIComponent('jaysmith@email.com'), emailsecondary: encodeURIComponent('jaysmith2@email.com'),
         isfirsttime: false, usertype: UserType.student, hasIncompleteHomework: true, image: '~/images/dp1.jpg',
+        lastpwupdate: dateNow1, lastlogin: dateNow1,
         children: []
       },
       { id: 2, fname: 'Emily', mname: '', lname: 'Smith', username: 'student1', password: 'password', birthdate: '02/03/2001', 
         phoneprimary: '9234', phonesecondary: '',
         emailprimary: encodeURIComponent('emilysmith@email.com'), emailsecondary: encodeURIComponent('emilysmith2@email.com'),
         isfirsttime: true, usertype: UserType.student, hasIncompleteHomework: false, image: '~/images/dp2.jpg',
+        lastpwupdate: dateNow1, lastlogin: dateNow1,
         children: []
       },
       { id: 3, fname: 'Grace', mname: '', lname: 'Smith', username: 'student2', password: 'password', birthdate: '03/03/1978',
         phoneprimary: '9345', phonesecondary: '0345', 
         emailprimary: encodeURIComponent('gracesmith@email.com'), emailsecondary: encodeURIComponent('gracesmith2@email.com'),
         isfirsttime: false, usertype: UserType.student, hasIncompleteHomework: false, image: '~/images/dp3.jpg',
+        lastpwupdate: dateNow1, lastlogin: dateNow1,
         children: []
       },
       { id: 4, fname: 'Finn', mname: 'Johnson', lname: 'Williams', username: 'student3', password: 'password', birthdate: '04/05/1975', 
         phoneprimary: '9456', phonesecondary: '',
         emailprimary: encodeURIComponent('finnwilliams@email.com'), emailsecondary: encodeURIComponent('finnwilliams2@email.com'),
         isfirsttime: false, usertype: UserType.student, hasIncompleteHomework: false, image: '~/images/dp4.jpg',
+        lastpwupdate: dateNow1, lastlogin: dateNow1,
         children: []
       },
       { id: 5, fname: 'Jason', mname: '', lname: 'Smith', username: 'parent', password: 'parent', birthdate: '01/01/1950', 
         phoneprimary: '9567', phonesecondary: '0567',
         emailprimary: encodeURIComponent('jasonsmith@email.com'), emailsecondary: encodeURIComponent('jasonsmith2@email.com'),
         isfirsttime: false, usertype: UserType.parent, hasIncompleteHomework: null, image: '~/images/dp5.jpg',
+        lastpwupdate: dateNow1, lastlogin: dateNow1,
         children: [
             { id: 1, fname: 'Jay', mname: '', lname: 'Smith', username: '1', password: '1', birthdate: '1', 
               emailprimary: encodeURIComponent('jaysmith@email.com'), emailsecondary: encodeURIComponent('jaysmith2@email.com'),
               phoneprimary: '9123', phonesecondary: '0123',
               isfirsttime: false, usertype: UserType.student, hasIncompleteHomework: true, image: '~/images/dp1.jpg',
+              lastpwupdate: dateNow1, lastlogin: dateNow1,
               children: []
             },
             { id: 2, fname: 'Emily', mname: '', lname: 'Smith', username: 'student1', password: 'password', birthdate: '02/03/2001', 
               phoneprimary: '9234', phonesecondary: '',
               emailprimary: encodeURIComponent('emilysmith@email.com'), emailsecondary: encodeURIComponent('emilysmith2@email.com'),
               isfirsttime: true, usertype: UserType.student, hasIncompleteHomework: false, image: '~/images/dp2.jpg',
+              lastpwupdate: dateNow1, lastlogin: dateNow1,
               children: []
             },
             { id: 3, fname: 'Grace', mname: '', lname: 'Smith', username: 'student2', password: 'password', birthdate: '03/03/1978',
               phoneprimary: '9345', phonesecondary: '0345', 
               emailprimary: encodeURIComponent('gracesmith@email.com'), emailsecondary: encodeURIComponent('gracesmith2@email.com'),
               isfirsttime: false, usertype: UserType.student, hasIncompleteHomework: false, image: '~/images/dp3.jpg',
+              lastpwupdate: dateNow1, lastlogin: dateNow1,
               children: []
             }  
         ]
@@ -351,11 +359,13 @@ export class DataService implements InMemoryDbService {
         phoneprimary: '9678', phonesecondary: '', 
         emailprimary: encodeURIComponent('bonwilliams@email.com'), emailsecondary: encodeURIComponent('bonwilliams2@email.com'),
         isfirsttime: true, usertype: UserType.parent, hasIncompleteHomework: null, image: '',
+        lastpwupdate: dateNow1, lastlogin: dateNow1,
         children: [
             { id: 4, fname: 'Finn', mname: 'Johnson', lname: 'Williams', username: 'student3', password: 'password', birthdate: '04/05/1975',
               phoneprimary: '9456', phonesecondary: '', 
               emailprimary: encodeURIComponent('finnwilliams@email.com'), emailsecondary: encodeURIComponent('finnwilliams2@email.com'),
               isfirsttime: false, usertype: UserType.student, hasIncompleteHomework: false, image: '~/images/dp4.jpg',
+              lastpwupdate: dateNow1, lastlogin: dateNow1,
               children: []
             }
         ]
@@ -364,6 +374,7 @@ export class DataService implements InMemoryDbService {
         phoneprimary: '9789', phonesecondary: '0789', 
         emailprimary: encodeURIComponent('mariabrown@email.com'), emailsecondary: encodeURIComponent('mariabrown2@email.com'),
         isfirsttime: false, usertype: UserType.parent, hasIncompleteHomework: null, image: '',
+        lastpwupdate: dateNow1, lastlogin: dateNow1,
         children: []
       }
     ];

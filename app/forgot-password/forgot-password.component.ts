@@ -5,13 +5,13 @@ import { Subscription } from 'rxjs';
 
 import { User } from '~/model/user.model';
 
+import { HelperService } from '../service/helper.service';
 import { UserService } from '../service/user.service';
 
 export enum pageState {
 	sendCode = 0,
 	enterCode = 1,
-	enterNewPassword = 2,
-	confirmation = 3
+	enterNewPassword = 2
 }
 
 @Component({
@@ -38,8 +38,9 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 
 	successfulIconCode = String.fromCharCode(0xea10);
 
-	constructor(private userService: UserService,
-		private routerExt: RouterExtensions) { }
+	constructor(private routerExt: RouterExtensions,
+		private helperService: HelperService,
+		private userService: UserService) { }
 
 	ngOnInit() { 
 		// this.emailAddress = "jasonsmith@email.com";
@@ -65,27 +66,27 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 		this.errorMessageNewPassword = '';
 		this.errorMessageConfirmPassword = '';
 
-		if(this.passwordNew.trim().length === 0) {
-			this.errorMessageNewPassword = 'New password is required.';
-		} else if(this.passwordNew.length < 6) {
-			this.errorMessageNewPassword = 'Password must have atleast 6 characters.';
-		} else if(!this.isAlphaNumeric(this.passwordNew)) {
-			this.errorMessageNewPassword = 'Password must be alphanumeric.';
-		} else if(this.passwordConfirm.trim().length === 0) {
-			this.errorMessageConfirmPassword = 'Confirm password is required.';
-		} else if(this.passwordNew !== this.passwordConfirm) {
-			this.errorMessageConfirmPassword = 'New password and confirm password do not match.';
+		let errorMessage = this.userService.validatePassword(this.passwordNew, this.passwordConfirm);
+		if(errorMessage !== null) {
+			if(errorMessage.control === 'newpassword') {
+				this.errorMessageNewPassword = errorMessage.message;
+			} else {
+				this.errorMessageConfirmPassword = errorMessage.message;
+			}
 		} else {
 			this.user.password = this.passwordNew;
 			this.subscriptions.push(this.userService.updateUser(this.user)
 				.subscribe(
 					(x) => {
-						this.pageState = pageState.confirmation;
-						this.pageStates.push(this.pageState);
-						setTimeout(() => {
-							this.backToLogin();
-						}, 3000);
-				})
+						this.routerExt.navigate([`messagepage`], { 
+							queryParams: {
+								title: 'Forgot Password',
+								messageSub: 'Password successfully changed.',
+								nextModule: 'login'
+							}
+						});
+					}
+				)
 			);
 		}
 	}
@@ -120,7 +121,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 	}
 
 	goBack() {
-		if(this.pageStates.length <= 1 || this.pageStates[this.pageStates.length - 1] === pageState.confirmation) {
+		if(this.pageStates.length <= 1) {
 			this.backToLogin();
 		} else {
 			this.pageStates.pop();
@@ -132,7 +133,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 		if(this.emailAddress.trim().length === 0) {
 			this.errorMessageEmailAddress = 'Email address is required.';
 		} 
-		else if(!this.validateEmail(this.emailAddress)) {
+		else if(!this.helperService.validateEmail(this.emailAddress)) {
 			this.errorMessageEmailAddress = 'Invalid email address.';
 		} 
 		else {
@@ -164,15 +165,5 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 				)
 			);
 		}
-	}
-
-	validateEmail(email): boolean {
-		var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-		return re.test(String(email).toLowerCase());
-	}
-
-	isAlphaNumeric(args): boolean {
-		var re = /^(?=.*?[a-z])(?=.*?\d)[a-z\d]+$/i;
-		return re.test(String(args).toLowerCase());
 	}
 }

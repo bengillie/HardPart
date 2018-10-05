@@ -10,13 +10,14 @@
         </GridLayout>
         <StackLayout *ngIf="currentUser" row="1" class="hr-light"></StackLayout>
         <StackLayout *ngIf="currentUser" row="2" class="sidedrawerNavLinks">
-            <StackLayout class="navLink" orientation="horizontal" (tap)='tapSettings()'>
-                <Label col="0" class="icon navIcon" [text]="iconSettings"></Label>
-                <Label col="2" class="navLabel" text="Settings"></Label>
-            </StackLayout>
-            <StackLayout class="navLink" orientation="horizontal" (tap)='tapLogout()'>
-                <Label col="0" class="icon navIcon" [text]="iconLogout"></Label>
-                <Label col="2" class="navLabel" text="Logout"></Label>
+            <StackLayout *ngFor="let item of navItems" class="navLink" orientation="horizontal" 
+                (tap)="item.text === 'Settings' ? tapSettings($event) : 
+                    item.text === 'Logout' ? tapLogout($event) :
+                    item.text === 'Security' ? tapSecurity($event) :
+                    ''
+                    ">
+                <Label col="0" class="icon navIcon" [text]="item.icon"></Label>
+                <Label col="2" class="navLabel" [text]="item.text"></Label>
             </StackLayout>
         </StackLayout>
     </GridLayout>
@@ -28,4 +29,3 @@
         </StackLayout>
     </GridLayout>
 </RadSideDrawer>
-

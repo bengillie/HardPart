@@ -15,6 +15,8 @@ export class User {
     hasIncompleteHomework: boolean | null;
     image: string;
     children: User[];
+    lastpwupdate: Date;
+    lastlogin: Date;
 }
 
 export enum UserType {

@@ -10,6 +10,7 @@ import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
 import { NativeScriptUISideDrawerModule } from "nativescript-ui-sidedrawer/angular";
 
 import { AppComponent } from "./app.component";
+import { AccountSecurityComponent } from "./account-security/account-security.component";
 import { AchievementComponent } from '~/achievement/achievement.component';
 import { ActionbarComponent } from '~/actionbar/actionbar.component';
 import { AttendanceComponent } from "./attendance/attendance.component";
@@ -18,11 +19,13 @@ import { ForgotPasswordComponent } from "~/forgot-password/forgot-password.compo
 import { HomeworkComponent } from './homework/homework.component';
 import { HomeworkDetailComponent } from './homework-detail/homework-detail.component';
 import { LoginComponent } from "./login/login.component";
+import { MessagePageComponent } from "./message-page/message-page.component";
 import { NavigationBarComponent } from "~/navigationbar/navigationbar.component";
 import { NotificationComponent } from "~/notification/notification.component";
 import { ProgressbarCircularComponent } from "~/progressbar-circular/progressbar-circular.component";
 import { StudentSelectionComponent } from "~/student-selection/student-selection.component";
 import { TimetableComponent } from "./timetable/timetable.component";
+import { UpdateSecurityDetailsComponent } from "./update-security-details/update-security-details.component";
 
 import { AchievementService } from '~/service/achievement.service';
 import { AppValuesService } from '~/service/appvalues.service';
@@ -59,6 +62,7 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
     ],
     declarations: [
         AppComponent,
+        AccountSecurityComponent,
         AchievementComponent,
         ActionbarComponent,
         AttendanceComponent,
@@ -67,11 +71,13 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
         HomeworkComponent,
         HomeworkDetailComponent,
         LoginComponent,
+        MessagePageComponent,
         NavigationBarComponent,
         NotificationComponent,
         ProgressbarCircularComponent,
         StudentSelectionComponent,
-        TimetableComponent
+        TimetableComponent,
+        UpdateSecurityDetailsComponent
     ],
     providers: [
         AchievementService,

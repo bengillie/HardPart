@@ -18,6 +18,7 @@ import { AppValuesService } from '~/service/appvalues.service';
 
 export class ActionbarComponent implements OnInit, OnDestroy {
 	@Input() title: string;
+	@Input() hasDisplayPicture: boolean;
 	@Input() hasNavigationBack: boolean;
 
 	private subscriptions : Subscription[] = [];
@@ -43,10 +44,12 @@ export class ActionbarComponent implements OnInit, OnDestroy {
 
 	getCurrentUser() {
 		this.currentUser = this.appValuesService.getLoggedInUser();
-		if(this.currentUser.image === '') {
+		if(this.currentUser && this.currentUser.image === '') {
 			this.currentUser.image = '~/images/silhouette.png';
 			this.appValuesService.setLoggedInUser(this.currentUser);
 		}
+		this.hasDisplayPicture = this.hasDisplayPicture === undefined ? true : false;
+		this.hasDisplayPicture = (this.hasDisplayPicture && (this.currentUser !== undefined));
 	}
 
 	goBack() {
