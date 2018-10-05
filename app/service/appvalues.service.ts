@@ -11,6 +11,7 @@ export class AppValuesService {
     selectedStudent: User;
 
     notification: Notification[] = [];
+    totalNotif = 0;
     
     getLoggedInUser(): User {
         return this.currentUser;
@@ -24,6 +25,12 @@ export class AppValuesService {
     }
     setNotification(notification: Notification[]) {
         this.notification = notification;
+    }
+    getTotalNotif() {
+        return this.totalNotif;
+    }
+    setTotalNotif(total: number) {
+        this.totalNotif = total;
     }
 
     getSelectedStudent() : User {

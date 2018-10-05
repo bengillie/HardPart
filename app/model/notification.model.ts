@@ -4,5 +4,5 @@ export class Notification {
     title: string;
     message: string;
     image: string;
-    isSeen: boolean;
+    seen: boolean;
 }
