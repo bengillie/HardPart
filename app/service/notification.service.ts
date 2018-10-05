@@ -26,12 +26,12 @@ export class NotificationService {
         const loggedInUser: User = this.appValuesService.getLoggedInUser();
         let params = new HttpParams();
         params = params.append('userId', JSON.stringify(loggedInUser.id));
-        params = params.append('isSeen', JSON.stringify(false));
+        params = params.append('seen', JSON.stringify(false));
 
         return this.httpService.get<Notification[]>(this.url, params)
         .pipe(
             map(notification => notification),
-            tap(_ => this.logService.log(`fetched notification for student id = ${loggedInUser.id.toString()}`)),
+            /* tap(_ => this.logService.log(`fetched notification for student id = ${loggedInUser.id.toString()}`)), */
             catchError(this.errorService.handleError<Notification[]>(`getNotification(): student id = ${loggedInUser.id.toString()}`))
         );
     }

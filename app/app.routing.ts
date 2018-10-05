@@ -10,6 +10,7 @@ import { ForgotPasswordComponent } from "~/forgot-password/forgot-password.compo
 import { LoginComponent } from "./login/login.component";
 import { HomeworkComponent } from "./homework/homework.component";
 import { HomeworkDetailComponent } from './homework-detail/homework-detail.component';
+import { NavigationBarComponent } from '~/navigationbar/navigationbar.component';
 import { NotificationComponent } from "~/notification/notification.component";
 import { StudentSelectionComponent } from './student-selection/student-selection.component';
 import { TimetableComponent } from './timetable/timetable.component';
@@ -25,6 +26,7 @@ const routes: Routes = [
     { path: "login", component: LoginComponent },
     { path: "homework", component: HomeworkComponent },
     { path: "homeworkdetails/:id", component: HomeworkDetailComponent },
+    { path: "navigationbar", component: NavigationBarComponent },
     { path: "notification", component: NotificationComponent},
     { path: "studentselection", component: StudentSelectionComponent },
     { path: "timetable", component: TimetableComponent}

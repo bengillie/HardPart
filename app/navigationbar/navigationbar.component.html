@@ -25,18 +25,25 @@
                         [class.btnTab-active]="tabViewSelectedIndex===2" 
                         [class.btnTab-notActive]="tabViewSelectedIndex!==2">
                     </Button>
-                    <Button [col]="!showStudentSelection ? 2 : 3" 
-                        class="icon btnTab" 
+                    <Button *ngIf="totalNotification === 0"
+                        [col]="!showStudentSelection ? 2 : 3" 
+                        class="icon btnTab"
+                        text="{{ iconCodeNotification }}"
                         (tap)="onTabViewClicked(3)" 
                         [class.btnTab-active]="tabViewSelectedIndex===3" 
-                        [class.btnTab-notActive]="tabViewSelectedIndex!==3">
-                        <FormattedString>
-                            <Span text="{{ iconCodeNotif }}"></Span>
-                            <ng-container *ngIf="totalNotif > 0">
-                                <Span class="notif m-b-20" text=" {{ totalNotif }}" verticalAlignment="top" dock="top"></Span>
-                            </ng-container>
-                        </FormattedString>
+                        [class.btnTab-notActive]="tabViewSelectedIndex!==3">                       
                     </Button>
+                    <StackLayout [col]="!showStudentSelection ? 2 : 3" 
+                        class="btnTab stackLayout-label" 
+                        (tap)="onTabViewClicked(3)" 
+                        [class.btnTab-active]="tabViewSelectedIndex===3"
+                        [class.btnTab-notActive]="tabViewSelectedIndex!==3"
+                        verticalAlignment="center">
+                        <Label *ngIf="totalNotification != 0"
+                            class="notification" 
+                            text="{{ totalNotification }}">                       
+                        </Label>
+                    </StackLayout>
                 </GridLayout>
             </StackLayout>
         </GridLayout>

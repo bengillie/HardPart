@@ -1,9 +1,8 @@
-import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core'
-import { Router } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core'
+import { Router, ActivatedRoute } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router'
 import { Subscription } from 'rxjs';
 
-import { Notification } from '~/model/notification.model';
 import { User } from '../model/user.model';
 
 import { AppValuesService } from '../service/appvalues.service';
@@ -23,11 +22,12 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
     iconCodeMenu = "";
     iconCodeHomework = "";
     iconCodeStudentSelection = "";
-    iconCodeNotif = "";
+    iconCodeNotification = "";
+    iconCodeNewNotification = "";
     tabIcon = "";
     tabViewSelectedIndex = 0;
     title = "";
-    totalNotif = 0;
+    totalNotification = 0;
 
     showNavBar = false;
     showStudentSelection = false;
@@ -36,6 +36,7 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
         private appValuesService: AppValuesService,
         private helperService: HelperService,
         private notificationService: NotificationService,
+        private route: ActivatedRoute,
         private router: Router,
         private routerExt: RouterExtensions) { }
 
@@ -65,18 +66,23 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
         this.iconCodeMenu = String.fromCharCode(0xe9bd);
         this.iconCodeHomework = String.fromCharCode(0xe91f);
         this.iconCodeStudentSelection = String.fromCharCode(0xe972);
-        this.iconCodeNotif = String.fromCharCode(0xea08);
+        this.iconCodeNotification = String.fromCharCode(0xea08);
     } 
 
-    getNotification() {
-        this.subscriptions.push(this.notificationService.getNotification()
-            .subscribe(
-                notification => {
-                    this.appValuesService.setNotification(notification);
-                    this.totalNotif = notification.length;
-                }
-            ),
-        )
+    getNotification() {    
+        this.totalNotification = this.appValuesService.getTotalNotif();
+
+        if (this.totalNotification === 0) {
+            this.subscriptions.push(this.notificationService.getNotification()
+                .subscribe(
+                    notification => {
+                        this.appValuesService.setNotification(notification);
+                        this.appValuesService.setTotalNotif(notification.length);
+                        this.totalNotification = notification.length;
+                    }
+                ),
+            )
+        }
     }
 
     getTabList() {

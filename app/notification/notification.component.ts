@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core'
 import { RadListViewComponent } from 'nativescript-ui-listview/angular/listview-directives';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { SwipeActionsEventData } from 'nativescript-ui-listview';
 import { View } from 'tns-core-modules/ui/page/page';
@@ -9,6 +10,7 @@ import { User } from '~/model/user.model';
 
 import { AppValuesService } from '~/service/appvalues.service';
 import { NotificationService } from '~/service/notification.service';
+import { RouterExtensions } from 'nativescript-angular/router';
 
 @Component({
     moduleId: module.id,
@@ -32,6 +34,8 @@ export class NotificationComponent implements OnInit, OnDestroy {
     constructor(
         private appValuesService: AppValuesService,
         private notificationService: NotificationService,
+        private route: Router,
+        private routerExt: RouterExtensions,
     ) { 
         this.loggedInUser = this.appValuesService.getLoggedInUser();
     }
@@ -52,20 +56,16 @@ export class NotificationComponent implements OnInit, OnDestroy {
     getNotification() {
         this.allNotification = this.appValuesService.getNotification();
         this.isLoading = false;
-        /* this.subscriptions.push(this.notificationService.getNotification()
-            .subscribe(
-                notification => {
-                    this.allNotification = notification.sort((a, b) => a.id < b.id ? -1 : 1);
-                    this.totalNotif = this.allNotification.length;
-                    this.isLoading = false;
-                }
-            ),
-        ) */
+    }
+
+    getRouteNavBar() {
+        this.routerExt.navigate([`navigationbar`]);
+        this.routerExt.navigate([`notification`]);
     }
 
     onDelete() {
         let notification = this.allNotification[this.itemIndex];
-        notification.isSeen = true;
+        notification.seen = true;
 
         this.subscriptions.push(this.notificationService.updateNotification(notification)
             .subscribe(() => {})
@@ -73,6 +73,9 @@ export class NotificationComponent implements OnInit, OnDestroy {
 
         this.allNotification.splice(this.itemIndex, 1);
         this.listView_notif.listView.notifySwipeToExecuteFinished();
+
+        this.appValuesService.setTotalNotif(this.allNotification.length);
+        this.getRouteNavBar();
 	}
         
     onSwipeCellStarted(args: SwipeActionsEventData) {
