@@ -75,6 +75,7 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
             this.subscriptions.push(this.notificationService.getNotification()
                 .subscribe(
                     notification => {
+                        notification = notification.sort((a, b) => new Date(a.createdDate) > new Date(b.createdDate) ? -1 : 1);
                         this.appValuesService.setNotification(notification);
                         this.appValuesService.setTotalNotification(notification.length);
                         this.totalNotification = notification.length;

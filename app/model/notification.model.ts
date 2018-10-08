@@ -4,5 +4,7 @@ export class Notification {
     title: string;
     message: string;
     image: string;
+    createdDate: Date;
+    expiryDate: Date;
     seen: boolean;
 }
