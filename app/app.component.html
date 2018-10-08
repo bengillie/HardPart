@@ -1,5 +1,5 @@
 <!-- https://docs.nativescript.org/angular/core-concepts/angular-navigation.html#page-router-outlet -->
-<RadSideDrawer drawerLocation="right">
+<RadSideDrawer drawerLocation="right" (loaded)="onLoaded()">
     <GridLayout #sideDrawer tkDrawerContent rows="auto, auto, *" class="sidedrawer">
         <GridLayout *ngIf="currentUser" row="0" rows="2*, *" class="sidedrawerHeader">
             <Image row="0" class="displaypicture" [class.displaypicture-silhouette]="currentUser.image === '~/images/silhouette.png'" [src]="currentUser.image" stretch="aspectFill"></Image>
