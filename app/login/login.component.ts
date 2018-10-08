@@ -17,6 +17,7 @@ import { LoginService } from '../service/login.service';
 export class LoginComponent implements OnInit, OnDestroy {
     private subscription : Subscription;
     logIn: User;
+    isLoginBusy: boolean = false;
 
     errorMessage = "";
 
@@ -63,14 +64,22 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     login() {
-        this.errorMessage = "";
-        let isValid = this.validInput(this.logIn);
+        if(!this.isLoginBusy) {
+            this.isLoginBusy = true;
+            this.errorMessage = "";
+            let isValid = this.validInput(this.logIn);
 
-        if (isValid != false) {
-            this.subscription = this.loginService.getUser(this.logIn)
-                .subscribe(user => {
-                    this.checkUser(user);
-                })
+            if (isValid != false) {
+                this.subscription = this.loginService.getUser(this.logIn)
+                    .subscribe(user => {
+                        const isSuccessful = this.checkUser(user);
+                        if(!isSuccessful) {
+                            this.isLoginBusy = false;
+                        }
+                    })
+            } else {
+                this.isLoginBusy = false;
+            }
         }
     }
 
@@ -95,12 +104,13 @@ export class LoginComponent implements OnInit, OnDestroy {
         return true;
     }
 
-    private checkUser(login: User): void {
+    private checkUser(login: User): boolean {
         if ((login === undefined) ||
             (login.username != this.logIn.username) ||
             (login.password != this.logIn.password) ||
             (login.birthdate != this.logIn.birthdate)) {
             this.errorMessage = "User not found";
+            return false;
         } else {
             this.appValuesService.setLoggedInUser(login);
 
@@ -110,5 +120,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                 this.router.navigate([`dashboard`]);
             }
         }
+
+        return true;
     }
 }

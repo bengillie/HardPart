@@ -37,7 +37,7 @@
 
         <GridLayout rows="auto,*">
             <Label class="error-msg text-center m-y-5" row="0" text="{{errorMessage}}" ></Label>
-            <Button class="btn-login m-b-20" row="1" text="Sign in" (tap)="login()"></Button>
+            <Button class="btn-login m-b-20" [class.btn-login-disabled]="isLoginBusy" row="1" text="Sign in" (tap)="login()"></Button>
         </GridLayout>
 
         <GridLayout rows="auto,*">
