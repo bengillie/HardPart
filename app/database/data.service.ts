@@ -219,19 +219,31 @@ export class DataService implements InMemoryDbService {
     ];
 
     const notification: Notification[] = [
-      { id: 1, userId: 1, title: "Homework Overdue", message: "Math Homework due: 02/01/2018  for Mrs. Potts", image: "~/images/notif_homework.png", seen: false },
-      { id: 2, userId: 1, title: "Late Registration", message: "Late on 10/01/2018", image: "~/images/notif_late.png", seen: false },
-      { id: 3, userId: 1, title: "Unauthorized Absence", message: "Absent on 10/02/2018", image: "~/images/notif_absent.png", seen: false },
-      { id: 4, userId: 1, title: "Homework Near Due Date", message: "Science Homework due: 02/01/2018  for Mr. Fixit", image: "~/images/notif_homework.png", seen: false },
-      { id: 5, userId: 1, title: "Non-uniform Day", message: "Non-uniform day on 10/03/2018", image: "~/images/notif_non-uniform.png", seen: false },
-      { id: 6, userId: 1, title: "Class Suspension", message: "School is shut because of the typhoon on 10/05/2018", image: "~/images/notif_noclass.png", seen: false },
+      { id: 1, userId: 3, title: "Homework Overdue", message: "Math Homework due: " + nextWeekFriday.toDateString() + " for Mrs. Potts", image: "~/images/notif_homework.png", 
+        createdDate: new Date(friday.setHours(8, 0, 0)), expiryDate: nextWeekFriday, seen: false },
+      { id: 2, userId: 3, title: "Late Registration", message: "Late on " + monday.toDateString(), image: "~/images/notif_late.png", 
+        createdDate: new Date(monday.setHours(8, 30, 0)), expiryDate: tuesday, seen: false },
+      { id: 3, userId: 3, title: "Unauthorized Absence", message: "Absent on " + tuesday.toDateString(), image: "~/images/notif_absent.png", 
+        createdDate: new Date(tuesday.setHours(8, 0, 0)), expiryDate: wednesday, seen: false },
+      { id: 4, userId: 3, title: "Homework Near Due Date", message: "Science Homework due: " + nextWeekMonday.toDateString() + " for Mr. Fixit", image: "~/images/notif_homework.png", 
+        createdDate: new Date(monday.setHours(9, 0, 0)), expiryDate: nextWeekMonday, seen: false },
+      { id: 5, userId: 3, title: "Non-uniform Day", message: "Non-uniform day on " + wednesday.toDateString(), image: "~/images/notif_non-uniform.png", 
+        createdDate: new Date(wednesday.setHours(7, 0, 0)), expiryDate: thursday, seen: false },
+      { id: 6, userId: 3, title: "Class Suspension", message: "School is shut because of the typhoon on " + thursday.toDateString(), image: "~/images/notif_noclass.png", 
+        createdDate: new Date(thursday.setHours(7, 0, 0)), expiryDate: friday, seen: false },
       
-      { id: 7, userId: 5, title: "Homework Overdue", message: "Math Homework due: 02/01/2018  for Mrs. Potts", image: "~/images/notif_homework.png", seen: false },
-      { id: 8, userId: 5, title: "Late Registration", message: "Late on 10/01/2018", image: "~/images/notif_late.png", seen: false },
-      { id: 9, userId: 5, title: "Unauthorized Absence", message: "Absent on 10/02/2018", image: "~/images/notif_absent.png", seen: false },
-      { id: 10, userId: 5, title: "Homework Near Due Date", message: "Science Homework due: 02/01/2018  for Mr. Fixit", image: "~/images/notif_homework.png", seen: false },
-      { id: 11, userId: 5, title: "Non-uniform Day", message: "Non-uniform day on 10/03/2018", image: "~/images/notif_non-uniform.png", seen: false },
-      { id: 12, userId: 5, title: "Class Suspension", message: "School is shut because of the typhoon on 10/05/2018", image: "~/images/notif_noclass.png", seen: false },
+      { id: 7, userId: 5, title: "Homework Overdue", message: "Math Homework due: " + nextWeekFriday.toDateString() + " for Mrs. Potts", image: "~/images/notif_homework.png", 
+        createdDate: new Date(friday.setHours(8, 0, 0)), expiryDate: nextWeekFriday, seen: false },
+      { id: 8, userId: 5, title: "Late Registration", message: "Late on " + monday.toDateString(), image: "~/images/notif_late.png", 
+        createdDate: new Date(monday.setHours(8, 30, 0)), expiryDate: tuesday, seen: false },
+      { id: 9, userId: 5, title: "Unauthorized Absence", message: "Absent on " + tuesday.toDateString(), image: "~/images/notif_absent.png", 
+        createdDate: new Date(tuesday.setHours(8, 0, 0)), expiryDate: wednesday, seen: false },
+      { id: 10, userId: 5, title: "Homework Near Due Date", message: "Science Homework due: " + nextWeekMonday.toDateString() + " for Mr. Fixit", image: "~/images/notif_homework.png", 
+        createdDate: new Date(monday.setHours(9, 0, 0)), expiryDate: nextWeekMonday, seen: false },
+      { id: 11, userId: 5, title: "Non-uniform Day", message: "Non-uniform day on " + wednesday.toDateString(), image: "~/images/notif_non-uniform.png", 
+        createdDate: new Date(wednesday.setHours(7, 0, 0)), expiryDate: thursday, seen: false },
+      { id: 12, userId: 5, title: "Class Suspension", message: "School is shut because of the typhoon on " + thursday.toDateString(), image: "~/images/notif_noclass.png", 
+        createdDate: new Date(thursday.setHours(7, 0, 0)), expiryDate: friday, seen: false },
     ]
     
     const period: Period[] = [
