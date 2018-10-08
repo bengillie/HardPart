@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core'
 import { RadListViewComponent } from 'nativescript-ui-listview/angular/listview-directives';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { SwipeActionsEventData } from 'nativescript-ui-listview';
 import { View } from 'tns-core-modules/ui/page/page';
@@ -27,14 +26,12 @@ export class NotificationComponent implements OnInit, OnDestroy {
     allNotification: Notification[] = [];
     
     itemIndex = 0;
-    totalNotif = 0;
 
     @ViewChild("listView_notif") listView_notif: RadListViewComponent;
 
     constructor(
         private appValuesService: AppValuesService,
         private notificationService: NotificationService,
-        private route: Router,
         private routerExt: RouterExtensions,
     ) { 
         this.loggedInUser = this.appValuesService.getLoggedInUser();
@@ -74,7 +71,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
         this.allNotification.splice(this.itemIndex, 1);
         this.listView_notif.listView.notifySwipeToExecuteFinished();
 
-        this.appValuesService.setTotalNotif(this.allNotification.length);
+        this.appValuesService.setTotalNotification(this.allNotification.length);
         this.getRouteNavBar();
 	}
         

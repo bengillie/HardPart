@@ -225,6 +225,13 @@ export class DataService implements InMemoryDbService {
       { id: 4, userId: 1, title: "Homework Near Due Date", message: "Science Homework due: 02/01/2018  for Mr. Fixit", image: "~/images/notif_homework.png", seen: false },
       { id: 5, userId: 1, title: "Non-uniform Day", message: "Non-uniform day on 10/03/2018", image: "~/images/notif_non-uniform.png", seen: false },
       { id: 6, userId: 1, title: "Class Suspension", message: "School is shut because of the typhoon on 10/05/2018", image: "~/images/notif_noclass.png", seen: false },
+      
+      { id: 7, userId: 5, title: "Homework Overdue", message: "Math Homework due: 02/01/2018  for Mrs. Potts", image: "~/images/notif_homework.png", seen: false },
+      { id: 8, userId: 5, title: "Late Registration", message: "Late on 10/01/2018", image: "~/images/notif_late.png", seen: false },
+      { id: 9, userId: 5, title: "Unauthorized Absence", message: "Absent on 10/02/2018", image: "~/images/notif_absent.png", seen: false },
+      { id: 10, userId: 5, title: "Homework Near Due Date", message: "Science Homework due: 02/01/2018  for Mr. Fixit", image: "~/images/notif_homework.png", seen: false },
+      { id: 11, userId: 5, title: "Non-uniform Day", message: "Non-uniform day on 10/03/2018", image: "~/images/notif_non-uniform.png", seen: false },
+      { id: 12, userId: 5, title: "Class Suspension", message: "School is shut because of the typhoon on 10/05/2018", image: "~/images/notif_noclass.png", seen: false },
     ]
     
     const period: Period[] = [
