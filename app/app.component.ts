@@ -28,7 +28,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     public drawerComponent: RadSideDrawerComponent;
     private sideDrawer: RadSideDrawer;
 
-    currentUser: User = new User();
+    currentUser: User;
     navItemSettings: navItem = { sortId: 1, icon: String.fromCharCode(0xe994), text: 'Settings' };
     navItemSecurity: navItem = { sortId: 2, icon: String.fromCharCode(0xe9b4), text: 'Security' };
     navItemLogout: navItem = { sortId: 3, icon: String.fromCharCode(0xe9b6), text: 'Logout' };

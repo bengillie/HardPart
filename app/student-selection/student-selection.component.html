@@ -1,6 +1,6 @@
 <actionbar title="{{currentUser.children.length > 1 ? 'Child Selection' : 'Student Selection'}}" hasNavigationBack="true"></actionbar>
 
-<WrapLayout class="container" orientation="horizontal">
+<WrapLayout [visibility]="isLoading ? 'collapse' : 'visible'" class="container" orientation="horizontal">
     <StackLayout *ngFor="let item of students" class="selection-item" [class.selection-item-active]="selectedStudent.id === item.id" (tap)="onTap(item)">
         <GridLayout rows="10*, 3*">
             <Image row="0" class="selection-item-image" 

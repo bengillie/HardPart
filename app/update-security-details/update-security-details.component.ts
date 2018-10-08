@@ -27,7 +27,7 @@ export class UpdateSecurityDetailsComponent implements OnInit, OnDestroy {
 	private subscriptions : Subscription[] = [];
 
 	currentUser: User = new User();
-	hasNavigationBack;
+	hasNavigationBack: boolean;
 	hasSkip;
 	isLoading = true;
 	pageState: pageState;
@@ -55,8 +55,13 @@ export class UpdateSecurityDetailsComponent implements OnInit, OnDestroy {
 		this.getCurrentUser();
 		this.getQueryParams();
 
-		this.hasNavigationBack = (!this.currentUser.isfirsttime).toString();
+		this.hasNavigationBack = !this.currentUser.isfirsttime;
 		this.hasSkip = this.currentUser.isfirsttime;
+
+		this.primaryEmailAddress = decodeURIComponent(this.currentUser.emailprimary);;
+		this.secondaryEmailAddress = decodeURIComponent(this.currentUser.emailsecondary);
+		this.primaryPhoneNo = this.currentUser.phoneprimary;
+		this.secondaryPhoneNo = this.currentUser.phonesecondary;
 
 		// this.passwordNew = "test123";
 		// this.passwordConfirm = "test123";

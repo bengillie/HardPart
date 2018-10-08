@@ -19,7 +19,7 @@ import { AppValuesService } from '~/service/appvalues.service';
 export class ActionbarComponent implements OnInit, OnDestroy {
 	@Input() title: string;
 	@Input() hasDisplayPicture: boolean;
-	@Input() hasNavigationBack: boolean;
+	@Input() hasNavigationBack;
 
 	private subscriptions : Subscription[] = [];
 	sideDrawer = <RadSideDrawer>app.getRootView();
@@ -31,7 +31,11 @@ export class ActionbarComponent implements OnInit, OnDestroy {
 			this.getCurrentUser();
 	}
 
-	ngOnInit() { }
+	ngOnInit() {
+		if(this.hasNavigationBack === "false") {
+			this.hasNavigationBack = false;
+		}
+	 }
 
 	ngOnDestroy() {
 		if (this.subscriptions) {
