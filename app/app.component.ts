@@ -1,6 +1,7 @@
 import { Component, ViewChild, AfterViewInit, OnInit, OnDestroy } from "@angular/core";
 import { Router } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router';
+import { isAndroid, isIOS, ios } from "tns-core-modules/ui/frame/frame";
 
 import { RadSideDrawerComponent } from "nativescript-ui-sidedrawer/angular";
 import { RadSideDrawer } from 'nativescript-ui-sidedrawer';
@@ -28,7 +29,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     public drawerComponent: RadSideDrawerComponent;
     private sideDrawer: RadSideDrawer;
 
-    currentUser: User = new User();
+    currentUser: User;
     navItemSettings: navItem = { sortId: 1, icon: String.fromCharCode(0xe994), text: 'Settings' };
     navItemSecurity: navItem = { sortId: 2, icon: String.fromCharCode(0xe9b4), text: 'Security' };
     navItemLogout: navItem = { sortId: 3, icon: String.fromCharCode(0xe9b6), text: 'Logout' };
@@ -44,6 +45,11 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
     ngAfterViewInit() {
         this.sideDrawer = this.drawerComponent.sideDrawer;
+        
+        if(isIOS) {
+            // This disables the swipe gesture to open menu
+            this.sideDrawer.ios.defaultSideDrawer.allowEdgeSwipe = false;
+        }
     }
 
 	ngOnDestroy() {
@@ -82,6 +88,13 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
             
             this.pushNavItem(this.navItemLogout);
             this.navItems.sort(this.sortMenu);
+        }
+    }
+
+    onLoaded() {
+        if (isAndroid) {
+          // This disables the swipe gesture to open menu, by setting the treshhold to '0'
+          this.sideDrawer.android.setTouchTargetThreshold(0);
         }
     }
 
