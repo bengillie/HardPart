@@ -31,7 +31,6 @@ export class NotificationService {
         return this.httpService.get<Notification[]>(this.url, params)
         .pipe(
             map(notification => notification),
-            /* tap(_ => this.logService.log(`fetched notification for student id = ${loggedInUser.id.toString()}`)), */
             catchError(this.errorService.handleError<Notification[]>(`getNotification(): student id = ${loggedInUser.id.toString()}`))
         );
     }
@@ -39,7 +38,6 @@ export class NotificationService {
     updateNotification(notification: Notification): Observable<any> {
         return this.httpService.put(this.url, notification)
         .pipe(
-            tap(_ => this.logService.log(`update notification for user id = ${notification.userId.toString()}`)),
             catchError(this.errorService.handleError<Notification[]>(`updateNotification(): user id = ${notification.userId.toString()}`))
         );
     }

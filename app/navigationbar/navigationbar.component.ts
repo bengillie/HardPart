@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router'
 import { Subscription } from 'rxjs';
 
@@ -36,7 +36,6 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
         private appValuesService: AppValuesService,
         private helperService: HelperService,
         private notificationService: NotificationService,
-        private route: ActivatedRoute,
         private router: Router,
         private routerExt: RouterExtensions) { }
 
@@ -70,14 +69,14 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
     } 
 
     getNotification() {    
-        this.totalNotification = this.appValuesService.getTotalNotif();
+        this.totalNotification = this.appValuesService.getTotalNotification();
 
         if (this.totalNotification === 0) {
             this.subscriptions.push(this.notificationService.getNotification()
                 .subscribe(
                     notification => {
                         this.appValuesService.setNotification(notification);
-                        this.appValuesService.setTotalNotif(notification.length);
+                        this.appValuesService.setTotalNotification(notification.length);
                         this.totalNotification = notification.length;
                     }
                 ),

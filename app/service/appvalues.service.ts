@@ -26,10 +26,10 @@ export class AppValuesService {
     setNotification(notification: Notification[]) {
         this.notification = notification;
     }
-    getTotalNotif() {
+    getTotalNotification() {
         return this.totalNotif;
     }
-    setTotalNotif(total: number) {
+    setTotalNotification(total: number) {
         this.totalNotif = total;
     }
 

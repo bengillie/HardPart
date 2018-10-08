@@ -25,24 +25,35 @@
                         [class.btnTab-active]="tabViewSelectedIndex===2" 
                         [class.btnTab-notActive]="tabViewSelectedIndex!==2">
                     </Button>
-                    <Button *ngIf="totalNotification === 0"
+                    <!-- <Button 
                         [col]="!showStudentSelection ? 2 : 3" 
                         class="icon btnTab"
                         text="{{ iconCodeNotification }}"
                         (tap)="onTabViewClicked(3)" 
                         [class.btnTab-active]="tabViewSelectedIndex===3" 
                         [class.btnTab-notActive]="tabViewSelectedIndex!==3">                       
-                    </Button>
+                    </Button> -->
                     <StackLayout [col]="!showStudentSelection ? 2 : 3" 
                         class="btnTab stackLayout-label" 
                         (tap)="onTabViewClicked(3)" 
                         [class.btnTab-active]="tabViewSelectedIndex===3"
                         [class.btnTab-notActive]="tabViewSelectedIndex!==3"
-                        verticalAlignment="center">
-                        <Label *ngIf="totalNotification != 0"
-                            class="notification" 
-                            text="{{ totalNotification }}">                       
-                        </Label>
+                        horizontalAlignment="center">
+                        <GridLayout [columns]="totalNotification != 0 ? '*,*' : '*'" horizontalAlignment="center">
+                            <Label col="0"
+                                class="icon"
+                                text="{{ iconCodeNotification }}"
+                                verticalAlignment="center"
+                                [horizontalAlignment]="totalNotification != 0 ? 'right' : 'center'">
+                            </Label>
+                            <Label col="1"
+                                *ngIf="totalNotification != 0"
+                                class="notification" 
+                                text="{{ totalNotification }}"
+                                verticalAlignment="top"
+                                horizontalAlignment="left">                       
+                            </Label>
+                        </GridLayout>
                     </StackLayout>
                 </GridLayout>
             </StackLayout>
