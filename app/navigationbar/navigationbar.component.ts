@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router'
 import { Subscription } from 'rxjs';
 
+import { Notification } from '~/model/notification.model';
 import { User } from '../model/user.model';
 
 import { AppValuesService } from '../service/appvalues.service';
@@ -32,6 +33,8 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
     showNavBar = false;
     showStudentSelection = false;
 
+    emergencyNotification: Notification[] = [];
+
     constructor(
         private appValuesService: AppValuesService,
         private helperService: HelperService,
@@ -59,6 +62,15 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
             this.showStudentSelection = this.currentUser.children.length > 1;
             this.getNotification();
         }
+    }
+
+    getEmergencyNotification(notification: Notification[]) {
+        let today = new Date;
+
+        this.emergencyNotification = notification.filter(n => 
+                n.displayOnLogin == true &&
+                n.createdDate <= today
+            )
     }
 
     getIcon() {
