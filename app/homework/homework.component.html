@@ -18,6 +18,7 @@
             (itemSwipeProgressStarted)="onSwipeCellStarted($event)" 
             (itemSwipeProgressChanged)="onCellSwiping($event)"
             (itemTap)="onItemTap_todo($event)"
+            (scrollEnded)="onScrollEnded_todo($event)"
             swipeActions="true">
             <ng-template tkListItemTemplate let-item="item">
                 <StackLayout class="listItemStackLayout">
@@ -49,6 +50,7 @@
             (itemSwipeProgressStarted)="onSwipeCellStarted($event)" 
             (itemSwipeProgressChanged)="onCellSwiping($event)" 
             (itemTap)="onItemTap_done($event)"
+            (scrollEnded)="onScrollEnded_done($event)"
             swipeActions="true">
             <ng-template tkListItemTemplate let-item="item">
                 <StackLayout class="listItemStackLayout" >
@@ -77,6 +79,7 @@
             (itemSwipeProgressStarted)="onSwipeCellStarted($event)" 
             (itemSwipeProgressChanged)="onCellSwiping($event)" 
             (itemTap)="onItemTap_all($event)"
+            (scrollEnded)="onScrollEnded_all($event)"
             swipeActions="true">
             <ng-template tkListItemTemplate let-item="item">
                 <StackLayout class="listItemStackLayout">

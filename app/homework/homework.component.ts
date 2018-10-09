@@ -2,10 +2,10 @@ import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from "@angular/router";
 
 import { Subscription } from 'rxjs';
-import { ListViewEventData, RadListView, SwipeActionsEventData } from "nativescript-ui-listview";
+import { ListViewEventData, ListViewScrollEventData, SwipeActionsEventData } from "nativescript-ui-listview";
 import { RadListViewComponent } from "nativescript-ui-listview/angular";
 
-import { View } from 'tns-core-modules/ui/core/view';
+import { View, isIOS } from 'tns-core-modules/ui/core/view';
 
 import { Homework, HomeworkDeadlineStatus, HomeworkStatus } from '../model/homework.model';
 import { HomeworkService } from '../service/homework.service';
@@ -25,6 +25,10 @@ export class HomeworkComponent implements OnInit, OnDestroy {
 	homeworks: Homework[] = [];
 	homeworks_todo: Homework[] = [];
 	homeworks_done: Homework[] = [];
+
+	scrollOffset_all: number = 0;
+	scrollOffset_todo: number = 0;
+	scrollOffset_done: number = 0;
 
 	isLoading = true;
 
@@ -72,10 +76,35 @@ export class HomeworkComponent implements OnInit, OnDestroy {
 		return this.homeworkService.getHomeworkDeadlineStatus(homework);
 	}
 
+	onScrollEnded_all(args: ListViewScrollEventData) {
+		this.scrollOffset_all = args.scrollOffset;
+	}
+
+	onScrollEnded_todo(args: ListViewScrollEventData) {
+		this.scrollOffset_todo = args.scrollOffset;
+	}
+
+	onScrollEnded_done(args: ListViewScrollEventData) {
+		this.scrollOffset_done = args.scrollOffset;
+	}
+
 	sortHomeworkList() {
 		this.homeworks = this.homeworks.sort(this.sortHomeworkByDueDate);
 		this.homeworks_todo = this.homeworks_todo.sort(this.sortHomeworkByDueDate);
 		this.homeworks_done = this.homeworks_done.sort(this.sortHomeworkByDueDate);
+
+		if (isIOS) {
+			// required on iOS to redraw the ListView
+			this.listViewComponent_all.nativeElement.refresh();
+			this.listViewComponent_todo.nativeElement.refresh();
+			this.listViewComponent_done.nativeElement.refresh();
+		}
+		  
+		setTimeout(() => {
+			this.listViewComponent_all.listView.scrollWithAmount(this.scrollOffset_all, false);
+			this.listViewComponent_todo.listView.scrollWithAmount(this.scrollOffset_todo, false);
+			this.listViewComponent_done.listView.scrollWithAmount(this.scrollOffset_done, false);
+		}, 10);
 	}
 
 	sortHomeworkByDueDate(a, b) {
@@ -202,7 +231,6 @@ export class HomeworkComponent implements OnInit, OnDestroy {
 	}
 
 	onLeftSwipeClick(args: ListViewEventData) {
-		console.log("Left swipe click");
 		this.listViewComponent_todo.listView.notifySwipeToExecuteFinished();
 		this.listViewComponent_done.listView.notifySwipeToExecuteFinished();
 		this.listViewComponent_all.listView.notifySwipeToExecuteFinished();
