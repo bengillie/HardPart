@@ -1,0 +1,23 @@
+<actionbar title="Notifications" hasNavigationBack="true"></actionbar>
+
+<GridLayout backgroundColor="white">
+    <ListView [items]="emergencyNotification" class="list-group">
+        <ng-template let-item="item">
+            <StackLayout class="listItemStackLayout">
+                <GridLayout columns="50, *">
+                    <StackLayout col="0" class="m-l-10" style.verticalAlignment="center">
+                        <Image class="imageNotif" [src]="item.image"></Image>
+                    </StackLayout>
+                    <StackLayout col="1">
+                        <StackLayout orientation="horizontal">
+                            <Label [text]="item.title" class="list-group-item"></Label>
+                        </StackLayout>
+                        <StackLayout class="list-group-item list-group-item-sub">
+                            <Label [text]="item.message" textWrap="true" ></Label>
+                        </StackLayout>
+                    </StackLayout>
+                </GridLayout>
+            </StackLayout>
+        </ng-template>
+    </ListView>
+</GridLayout>

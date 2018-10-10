@@ -10,6 +10,7 @@ export class AppValuesService {
     currentUser: User;
     selectedStudent: User;
 
+    emergencyNotification: Notification[] = [];
     notification: Notification[] = [];
     totalNotif = 0;
     
@@ -31,6 +32,12 @@ export class AppValuesService {
     }
     setTotalNotification(total: number) {
         this.totalNotif = total;
+    }
+    getEmergencyNotification() {
+        return this.emergencyNotification;
+    }
+    setEmergencyNotification(notification: Notification[]) {
+        this.emergencyNotification = notification;
     }
 
     getSelectedStudent() : User {

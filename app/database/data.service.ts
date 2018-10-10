@@ -1,6 +1,7 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
 
 import { Achievement } from '~/model/achievement.model';
+import { Advert } from '~/model/advert.model';
 import { Attendance, AttendanceMark } from '~/model/attendance.model';
 import { ContactDetails } from '../model/contactus.model';
 import { Homework, HomeworkStatus } from '../model/homework.model';
@@ -61,6 +62,12 @@ export class DataService implements InMemoryDbService {
       { id: 8, subject: 'Math', type: 'Helping Others', date: prevWeekTuesday, score: 10 },
       { id: 9, subject: 'Science', type: 'Excellent Work', date: prevWeekWednesday, score: 10 },
       { id: 10, subject: 'Science', type: 'Leadership', date: prevWeekThursday, score: 10 }
+    ];
+
+    const advert: Advert[] = [
+      { id: 1, title: "After School Programs", subTitle: "Learn, Engage, Play",
+        description: "We offer tutoring, intensive learning, homework help, arts and crafts, reading, math, and so much more. Admission is open from October to December, 2018. Register now.", 
+        image:"~/images/advert-afterschool.png", urlLink:"https://www.google.com/", createdDate: new Date(), expiryDate: nextWeekMonday },
     ];
 
     const attendance: Attendance[] = [
@@ -225,30 +232,30 @@ export class DataService implements InMemoryDbService {
 
     const notification: Notification[] = [
       { id: 1, userId: 3, title: "Homework Overdue", message: "Math Homework due: " + nextWeekFriday.toDateString() + " for Mrs. Potts", image: "~/images/notif_homework.png", 
-        createdDate: new Date(friday.setHours(8, 0, 0)), expiryDate: nextWeekFriday, seen: false },
+        createdDate: new Date(friday.setHours(8, 0, 0)), expiryDate: nextWeekFriday, displayOnLogin: false, seen: false },
       { id: 2, userId: 3, title: "Late Registration", message: "Late on " + monday.toDateString(), image: "~/images/notif_late.png", 
-        createdDate: new Date(monday.setHours(8, 30, 0)), expiryDate: tuesday, seen: false },
+        createdDate: new Date(monday.setHours(8, 30, 0)), expiryDate: tuesday, displayOnLogin: false, seen: false },
       { id: 3, userId: 3, title: "Unauthorized Absence", message: "Absent on " + tuesday.toDateString(), image: "~/images/notif_absent.png", 
-        createdDate: new Date(tuesday.setHours(8, 0, 0)), expiryDate: wednesday, seen: false },
+        createdDate: new Date(tuesday.setHours(8, 0, 0)), expiryDate: wednesday, displayOnLogin: false, seen: false },
       { id: 4, userId: 3, title: "Homework Near Due Date", message: "Science Homework due: " + nextWeekMonday.toDateString() + " for Mr. Fixit", image: "~/images/notif_homework.png", 
-        createdDate: new Date(monday.setHours(9, 0, 0)), expiryDate: nextWeekMonday, seen: false },
+        createdDate: new Date(monday.setHours(9, 0, 0)), expiryDate: nextWeekMonday, displayOnLogin: false, seen: false },
       { id: 5, userId: 3, title: "Non-uniform Day", message: "Non-uniform day on " + wednesday.toDateString(), image: "~/images/notif_non-uniform.png", 
-        createdDate: new Date(wednesday.setHours(7, 0, 0)), expiryDate: thursday, seen: false },
+        createdDate: new Date(wednesday.setHours(7, 0, 0)), expiryDate: thursday, displayOnLogin: true, seen: false },
       { id: 6, userId: 3, title: "Class Suspension", message: "School is shut because of the typhoon on " + thursday.toDateString(), image: "~/images/notif_noclass.png", 
-        createdDate: new Date(thursday.setHours(7, 0, 0)), expiryDate: friday, seen: false },
+        createdDate: new Date(thursday.setHours(7, 0, 0)), expiryDate: friday, displayOnLogin: true, seen: false },
       
       { id: 7, userId: 5, title: "Homework Overdue", message: "Math Homework due: " + nextWeekFriday.toDateString() + " for Mrs. Potts", image: "~/images/notif_homework.png", 
-        createdDate: new Date(friday.setHours(8, 0, 0)), expiryDate: nextWeekFriday, seen: false },
+        createdDate: new Date(friday.setHours(8, 0, 0)), expiryDate: nextWeekFriday, displayOnLogin: false, seen: false },
       { id: 8, userId: 5, title: "Late Registration", message: "Late on " + monday.toDateString(), image: "~/images/notif_late.png", 
-        createdDate: new Date(monday.setHours(8, 30, 0)), expiryDate: tuesday, seen: false },
+        createdDate: new Date(monday.setHours(8, 30, 0)), expiryDate: tuesday, displayOnLogin: false, seen: false },
       { id: 9, userId: 5, title: "Unauthorized Absence", message: "Absent on " + tuesday.toDateString(), image: "~/images/notif_absent.png", 
-        createdDate: new Date(tuesday.setHours(8, 0, 0)), expiryDate: wednesday, seen: false },
+        createdDate: new Date(tuesday.setHours(8, 0, 0)), expiryDate: wednesday, displayOnLogin: false, seen: false },
       { id: 10, userId: 5, title: "Homework Near Due Date", message: "Science Homework due: " + nextWeekMonday.toDateString() + " for Mr. Fixit", image: "~/images/notif_homework.png", 
-        createdDate: new Date(monday.setHours(9, 0, 0)), expiryDate: nextWeekMonday, seen: false },
+        createdDate: new Date(monday.setHours(9, 0, 0)), expiryDate: nextWeekMonday, displayOnLogin: false, seen: false },
       { id: 11, userId: 5, title: "Non-uniform Day", message: "Non-uniform day on " + wednesday.toDateString(), image: "~/images/notif_non-uniform.png", 
-        createdDate: new Date(wednesday.setHours(7, 0, 0)), expiryDate: thursday, seen: false },
+        createdDate: new Date(wednesday.setHours(7, 0, 0)), expiryDate: thursday, displayOnLogin: true, seen: false },
       { id: 12, userId: 5, title: "Class Suspension", message: "School is shut because of the typhoon on " + thursday.toDateString(), image: "~/images/notif_noclass.png", 
-        createdDate: new Date(thursday.setHours(7, 0, 0)), expiryDate: friday, seen: false },
+        createdDate: new Date(thursday.setHours(7, 0, 0)), expiryDate: friday, displayOnLogin: true, seen: false },
     ]
     
     const period: Period[] = [
@@ -403,6 +410,10 @@ export class DataService implements InMemoryDbService {
       }
     ];
 
+<<<<<<< HEAD
     return { achievement, attendance, contactdetail, homework, lesson, notification, period, user }; 
+=======
+    return { achievement, advert, attendance, homework, lesson, notification, period, user }; 
+>>>>>>> 31b492ff234ce29ab29e60a0239fe5785ef4d4f4
   }
 }

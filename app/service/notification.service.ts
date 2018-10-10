@@ -22,6 +22,19 @@ export class NotificationService {
         private logService: LoggingService
     ) { }
 
+    getEmergencyNotification(): Observable<Notification[]> {
+        const loggedInUser: User = this.appValuesService.getLoggedInUser();
+        let params = new HttpParams();
+        params = params.append('userId', JSON.stringify(loggedInUser.id));
+        params = params.append('displayOnLogin', JSON.stringify(true));
+
+        return this.httpService.get<Notification[]>(this.url, params)
+        .pipe(
+            map(emergencyNotification => emergencyNotification),
+            catchError(this.errorService.handleError<Notification[]>(`getNotification(): student id = ${loggedInUser.id.toString()}`))
+        );
+    }
+
     getNotification(): Observable<Notification[]> {
         const loggedInUser: User = this.appValuesService.getLoggedInUser();
         let params = new HttpParams();

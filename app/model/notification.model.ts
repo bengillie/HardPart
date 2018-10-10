@@ -6,5 +6,6 @@ export class Notification {
     image: string;
     createdDate: Date;
     expiryDate: Date;
+    displayOnLogin: boolean;
     seen: boolean;
 }

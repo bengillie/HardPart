@@ -1,10 +1,14 @@
-import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core'
+import { Component, OnInit, OnDestroy, ViewContainerRef } from '@angular/core'
+import { Router } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router'
 import { Subscription } from 'rxjs';
 
 import { MenuList } from '~/model/dashboard.model';
 
 import { AppValuesService } from '../service/appvalues.service';
+
+import { ModalDialogService } from "nativescript-angular/directives/dialogs";
+import { NotificationLoginComponent } from '~/notification-login/notification-login.component';
 
 @Component({
     moduleId: module.id,
@@ -23,10 +27,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
     
     constructor(
         private appValuesService: AppValuesService,
-        private routerExt: RouterExtensions) { }
+        private route: Router,
+        private routerExt: RouterExtensions,
+        private modal: ModalDialogService,
+        private vcRef: ViewContainerRef,
+    ) { }
 
     ngOnInit() {
         this.checkMultiChildren();
+        // this.getEmergencyNotification();
     }
 
     ngOnDestroy() {
@@ -106,5 +115,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 break;
             }
         }
+    }
+
+    private getEmergencyNotification() {
+        let options = {
+            context: {},
+            fullscreen: false,
+            viewContainerRef: this.vcRef,
+        };
+
+        this.modal.showModal(NotificationLoginComponent, options);
     }
 }
