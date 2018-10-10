@@ -410,10 +410,6 @@ export class DataService implements InMemoryDbService {
       }
     ];
 
-<<<<<<< HEAD
     return { achievement, attendance, contactdetail, homework, lesson, notification, period, user }; 
-=======
-    return { achievement, advert, attendance, homework, lesson, notification, period, user }; 
->>>>>>> 31b492ff234ce29ab29e60a0239fe5785ef4d4f4
   }
 }
