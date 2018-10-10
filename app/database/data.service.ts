@@ -1,6 +1,7 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
 
 import { Achievement } from '~/model/achievement.model';
+import { Advert } from '~/model/advert.model';
 import { Attendance, AttendanceMark } from '~/model/attendance.model';
 import { Homework, HomeworkStatus } from '../model/homework.model';
 import { Notification } from '~/model/notification.model';
@@ -60,6 +61,12 @@ export class DataService implements InMemoryDbService {
       { id: 8, subject: 'Math', type: 'Helping Others', date: prevWeekTuesday, score: 10 },
       { id: 9, subject: 'Science', type: 'Excellent Work', date: prevWeekWednesday, score: 10 },
       { id: 10, subject: 'Science', type: 'Leadership', date: prevWeekThursday, score: 10 },
+    ];
+
+    const advert: Advert[] = [
+      { id: 1, title: "After School Programs", subTitle: "Learn, Engage, Play",
+        description: "We offer tutoring, intensive learning, homework help, arts and crafts, reading, math, and so much more. Admission is open from October to December, 2018. Register now.", 
+        image:"~/images/advert-afterschool.png", urlLink:"https://www.google.com/", createdDate: new Date(), expiryDate: nextWeekMonday },
     ];
 
     const attendance: Attendance[] = [
@@ -398,6 +405,6 @@ export class DataService implements InMemoryDbService {
       }
     ];
 
-    return { achievement, attendance, homework, lesson, notification, period, user }; 
+    return { achievement, advert, attendance, homework, lesson, notification, period, user }; 
   }
 }

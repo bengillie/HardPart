@@ -30,6 +30,7 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
     title = "";
     totalNotification = 0;
 
+    displayOnLogin = false;
     showNavBar = false;
     showStudentSelection = false;
 
@@ -40,7 +41,8 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
         private helperService: HelperService,
         private notificationService: NotificationService,
         private router: Router,
-        private routerExt: RouterExtensions) { }
+        private routerExt: RouterExtensions,
+    ) { }
 
     ngOnInit() {
         this.getIcon();
@@ -56,6 +58,10 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
         }
     }  
 
+    getAdvert() {
+        this.routerExt.navigate([`advert`]);
+    }
+
     getCurrentUser() {
         this.currentUser = this.appValuesService.getLoggedInUser();
         if(this.currentUser) {
@@ -65,12 +71,7 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
     }
 
     getEmergencyNotification(notification: Notification[]) {
-        let today = new Date;
-
-        this.emergencyNotification = notification.filter(n => 
-                n.displayOnLogin == true &&
-                n.createdDate <= today
-            )
+        this.router.navigate([`notificationlogin`]);
     }
 
     getIcon() {
@@ -91,6 +92,8 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
                         this.appValuesService.setNotification(notification);
                         this.appValuesService.setTotalNotification(notification.length);
                         this.totalNotification = notification.length;
+                        this.getEmergencyNotification(notification);
+                        // this.getAdvert();
                     }
                 ),
             )
@@ -117,7 +120,7 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
         this.router.events.subscribe((res) => { 
             this.getCurrentUser();
 
-            let excludedPages: string[] = ['/login', '/forgotpassword'];
+            let excludedPages: string[] = ['/login', '/forgotpassword', '/advert'];
             let tempShowNavBar = excludedPages.filter(x => this.router.url.startsWith(x)).length === 0;
             tempShowNavBar = tempShowNavBar && this.currentUser && !this.currentUser.isfirsttime;
             this.showNavBar  = tempShowNavBar;
@@ -131,5 +134,5 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
     onTabViewClicked(args){ 
         this.tabViewSelectedIndex = args;
         this.getTabList();
-	}
+    }
 }
