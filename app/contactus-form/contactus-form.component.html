@@ -1,0 +1,33 @@
+<actionbar title="Email Us" hasNavigationBack="true"></actionbar>
+
+<StackLayout [visibility]="isLoading ? 'collapse' : 'visible'" class="container">
+    <GridLayout class="container-form" columns="*, 3*" rows="auto, auto, auto, 200, auto">
+        <Label col="0" row="0" class="icon formIcon" verticalAlignment="bottom" [text]="nameIconCode"></Label>
+        <TextField required col="1" row="0" class="input txt-class" [class.txt-class-error]="errorMessageName.length > 0"
+            horizontalAlignment="left" verticalAlignment="center"
+            hint="Name" autocapitalizationType="none" [(ngModel)]="name">
+        </TextField>
+
+        <Label col="0" row="1" class="icon formIcon" verticalAlignment="bottom" [text]="mailIconCode"></Label>
+        <TextField required col="1" row="1" class="input txt-class" [class.txt-class-error]="errorMessageEmailAddress.length > 0"
+            horizontalAlignment="left" verticalAlignment="center"
+            hint="Email Address (emailaddress@email.com)" autocapitalizationType="none" [(ngModel)]="emailaddress"
+            keyboardType="email">
+        </TextField>
+
+        <Label class="lbl-message" col="0" colspan="2" row="2" text="Message"></Label>
+
+        <TextView col="0" colspan="2" row="3" class="input rtxt-class" [class.rtxt-class-error]="errorMessage.length > 0"
+            [(ngModel)]="message" returnKeyType="send" (returnPress)="sendEmail()">
+        </TextView>
+
+        <!-- <StackLayout class="container-errormsg" col="0" colspan="2" row="4">
+            <Label *ngIf="errorMessageName.length > 0" class="error-msg" [text]="errorMessageName" ></Label>
+            <Label *ngIf="errorMessageEmailAddress.length > 0" class="error-msg" [text]="errorMessageEmailAddress" ></Label>
+            <Label *ngIf="errorMessage.length > 0" class="error-msg" [text]="errorMessage" ></Label>
+        </StackLayout> -->
+
+        <Button col="0" colspan="2" row="4" class="button" text="Send" (tap)="sendEmail()"></Button>
+    </GridLayout>
+</StackLayout>
+<ActivityIndicator [busy]="isLoading" horizontalAlignment="center"></ActivityIndicator>

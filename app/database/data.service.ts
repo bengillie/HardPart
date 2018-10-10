@@ -2,6 +2,7 @@ import { InMemoryDbService } from 'angular-in-memory-web-api';
 
 import { Achievement } from '~/model/achievement.model';
 import { Attendance, AttendanceMark } from '~/model/attendance.model';
+import { ContactDetails } from '../model/contactus.model';
 import { Homework, HomeworkStatus } from '../model/homework.model';
 import { Notification } from '~/model/notification.model';
 import { Lesson, Period, Subject } from '~/model/timetable.model';
@@ -82,6 +83,10 @@ export class DataService implements InMemoryDbService {
       { id: 17, date: n2WeekFriday, amMark: AttendanceMark.present, pmMark: AttendanceMark.unauthorised },
       { id: 18, date: n2WeekSaturday, amMark: AttendanceMark.late, pmMark: AttendanceMark.unauthorised },
     ];
+
+    const contactdetail: ContactDetails = {
+      id: 1, phoneno: '+1 989-356-1414', email: 'piedpiperschool@email.com', address: '444 Wilson St, Alpena, MI 49707, USA', map: ''
+    };
 
     dateNow1 = new Date();
     dateNow2 = new Date();
@@ -398,6 +403,6 @@ export class DataService implements InMemoryDbService {
       }
     ];
 
-    return { achievement, attendance, homework, lesson, notification, period, user }; 
+    return { achievement, attendance, contactdetail, homework, lesson, notification, period, user }; 
   }
 }

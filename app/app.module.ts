@@ -14,6 +14,8 @@ import { AccountSecurityComponent } from "./account-security/account-security.co
 import { AchievementComponent } from '~/achievement/achievement.component';
 import { ActionbarComponent } from '~/actionbar/actionbar.component';
 import { AttendanceComponent } from "./attendance/attendance.component";
+import { ContactUsComponent } from "./contactus/contactus.component";
+import { ContactusFormComponent } from "./contactus-form/contactus-form.component";
 import { DashboardComponent } from "~/dashboard/dashboard.component";
 import { ForgotPasswordComponent } from "~/forgot-password/forgot-password.component";
 import { HomeworkComponent } from './homework/homework.component';
@@ -30,6 +32,7 @@ import { UpdateSecurityDetailsComponent } from "./update-security-details/update
 import { AchievementService } from '~/service/achievement.service';
 import { AppValuesService } from '~/service/appvalues.service';
 import { AttendanceService } from '~/service/attendance.service';
+import { ContactUsService } from './service/contactus.service';
 import { DataService }  from './database/data.service';
 import { ErrorService } from './service/error.service';
 import { HelperService } from './service/helper.service';
@@ -66,6 +69,8 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
         AchievementComponent,
         ActionbarComponent,
         AttendanceComponent,
+        ContactUsComponent,
+        ContactusFormComponent,
         DashboardComponent,
         ForgotPasswordComponent,
         HomeworkComponent,
@@ -83,6 +88,7 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
         AchievementService,
         AppValuesService,
         AttendanceService,
+        ContactUsService,
         ErrorService,
         HelperService,
         HttpService,

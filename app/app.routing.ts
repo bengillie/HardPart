@@ -6,6 +6,8 @@ import { NativeScriptRouterModule } from "nativescript-angular/router";
 import { AccountSecurityComponent } from "./account-security/account-security.component";
 import { AchievementComponent } from "~/achievement/achievement.component";
 import { AttendanceComponent } from "~/attendance/attendance.component";
+import { ContactUsComponent } from "./contactus/contactus.component";
+import { ContactusFormComponent } from "./contactus-form/contactus-form.component";
 import { DashboardComponent } from "~/dashboard/dashboard.component";
 import { ForgotPasswordComponent } from "~/forgot-password/forgot-password.component";
 import { HomeworkComponent } from "./homework/homework.component";
@@ -20,11 +22,11 @@ import { UpdateSecurityDetailsComponent } from './update-security-details/update
 
 const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
-    //{ path: '', redirectTo: '/attendance', pathMatch: 'full' },
-
     { path: "accountsecurity", component: AccountSecurityComponent},
     { path: "achievement", component: AchievementComponent},
     { path: "attendance", component: AttendanceComponent},
+    { path: "contactus", component: ContactUsComponent},
+    { path: "contactusform", component: ContactusFormComponent},
     { path: "dashboard", component: DashboardComponent},
     { path: "forgotpassword", component: ForgotPasswordComponent },
     { path: "login", component: LoginComponent },
