@@ -1,14 +1,16 @@
 <actionbar title="Achievement" hasNavigationBack="true"></actionbar>
 
 <GridLayout [visibility]="isLoading ? 'collapse' : 'visible'" rows="auto, auto, *">
-    <WrapLayout row="0" class="container-total" orientation="horizontal">
-        <GridLayout *ngFor="let item of groupedAchievements; let i = index;" rows="4*, auto, *"
-            class="layout-total" horizontalAlignment="center">
-            <Label row="0" class="lbl-total-score" [text]="item.totalScore" horizontalAlignment="center" verticalAlignment="center"></Label>
-            <Label row="0" class="icon starIconCode" [text]="starIconCode" horizontalAlignment="center" verticalAlignment="center"></Label>
-            <Label row="1" class="lbl-total-type" [text]="item.key" horizontalAlignment="center" verticalAlignment="center"></Label>
-        </GridLayout>
-    </WrapLayout>
+    <ScrollView row="0" orientation="horizontal" horizontalAlignment="center" verticalAlignment="center">
+        <StackLayout class="container-total" orientation="horizontal">
+            <GridLayout *ngFor="let item of groupedAchievements; let i = index;" rows="4*, auto, *"
+                class="layout-total" horizontalAlignment="center">
+                <Label row="0" class="lbl-total-score" [text]="item.totalScore" horizontalAlignment="center" verticalAlignment="center"></Label>
+                <Label row="0" class="icon starIconCode" [text]="starIconCode" horizontalAlignment="center" verticalAlignment="center"></Label>
+                <Label row="1" class="lbl-total-type" [text]="item.key" horizontalAlignment="center" verticalAlignment="center"></Label>
+            </GridLayout>
+        </StackLayout>
+    </ScrollView>
 
     <StackLayout row="1" class="hr-light"></StackLayout>
 
