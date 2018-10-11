@@ -71,7 +71,17 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
     }
 
     getEmergencyNotification(notification: Notification[]) {
-        this.router.navigate([`notificationlogin`]);
+        let today = new Date;
+
+        this.emergencyNotification = notification.filter(n => 
+                n.displayOnLogin == true &&
+                new Date(n.expiryDate) > today
+            )
+        
+        if (this.emergencyNotification.length != 0) {
+            this.appValuesService.setEmergencyNotification(this.emergencyNotification);
+            this.router.navigate([`notificationlogin`]);
+        }
     }
 
     getIcon() {
