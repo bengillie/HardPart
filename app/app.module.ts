@@ -16,6 +16,8 @@ import { ActionbarComponent } from '~/actionbar/actionbar.component';
 import { AdvertComponent } from '~/advert/advert.component';
 import { AttendanceComponent } from "./attendance/attendance.component";
 import { BehaviourComponent } from "~/behaviour/behaviour.component";
+import { ContactUsComponent } from "./contactus/contactus.component";
+import { ContactusFormComponent } from "./contactus-form/contactus-form.component";
 import { DashboardComponent } from "~/dashboard/dashboard.component";
 import { ForgotPasswordComponent } from "~/forgot-password/forgot-password.component";
 import { HomeworkComponent } from './homework/homework.component';
@@ -35,6 +37,7 @@ import { AdvertService } from '~/service/advert.service';
 import { AppValuesService } from '~/service/appvalues.service';
 import { AttendanceService } from '~/service/attendance.service';
 import { BehaviourService } from '~/service/behaviour.service';
+import { ContactUsService } from './service/contactus.service';
 import { DataService }  from './database/data.service';
 import { ErrorService } from './service/error.service';
 import { HelperService } from './service/helper.service';
@@ -73,6 +76,8 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
         AdvertComponent,
         AttendanceComponent,
         BehaviourComponent,
+        ContactUsComponent,
+        ContactusFormComponent,
         DashboardComponent,
         ForgotPasswordComponent,
         HomeworkComponent,
@@ -93,6 +98,7 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
         AppValuesService,
         AttendanceService,
         BehaviourService,
+        ContactUsService,
         ErrorService,
         HelperService,
         HttpService,

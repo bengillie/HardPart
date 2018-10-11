@@ -7,7 +7,12 @@ import { AccountSecurityComponent } from "./account-security/account-security.co
 import { AchievementComponent } from "~/achievement/achievement.component";
 import { AdvertComponent } from '~/advert/advert.component';
 import { AttendanceComponent } from "~/attendance/attendance.component";
+<<<<<<< HEAD
 import { BehaviourComponent } from "~/behaviour/behaviour.component";
+=======
+import { ContactUsComponent } from "./contactus/contactus.component";
+import { ContactusFormComponent } from "./contactus-form/contactus-form.component";
+>>>>>>> 1ee7b361cdaa8bc7a2336938ad99b13704179be8
 import { DashboardComponent } from "~/dashboard/dashboard.component";
 import { ForgotPasswordComponent } from "~/forgot-password/forgot-password.component";
 import { HomeworkComponent } from "./homework/homework.component";
@@ -23,13 +28,16 @@ import { UpdateSecurityDetailsComponent } from './update-security-details/update
 
 const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
-    //{ path: '', redirectTo: '/attendance', pathMatch: 'full' },
-
     { path: "accountsecurity", component: AccountSecurityComponent},
     { path: "achievement", component: AchievementComponent},
     { path: "advert", component: AdvertComponent },
     { path: "attendance", component: AttendanceComponent},
+<<<<<<< HEAD
     { path: "behaviour", component: BehaviourComponent},
+=======
+    { path: "contactus", component: ContactUsComponent},
+    { path: "contactusform", component: ContactusFormComponent},
+>>>>>>> 1ee7b361cdaa8bc7a2336938ad99b13704179be8
     { path: "dashboard", component: DashboardComponent},
     { path: "forgotpassword", component: ForgotPasswordComponent },
     { path: "login", component: LoginComponent },

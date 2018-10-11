@@ -1,0 +1,21 @@
+<actionbar title="Contact Us" hasNavigationBack="true"></actionbar>
+
+<StackLayout [visibility]="isLoading ? 'collapse' : 'visible'" class="container">
+    <GridLayout class="container-contactDetails" columns="*, 3*" rows="auto, auto, auto, auto, *">
+        <Label col="0" row="0" class="icon contactIcon" [text]="phoneIconCode"></Label>
+        <Label col="1" row="0" class="contactLabel" [text]="contactDetails.phoneno"></Label>
+
+        <Label col="0" row="1" class="icon contactIcon" [text]="emailIconCode"></Label>
+        <Label col="1" row="1" class="contactLabel" [text]="contactDetails.email"></Label>
+
+        <Label col="0" row="2" class="icon contactIcon" [text]="addressIconCode"></Label>
+        <Label col="1" row="2" class="contactLabel" [text]="contactDetails.address"></Label>
+
+        <Button class="btn-emailus" row="3" colspan="2" text="Email us" (tap)="emailus()"></Button>
+
+        <Image class="mapaddress" row="4" colspan="2" src="~/images/addressmap.png" stretch="aspectFill" 
+            verticalAlignment="center" horizontalAlignment="center">
+        </Image>
+    </GridLayout>
+</StackLayout>
+<ActivityIndicator [busy]="isLoading" horizontalAlignment="center"></ActivityIndicator>

@@ -4,6 +4,7 @@ import { Achievement } from '~/model/achievement.model';
 import { Advert } from '~/model/advert.model';
 import { Attendance, AttendanceMark } from '~/model/attendance.model';
 import { Behaviour, BehaviourType } from '~/model/behaviour.model';
+import { ContactDetails } from '../model/contactus.model';
 import { Homework, HomeworkStatus } from '../model/homework.model';
 import { Notification } from '~/model/notification.model';
 import { Lesson, Period, Subject } from '~/model/timetable.model';
@@ -101,6 +102,9 @@ export class DataService implements InMemoryDbService {
       { id: 7, userId: 3, subject: "Music", type: BehaviourType.disruption, score: 1, date: p2WeekMonday },
       { id: 8, userId: 3, subject: "Science", type: BehaviourType.homework, score: 2, date: p2WeekMonday },
     ]
+    const contactdetail: ContactDetails = {
+      id: 1, phoneno: '+1 989-356-1414', email: 'piedpiperschool@email.com', address: '444 Wilson St, Alpena, MI 49707, USA', map: ''
+    };
 
     dateNow1 = new Date();
     dateNow2 = new Date();
@@ -417,6 +421,6 @@ export class DataService implements InMemoryDbService {
       }
     ];
 
-    return { achievement, advert, attendance, behaviour, homework, lesson, notification, period, user }; 
+    return { achievement, advert, attendance, behaviour, contactdetail, homework, lesson, notification, period, user }; 
   }
 }
