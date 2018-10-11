@@ -111,10 +111,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 break;
             }
             case this.menuName.contact: {
-<<<<<<< HEAD
-=======
                 this.routerExt.navigate([`contactus`]);
->>>>>>> 1ee7b361cdaa8bc7a2336938ad99b13704179be8
                 break;
             }
         }

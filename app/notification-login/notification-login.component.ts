@@ -5,6 +5,7 @@ import { topmost } from "ui/frame";
 
 import { Notification } from '~/model/notification.model';
 
+import { AppValuesService } from '../service/appvalues.service';
 import { NotificationService } from '~/service/notification.service';
 import { RouterExtensions } from 'nativescript-angular/router';
 
@@ -17,10 +18,11 @@ import { RouterExtensions } from 'nativescript-angular/router';
 export class NotificationLoginComponent implements OnInit, OnDestroy {
     private subscriptions : Subscription[] = [];
 
-    isLoading = true;
     emergencyNotification: Notification[] = [];
+    isLoading = true;
 
     constructor(
+        private appValuesService: AppValuesService,
         private notificationService: NotificationService,
         // private params: ModalDialogParams,
         private routerExt: RouterExtensions,
@@ -44,13 +46,6 @@ export class NotificationLoginComponent implements OnInit, OnDestroy {
     }
 
     getEmergencyNotification() {
-        this.subscriptions.push(this.notificationService.getEmergencyNotification()
-            .subscribe(
-                notification => {
-                    notification = notification.sort((a, b) => new Date(a.createdDate) > new Date(b.createdDate) ? -1 : 1);
-                    this.emergencyNotification = notification;
-                }
-            ),
-        )
+        this.emergencyNotification = this.appValuesService.getEmergencyNotification();
     }
 }
