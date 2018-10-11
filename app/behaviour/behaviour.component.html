@@ -1,0 +1,37 @@
+<actionbar title="Behaviour" hasNavigationBack="true"></actionbar>
+
+<GridLayout [visibility]="isLoading ? 'collapse' : 'visible'" rows="auto, auto, *">
+    <ScrollView row="0" orientation="horizontal" horizontalAlignment="center" verticalAlignment="center">
+        <StackLayout class="container-total" orientation="horizontal">
+            <GridLayout *ngFor="let item of groupedBehaviour; let i = index;" rows="*, *, *"
+                class="layout-total" horizontalAlignment="center">
+                <Label row="0" class="icon starIconCode" [text]="getBehaviourIcon(item.key)" horizontalAlignment="center" verticalAlignment="center"></Label>
+                <Label row="0" class="lbl-total-score" [text]="item.totalScore" horizontalAlignment="center" verticalAlignment="center"></Label>
+                <Label row="1" class="lbl-total-type" [text]="item.key" horizontalAlignment="center" verticalAlignment="center"></Label>
+            </GridLayout>
+        </StackLayout>
+    </ScrollView>
+
+    <StackLayout row="1" class="hr-light"></StackLayout>
+
+    <GridLayout row="2">
+        <ListView class="list-group" [items]="behaviour">
+            <ng-template let-item="item" let-i="index">
+                <GridLayout columns="4*, *">
+                    <StackLayout col="0">
+                        <Label [text]="item.subject" class="list-group-item"></Label>
+                        <StackLayout class="list-group-item list-group-item-sub">
+                            <Label [text]="item.type" ></Label>
+                            <Label [text]='item.date | date:"fullDate"' ></Label>
+                        </StackLayout>
+                    </StackLayout>
+                    <Label col="1" class="lbl-score" 
+                        verticalAlignment="center" horizontalAlignment="center" 
+                        [text]="item.score"></Label>
+                </GridLayout>
+            </ng-template>
+        </ListView>
+    </GridLayout>
+</GridLayout>
+
+<ActivityIndicator [busy]="isLoading" horizontalAlignment="center"></ActivityIndicator>

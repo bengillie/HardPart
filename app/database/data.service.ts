@@ -3,6 +3,7 @@ import { InMemoryDbService } from 'angular-in-memory-web-api';
 import { Achievement } from '~/model/achievement.model';
 import { Advert } from '~/model/advert.model';
 import { Attendance, AttendanceMark } from '~/model/attendance.model';
+import { Behaviour, BehaviourType } from '~/model/behaviour.model';
 import { ContactDetails } from '../model/contactus.model';
 import { Homework, HomeworkStatus } from '../model/homework.model';
 import { Notification } from '~/model/notification.model';
@@ -91,6 +92,16 @@ export class DataService implements InMemoryDbService {
       { id: 18, date: n2WeekSaturday, amMark: AttendanceMark.late, pmMark: AttendanceMark.unauthorised },
     ];
 
+    const behaviour: Behaviour[] = [
+      { id: 1, userId: 3, subject: "English", type: BehaviourType.homework, score: 1, date: p2WeekMonday },
+      { id: 2, userId: 3, subject: "Math", type: BehaviourType.disruption, score: 1, date: p2WeekMonday },
+      { id: 3, userId: 3, subject: "Science", type: BehaviourType.disruption, score: 2, date: p2WeekMonday },
+      { id: 4, userId: 3, subject: "Geography", type: BehaviourType.homework, score: 3, date: p2WeekMonday },
+      { id: 5, userId: 3, subject: "Math", type: BehaviourType.organisation, score: 1, date: p2WeekMonday },
+      { id: 6, userId: 3, subject: "Art and Design", type: BehaviourType.organisation, score: 1, date: p2WeekMonday },
+      { id: 7, userId: 3, subject: "Music", type: BehaviourType.disruption, score: 1, date: p2WeekMonday },
+      { id: 8, userId: 3, subject: "Science", type: BehaviourType.homework, score: 2, date: p2WeekMonday },
+    ]
     const contactdetail: ContactDetails = {
       id: 1, phoneno: '+1 989-356-1414', email: 'piedpiperschool@email.com', address: '444 Wilson St, Alpena, MI 49707, USA', map: ''
     };
@@ -410,6 +421,6 @@ export class DataService implements InMemoryDbService {
       }
     ];
 
-    return { achievement, attendance, contactdetail, homework, lesson, notification, period, user }; 
+    return { achievement, advert, attendance, behaviour, contactdetail, homework, lesson, notification, period, user }; 
   }
 }
