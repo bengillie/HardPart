@@ -7,6 +7,7 @@ import { AccountSecurityComponent } from "./account-security/account-security.co
 import { AchievementComponent } from "~/achievement/achievement.component";
 import { AdvertComponent } from '~/advert/advert.component';
 import { AttendanceComponent } from "~/attendance/attendance.component";
+import { BehaviourComponent } from "~/behaviour/behaviour.component";
 import { DashboardComponent } from "~/dashboard/dashboard.component";
 import { ForgotPasswordComponent } from "~/forgot-password/forgot-password.component";
 import { HomeworkComponent } from "./homework/homework.component";
@@ -28,6 +29,7 @@ const routes: Routes = [
     { path: "achievement", component: AchievementComponent},
     { path: "advert", component: AdvertComponent },
     { path: "attendance", component: AttendanceComponent},
+    { path: "behaviour", component: BehaviourComponent},
     { path: "dashboard", component: DashboardComponent},
     { path: "forgotpassword", component: ForgotPasswordComponent },
     { path: "login", component: LoginComponent },
