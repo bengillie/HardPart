@@ -92,7 +92,7 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
                         this.appValuesService.setNotification(notification);
                         this.appValuesService.setTotalNotification(notification.length);
                         this.totalNotification = notification.length;
-                        this.getEmergencyNotification(notification);
+                        //this.getEmergencyNotification(notification);
                         // this.getAdvert();
                     }
                 ),
