@@ -58,10 +58,6 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
         }
     }  
 
-    getAdvert() {
-        this.routerExt.navigate([`advert`]);
-    }
-
     getCurrentUser() {
         this.currentUser = this.appValuesService.getLoggedInUser();
         if(this.currentUser) {
@@ -103,7 +99,6 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
                         this.appValuesService.setTotalNotification(notification.length);
                         this.totalNotification = notification.length;
                         this.getEmergencyNotification(notification);
-                        // this.getAdvert();
                     }
                 ),
             )

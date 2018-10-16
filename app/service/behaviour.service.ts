@@ -21,11 +21,11 @@ export class BehaviourService {
     ) { }
 
     getBehaviour(): Observable<Behaviour[]> {
-        const loggedInUser: User = this.appValuesService.getLoggedInUser();
-        let params = new HttpParams();
-        params = params.append('userId', JSON.stringify(loggedInUser.id));
+        // const loggedInUser: User = this.appValuesService.getLoggedInUser();
+        // let params = new HttpParams();
+        // params = params.append('userId', JSON.stringify(loggedInUser.id));
 
-        return this.httpService.get<Behaviour[]>(this.url, params)
+        return this.httpService.get<Behaviour[]>(this.url)
         .pipe(
             map(advert => advert),
             catchError(this.errorService.handleError<Behaviour[]>(`getAdvert()`))

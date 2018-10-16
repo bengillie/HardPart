@@ -118,6 +118,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                 this.router.navigate([`updatesecuritydetails`]);
             } else {
                 this.router.navigate([`dashboard`]);
+                setTimeout(() => {this.router.navigate([`advert`])}, 200);
             }
         }
 
