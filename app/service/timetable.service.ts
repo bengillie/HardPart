@@ -23,17 +23,17 @@ export class TimetableService {
         private logService: LoggingService) { }
 
     getLessons(dateRange: string[]): Observable<Lesson[]> {
-        const loggedInUser: User = this.appValuesService.getLoggedInUser();
+        const selectedStudent: User = this.appValuesService.getSelectedStudent();
         let params = new HttpParams();
-        params = params.append('userId', loggedInUser.id.toString());
+        params = params.append('userId', selectedStudent.id.toString());
         params = params.append('startDate', JSON.stringify(dateRange));
         params = params.append('endDate', JSON.stringify(dateRange));
         
         return this.httpService.get<Lesson[]>(this.url_lesson, params)
         .pipe(
             map(lesson => lesson),
-            tap(_ => this.logService.log(`fetched lessons for student id = ${loggedInUser.id.toString()}`)),
-            catchError(this.errorService.handleError<Lesson[]>(`getLesson student id = ${loggedInUser.id.toString()}`))
+            tap(_ => this.logService.log(`fetched lessons for student id = ${selectedStudent.id.toString()}`)),
+            catchError(this.errorService.handleError<Lesson[]>(`getLesson student id = ${selectedStudent.id.toString()}`))
         );
     }
 

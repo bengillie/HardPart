@@ -4,6 +4,7 @@ import { RouterExtensions } from 'nativescript-angular/router'
 import { Subscription } from 'rxjs';
 
 import { MenuList } from '~/model/dashboard.model';
+import { UserType } from '~/model/user.model';
 
 import { AppValuesService } from '../service/appvalues.service';
 
@@ -52,7 +53,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
             this.getMenuList();
         } else {
             let currentUser = this.appValuesService.getLoggedInUser();
-            if(currentUser.children.length > 1) {
+            if(currentUser.usertype === UserType.student){
+                this.appValuesService.setSelectedStudent(this.appValuesService.getLoggedInUser());
+            } else if(currentUser.children.length > 1) {
                 this.routerExt.navigate([`studentselection`]);
             } else if(currentUser.children.length === 1) {
                 this.appValuesService.setSelectedStudent(currentUser.children[0]);

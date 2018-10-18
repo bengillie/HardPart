@@ -23,7 +23,7 @@ export class TimetableComponent implements OnInit, OnDestroy {
     
     homeworkIcon = "";
 
-    loggedInUser: User;
+    selectedStudent: User;
     
     lessonDate: Date = new Date();
     startDate: Date = new Date();
@@ -56,7 +56,7 @@ export class TimetableComponent implements OnInit, OnDestroy {
         private router: Router,
         private timetableService: TimetableService,
     ) {
-        this.loggedInUser = this.appValuesService.getLoggedInUser();
+        this.selectedStudent = this.appValuesService.getSelectedStudent();
 
         this.startDate.setDate(this.startDate.getDate() - (this.startDate.getDay() + 7));
         this.endDate.setDate(this.endDate.getDate() - (this.endDate.getDay() - 14));
@@ -79,7 +79,7 @@ export class TimetableComponent implements OnInit, OnDestroy {
     }
 
     getAllHomework() {
-        this.subscriptions.push(this.homeworkService.getStudentHomework(this.loggedInUser.id)
+        this.subscriptions.push(this.homeworkService.getStudentHomework(this.selectedStudent.id)
             .subscribe(
                 homework => {
                     this.allHomeworks = homework;
