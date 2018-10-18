@@ -1,6 +1,6 @@
 export class Behaviour {
     id: number;
-    userId: number;
+    // userId: number;
     subject: string;
     type: BehaviourType;
     score: number;

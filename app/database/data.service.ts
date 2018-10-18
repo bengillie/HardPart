@@ -93,14 +93,14 @@ export class DataService implements InMemoryDbService {
     ];
 
     const behaviour: Behaviour[] = [
-      { id: 1, userId: 3, subject: "English", type: BehaviourType.homework, score: 1, date: p2WeekMonday },
-      { id: 2, userId: 3, subject: "Math", type: BehaviourType.disruption, score: 1, date: p2WeekMonday },
-      { id: 3, userId: 3, subject: "Science", type: BehaviourType.disruption, score: 2, date: p2WeekMonday },
-      { id: 4, userId: 3, subject: "Geography", type: BehaviourType.homework, score: 3, date: p2WeekMonday },
-      { id: 5, userId: 3, subject: "Math", type: BehaviourType.organisation, score: 1, date: p2WeekMonday },
-      { id: 6, userId: 3, subject: "Art and Design", type: BehaviourType.organisation, score: 1, date: p2WeekMonday },
-      { id: 7, userId: 3, subject: "Music", type: BehaviourType.disruption, score: 1, date: p2WeekMonday },
-      { id: 8, userId: 3, subject: "Science", type: BehaviourType.homework, score: 2, date: p2WeekMonday },
+      { id: 1, subject: "English", type: BehaviourType.homework, score: 1, date: p2WeekMonday },
+      { id: 2, subject: "Math", type: BehaviourType.disruption, score: 1, date: p2WeekMonday },
+      { id: 3, subject: "Science", type: BehaviourType.disruption, score: 2, date: p2WeekMonday },
+      { id: 4, subject: "Geography", type: BehaviourType.homework, score: 3, date: p2WeekMonday },
+      { id: 5, subject: "Math", type: BehaviourType.organisation, score: 1, date: p2WeekMonday },
+      { id: 6, subject: "Art and Design", type: BehaviourType.organisation, score: 1, date: p2WeekMonday },
+      { id: 7, subject: "Music", type: BehaviourType.disruption, score: 1, date: p2WeekMonday },
+      { id: 8, subject: "Science", type: BehaviourType.homework, score: 2, date: p2WeekMonday },
     ]
     const contactdetail: ContactDetails = {
       id: 1, phoneno: '+1 989-356-1414', email: 'piedpiperschool@email.com', address: '444 Wilson St, Alpena, MI 49707, USA', map: ''
@@ -242,30 +242,17 @@ export class DataService implements InMemoryDbService {
     ];
 
     const notification: Notification[] = [
-      { id: 1, userId: 3, title: "Homework Overdue", message: "Math Homework due: " + nextWeekFriday.toDateString() + " for Mrs. Potts", image: "~/images/notif_homework.png", 
+      { id: 1, title: "Homework Overdue", message: "Math Homework due: " + nextWeekFriday.toDateString() + " for Mrs. Potts", image: "~/images/notif_homework.png", 
         createdDate: new Date(friday.setHours(8, 0, 0)), expiryDate: nextWeekFriday, displayOnLogin: false, seen: false },
-      { id: 2, userId: 3, title: "Late Registration", message: "Late on " + monday.toDateString(), image: "~/images/notif_late.png", 
+      { id: 2, title: "Late Registration", message: "Late on " + monday.toDateString(), image: "~/images/notif_late.png", 
         createdDate: new Date(monday.setHours(8, 30, 0)), expiryDate: tuesday, displayOnLogin: false, seen: false },
-      { id: 3, userId: 3, title: "Unauthorized Absence", message: "Absent on " + tuesday.toDateString(), image: "~/images/notif_absent.png", 
+      { id: 3, title: "Unauthorized Absence", message: "Absent on " + tuesday.toDateString(), image: "~/images/notif_absent.png", 
         createdDate: new Date(tuesday.setHours(8, 0, 0)), expiryDate: wednesday, displayOnLogin: false, seen: false },
-      { id: 4, userId: 3, title: "Homework Near Due Date", message: "Science Homework due: " + nextWeekMonday.toDateString() + " for Mr. Fixit", image: "~/images/notif_homework.png", 
+      { id: 4, title: "Homework Near Due Date", message: "Science Homework due: " + nextWeekMonday.toDateString() + " for Mr. Fixit", image: "~/images/notif_homework.png", 
         createdDate: new Date(monday.setHours(9, 0, 0)), expiryDate: nextWeekMonday, displayOnLogin: false, seen: false },
-      { id: 5, userId: 3, title: "Non-uniform Day", message: "Non-uniform day on " + wednesday.toDateString(), image: "~/images/notif_non-uniform.png", 
+      { id: 5, title: "Non-uniform Day", message: "Non-uniform day on " + wednesday.toDateString(), image: "~/images/notif_non-uniform.png", 
         createdDate: new Date(wednesday.setHours(7, 0, 0)), expiryDate: thursday, displayOnLogin: true, seen: false },
-      { id: 6, userId: 3, title: "Class Suspension", message: "School is shut because of the typhoon on " + thursday.toDateString(), image: "~/images/notif_noclass.png", 
-        createdDate: new Date(thursday.setHours(7, 0, 0)), expiryDate: friday, displayOnLogin: true, seen: false },
-      
-      { id: 7, userId: 5, title: "Homework Overdue", message: "Math Homework due: " + nextWeekFriday.toDateString() + " for Mrs. Potts", image: "~/images/notif_homework.png", 
-        createdDate: new Date(friday.setHours(8, 0, 0)), expiryDate: nextWeekFriday, displayOnLogin: false, seen: false },
-      { id: 8, userId: 5, title: "Late Registration", message: "Late on " + monday.toDateString(), image: "~/images/notif_late.png", 
-        createdDate: new Date(monday.setHours(8, 30, 0)), expiryDate: tuesday, displayOnLogin: false, seen: false },
-      { id: 9, userId: 5, title: "Unauthorized Absence", message: "Absent on " + tuesday.toDateString(), image: "~/images/notif_absent.png", 
-        createdDate: new Date(tuesday.setHours(8, 0, 0)), expiryDate: wednesday, displayOnLogin: false, seen: false },
-      { id: 10, userId: 5, title: "Homework Near Due Date", message: "Science Homework due: " + nextWeekMonday.toDateString() + " for Mr. Fixit", image: "~/images/notif_homework.png", 
-        createdDate: new Date(monday.setHours(9, 0, 0)), expiryDate: nextWeekMonday, displayOnLogin: false, seen: false },
-      { id: 11, userId: 5, title: "Non-uniform Day", message: "Non-uniform day on " + wednesday.toDateString(), image: "~/images/notif_non-uniform.png", 
-        createdDate: new Date(wednesday.setHours(7, 0, 0)), expiryDate: thursday, displayOnLogin: true, seen: false },
-      { id: 12, userId: 5, title: "Class Suspension", message: "School is shut because of the typhoon on " + thursday.toDateString(), image: "~/images/notif_noclass.png", 
+      { id: 6, title: "Class Suspension", message: "School is shut because of the typhoon on " + thursday.toDateString(), image: "~/images/notif_noclass.png", 
         createdDate: new Date(thursday.setHours(7, 0, 0)), expiryDate: friday, displayOnLogin: true, seen: false },
     ]
     

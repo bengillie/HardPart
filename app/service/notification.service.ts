@@ -25,7 +25,7 @@ export class NotificationService {
     getEmergencyNotification(): Observable<Notification[]> {
         const loggedInUser: User = this.appValuesService.getLoggedInUser();
         let params = new HttpParams();
-        params = params.append('userId', JSON.stringify(loggedInUser.id));
+        // params = params.append('userId', JSON.stringify(loggedInUser.id));
         params = params.append('displayOnLogin', JSON.stringify(true));
 
         return this.httpService.get<Notification[]>(this.url, params)
@@ -38,7 +38,7 @@ export class NotificationService {
     getNotification(): Observable<Notification[]> {
         const loggedInUser: User = this.appValuesService.getLoggedInUser();
         let params = new HttpParams();
-        params = params.append('userId', JSON.stringify(loggedInUser.id));
+        // params = params.append('userId', JSON.stringify(loggedInUser.id));
         params = params.append('seen', JSON.stringify(false));
 
         return this.httpService.get<Notification[]>(this.url, params)
@@ -51,7 +51,7 @@ export class NotificationService {
     updateNotification(notification: Notification): Observable<any> {
         return this.httpService.put(this.url, notification)
         .pipe(
-            catchError(this.errorService.handleError<Notification[]>(`updateNotification(): user id = ${notification.userId.toString()}`))
+            catchError(this.errorService.handleError<Notification[]>(`updateNotification(): user id = ${notification.id.toString()}`))
         );
     }
 }
