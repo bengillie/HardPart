@@ -251,9 +251,9 @@ export class DataService implements InMemoryDbService {
       { id: 4, title: "Homework Near Due Date", message: "Science Homework due: " + nextWeekMonday.toDateString() + " for Mr. Fixit", image: "~/images/notif_homework.png", 
         createdDate: new Date(monday.setHours(9, 0, 0)), expiryDate: nextWeekMonday, displayOnLogin: false, seen: false },
       { id: 5, title: "Non-uniform Day", message: "Non-uniform day on " + wednesday.toDateString(), image: "~/images/notif_non-uniform.png", 
-        createdDate: new Date(wednesday.setHours(7, 0, 0)), expiryDate: thursday, displayOnLogin: true, seen: false },
+        createdDate: new Date(wednesday.setHours(7, 0, 0)), expiryDate: thursday, displayOnLogin: false, seen: false },
       { id: 6, title: "Class Suspension", message: "School is shut because of the typhoon on " + thursday.toDateString(), image: "~/images/notif_noclass.png", 
-        createdDate: new Date(thursday.setHours(7, 0, 0)), expiryDate: friday, displayOnLogin: true, seen: false },
+        createdDate: new Date(thursday.setHours(7, 0, 0)), expiryDate: friday, displayOnLogin: false, seen: false },
     ]
     
     const period: Period[] = [
@@ -355,7 +355,7 @@ export class DataService implements InMemoryDbService {
         lastpwupdate: dateNow1, lastlogin: dateNow1,
         children: []
       },
-      { id: 5, fname: 'Jason', mname: '', lname: 'Smith', username: 'parent', password: 'parent', birthdate: '01/01/1950', 
+      { id: 5, fname: 'Jason', mname: '', lname: 'Smith', username: 'parent', password: 'parent', birthdate: '1', 
         phoneprimary: '9567', phonesecondary: '0567',
         emailprimary: encodeURIComponent('jasonsmith@email.com'), emailsecondary: encodeURIComponent('jasonsmith2@email.com'),
         isfirsttime: false, usertype: UserType.parent, hasIncompleteHomework: null, image: '~/images/dp5.jpg',
