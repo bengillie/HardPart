@@ -1,4 +1,20 @@
 {
-    "editor.fontSize": 17,
-    "editor.minimap.enabled": false,
+	"editor.formatOnSave": true,
+	"[typescript]": {
+		"editor.formatOnSave": true
+	},
+	"prettier.eslintIntegration": true,
+	"prettier.stylelintIntegration": true,
+	"files.autoSave": "onFocusChange",
+	"editor.tabSize": 3,
+	"window.zoomLevel": -1,
+	"editor.minimap.enabled": false,
+	"git.confirmSync": false,
+	"workbench.colorCustomizations": {
+		"editorIndentGuide.activeBackground": "#ff0000"
+	},
+	"typescript.preferences.quoteStyle": "single",
+	"nativescript.analytics.enabled": false,
+	"git.enableSmartCommit": true,
+	"typescript.updateImportsOnFileMove.enabled": "always"
 }

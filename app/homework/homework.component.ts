@@ -1,24 +1,23 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
-import { ListViewEventData, ListViewScrollEventData, SwipeActionsEventData } from "nativescript-ui-listview";
-import { RadListViewComponent } from "nativescript-ui-listview/angular";
+import { ListViewEventData, ListViewScrollEventData, SwipeActionsEventData } from 'nativescript-ui-listview';
+import { RadListViewComponent } from 'nativescript-ui-listview/angular';
 
 import { View, isIOS } from 'tns-core-modules/ui/core/view';
 
-import { Homework, HomeworkDeadlineStatus, HomeworkStatus } from '../model/homework.model';
-import { HomeworkService } from '../service/homework.service';
+import { Homework, HomeworkDeadlineStatus, HomeworkStatus } from '../shared/model/homework.model';
+import { HomeworkService } from './homework.service';
 
 @Component({
 	moduleId: module.id,
 	selector: 'homework',
 	templateUrl: './homework.component.html',
-	styleUrls: ['./homework.component.less']
+	styleUrls: ['./homework.component.less'],
 })
-
 export class HomeworkComponent implements OnInit, OnDestroy {
-	private subscriptions : Subscription[] = [];
+	private subscriptions: Subscription[] = [];
 	public tabViewSelectedIndex = 0;
 	public swipeText = 'Complete';
 
@@ -32,46 +31,46 @@ export class HomeworkComponent implements OnInit, OnDestroy {
 
 	isLoading = true;
 
-	@ViewChild("listView_todo") listViewComponent_todo: RadListViewComponent;
-	@ViewChild("listView_done") listViewComponent_done: RadListViewComponent;
-	@ViewChild("listView_all") listViewComponent_all: RadListViewComponent;
-	
-	warningIconCode = String.fromCharCode(0xea08);
-	
-	constructor(private router: Router,
-		private homeworkService: HomeworkService) { }
+	@ViewChild('listView_todo')
+	listViewComponent_todo: RadListViewComponent;
+	@ViewChild('listView_done')
+	listViewComponent_done: RadListViewComponent;
+	@ViewChild('listView_all')
+	listViewComponent_all: RadListViewComponent;
 
-	ngOnInit() { 
+	warningIconCode = String.fromCharCode(0xea08);
+
+	constructor(private router: Router, private homeworkService: HomeworkService) {}
+
+	ngOnInit() {
 		this.getHomeworks();
 	}
 
 	ngOnDestroy() {
 		if (this.subscriptions) {
-            for (let subscription of this.subscriptions)
-            {
-                subscription.unsubscribe();
-            }
-        }
+			for (let subscription of this.subscriptions) {
+				subscription.unsubscribe();
+			}
+		}
 	}
 
 	getHomeworks() {
 		this.subscriptions.push(
-			this.homeworkService.getHomeworks()
-			.subscribe(
+			this.homeworkService.getHomeworks().subscribe(
 				x => {
 					this.homeworks = x.filter(all => all.status !== HomeworkStatus.removed);
 					this.homeworks_todo = this.homeworks.filter(all => all.status === HomeworkStatus.todo);
 					this.homeworks_done = this.homeworks.filter(all => all.status === HomeworkStatus.done);
 					this.sortHomeworkList();
 				},
-				error => console.log("Error: ", error),
+				error => console.log('Error: ', error),
 				() => {
 					this.isLoading = false;
 				}
 			)
 		);
 	}
-	
+
 	getHomeworkDeadlineStatus(homework: Homework): HomeworkDeadlineStatus {
 		return this.homeworkService.getHomeworkDeadlineStatus(homework);
 	}
@@ -99,7 +98,7 @@ export class HomeworkComponent implements OnInit, OnDestroy {
 			this.listViewComponent_todo.nativeElement.refresh();
 			this.listViewComponent_done.nativeElement.refresh();
 		}
-		  
+
 		setTimeout(() => {
 			this.listViewComponent_all.listView.scrollWithAmount(this.scrollOffset_all, false);
 			this.listViewComponent_todo.listView.scrollWithAmount(this.scrollOffset_todo, false);
@@ -108,22 +107,19 @@ export class HomeworkComponent implements OnInit, OnDestroy {
 	}
 
 	sortHomeworkByDueDate(a, b) {
-		if (a.dueDate < b.dueDate)
-		  return -1;
-		if (a.dueDate > b.dueDate)
-		  return 1;
+		if (a.dueDate < b.dueDate) return -1;
+		if (a.dueDate > b.dueDate) return 1;
 		return 0;
 	}
 
 	markComplete(args) {
 		let item = args.object.bindingContext as Homework;
 		item.status = HomeworkStatus.done;
-		
+
 		this.subscriptions.push(
-			this.homeworkService.updateUserHomework(item)
-			.subscribe(
-				() => { },
-				() => { },
+			this.homeworkService.updateUserHomework(item).subscribe(
+				() => {},
+				() => {},
 				() => {
 					this.homeworks_todo.splice(this.homeworks_todo.indexOf(item), 1);
 					this.homeworks_done.push(item);
@@ -140,12 +136,11 @@ export class HomeworkComponent implements OnInit, OnDestroy {
 	markTodo(args) {
 		let item = args.object.bindingContext as Homework;
 		item.status = HomeworkStatus.todo;
-		
+
 		this.subscriptions.push(
-			this.homeworkService.updateUserHomework(item)
-			.subscribe(
-				() => { },
-				() => { },
+			this.homeworkService.updateUserHomework(item).subscribe(
+				() => {},
+				() => {},
 				() => {
 					this.homeworks_done.splice(this.homeworks_done.indexOf(item), 1);
 					this.homeworks_todo.push(item);
@@ -159,7 +154,7 @@ export class HomeworkComponent implements OnInit, OnDestroy {
 		this.listViewComponent_all.listView.notifySwipeToExecuteFinished();
 	}
 
-	onTabViewClicked(args) { 
+	onTabViewClicked(args) {
 		this.tabViewSelectedIndex = args;
 	}
 
@@ -172,62 +167,54 @@ export class HomeworkComponent implements OnInit, OnDestroy {
 	}
 
 	onItemTap_all(args) {
-		this.onItemTap(args, "ALL");
+		this.onItemTap(args, 'ALL');
 	}
 
 	onItemTap(args, tabText) {
 		let homework = new Homework();
-		if(tabText === HomeworkStatus.todo) {
+		if (tabText === HomeworkStatus.todo) {
 			homework = this.homeworks_todo[args.index];
-		}
-		else if(tabText === HomeworkStatus.done) {
+		} else if (tabText === HomeworkStatus.done) {
 			homework = this.homeworks_done[args.index];
-		}
-		else {
+		} else {
 			homework = this.homeworks[args.index];
 		}
 		this.router.navigate([`/homeworkdetails/${homework.id}`]);
 	}
-	
-	onItemSwiping(args) {
 
-	}
+	onItemSwiping(args) {}
 
 	onItemSwiping_all(args) {
 		let item = this.homeworks[args.index];
-		if(item.status === HomeworkStatus.todo) {
+		if (item.status === HomeworkStatus.todo) {
 			this.swipeText = 'Complete';
-		}
-		else {
+		} else {
 			this.swipeText = 'To Do';
 		}
 	}
-	
-	onSwipeCellFinished(args) {
 
-	}
+	onSwipeCellFinished(args) {}
 
 	onSwipeCellStarted(args: SwipeActionsEventData) {
-        const swipeLimits = args.data.swipeLimits;
+		const swipeLimits = args.data.swipeLimits;
 		const swipeView = args['object'];
-		
-        const leftItem = swipeView.getViewById<View>('attach-view');
-        swipeLimits.left = leftItem.getMeasuredWidth();
+
+		const leftItem = swipeView.getViewById<View>('attach-view');
+		swipeLimits.left = leftItem.getMeasuredWidth();
 		swipeLimits.threshold = leftItem.getMeasuredWidth() / 2;
-		
-        const rightItem = swipeView.getViewById<View>('complete-view');
-        swipeLimits.right = rightItem.getMeasuredWidth();
+
+		const rightItem = swipeView.getViewById<View>('complete-view');
+		swipeLimits.right = rightItem.getMeasuredWidth();
 	}
 
 	onCellSwiping(args: SwipeActionsEventData) {
-        // const swipeLimits = args.data.swipeLimits;
-        // const currentItemView = args.object;
-
-        // if (args.data.x > 200) {
-        //     console.log("Notify perform left action");
-        // } else if (args.data.x < -200) {
-        //     console.log("Notify perform right action");
-        // }
+		// const swipeLimits = args.data.swipeLimits;
+		// const currentItemView = args.object;
+		// if (args.data.x > 200) {
+		//     console.log("Notify perform left action");
+		// } else if (args.data.x < -200) {
+		//     console.log("Notify perform right action");
+		// }
 	}
 
 	onLeftSwipeClick(args: ListViewEventData) {

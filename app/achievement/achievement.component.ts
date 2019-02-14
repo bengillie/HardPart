@@ -2,19 +2,18 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Subscription } from 'rxjs';
 
-import { Achievement } from '../model/achievement.model';
-import { AchievementService } from '../service/achievement.service';
-import { HelperService } from '~/service/helper.service';
+import { Achievement } from '../shared/model/achievement.model';
+import { AchievementService } from './achievement.service';
+import { HelperService } from '~/shared/service/helper.service';
 
 @Component({
 	moduleId: module.id,
 	selector: 'achievement',
 	templateUrl: './achievement.component.html',
-	styleUrls: ['./achievement.component.css']
+	styleUrls: ['./achievement.component.css'],
 })
-
 export class AchievementComponent implements OnInit, OnDestroy {
-	private subscriptions : Subscription[] = [];
+	private subscriptions: Subscription[] = [];
 
 	achievements: Achievement[] = [];
 	groupedAchievements: any[] = [];
@@ -23,8 +22,7 @@ export class AchievementComponent implements OnInit, OnDestroy {
 
 	starIconCode = String.fromCharCode(0xe9d7);
 
-	constructor(private achievementService: AchievementService,
-		private helperService: HelperService) { }
+	constructor(private achievementService: AchievementService, private helperService: HelperService) {}
 
 	ngOnInit() {
 		this.getUserAchiements();
@@ -32,28 +30,26 @@ export class AchievementComponent implements OnInit, OnDestroy {
 
 	ngOnDestroy() {
 		if (this.subscriptions) {
-            for (let subscription of this.subscriptions)
-            {
-                subscription.unsubscribe();
-            }
-        }
+			for (let subscription of this.subscriptions) {
+				subscription.unsubscribe();
+			}
+		}
 	}
 
 	getUserAchiements() {
 		this.subscriptions.push(
-			this.achievementService.getUserAchievements()
-			.subscribe(
+			this.achievementService.getUserAchievements().subscribe(
 				x => {
 					this.achievements = x;
 				},
-				error => console.log("Error: ", error),
+				error => console.log('Error: ', error),
 				() => {
 					this.groupedAchievements = this.helperService.arrGroupBy(this.achievements, 'type');
 					this.groupedAchievements = this.groupedAchievements.map(i => {
 						return {
-							'key': i.key,
-							'totalScore': i.values.reduce((a, b) => a + b['score'], 0),
-							'values': i.values
+							key: i.key,
+							totalScore: i.values.reduce((a, b) => a + b['score'], 0),
+							values: i.values,
 						};
 					});
 					this.isLoading = false;

@@ -1,289 +1,172 @@
-import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core'
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { SelectedIndexChangedEventData } from "tns-core-modules/ui/tab-view";
+import { SelectedIndexChangedEventData } from 'tns-core-modules/ui/tab-view';
 
-import { Lesson, Period, TimetableTab } from "../model/timetable.model";
-import { Subject } from '~/model/timetable.model';
-import { User } from '~/model/user.model';
+import { Subject } from '~/shared/model/timetable.model';
+import { User } from '~/shared/model/user.model';
+import { Event } from '~/shared/model/event.model';
+import { Period } from '~/shared/model/period.model';
 
-import { AppValuesService } from '~/service/appvalues.service';
-import { HomeworkService } from '~/service/homework.service';
-import { TimetableService } from "../service/timetable.service";
-import { Homework, HomeworkDeadlineStatus } from '~/model/homework.model';
+import { AppValuesService } from '../shared/service/appvalues.service';
+import { HomeworkService } from '~/homework/homework.service';
+import { TimetableService } from './timetable.service';
+import { Homework, HomeworkDeadlineStatus } from '~/shared/model/homework.model';
+import { TimetableDay } from '~/shared/model/timetableDay.model';
 
 @Component({
-    moduleId: module.id,
-    selector: 'ns-timetable',
-    templateUrl: './timetable.component.html',
-    styleUrls: ['./timetable.component.less']
+	moduleId: module.id,
+	selector: 'ns-timetable',
+	templateUrl: './timetable.component.html',
+	styleUrls: ['./timetable.component.less'],
 })
 export class TimetableComponent implements OnInit, OnDestroy {
-    private subscriptions : Subscription[] = [];
-    
-    homeworkIcon = "";
+	private subscriptions: Subscription[] = [];
 
-    selectedStudent: User;
-    
-    lessonDate: Date = new Date();
-    startDate: Date = new Date();
-    endDate: Date = new Date();
+	homeworkIcon = '';
 
-    allHomeworks: Homework[] = [];
-    allDueHomeworks: Homework[] = [];
+	selectedStudent: User;
 
-    allLessons: Lesson[] = [];
-    lessonsForDate: Lesson[] = [];
+	lessonDate: Date = new Date();
+	startDate: Date = new Date();
+	endDate: Date = new Date();
 
-    allPeriods: Period[] = [];
-    periodsForDate: Period[] = [];    
+	allHomeworks: Homework[] = [];
+	allDueHomeworks: Homework[] = [];
 
-    tabDates: TimetableTab[] = [];
-    
-    current = false;
-    hasLesson = true;
-    isDueLesson = false;
-    isLoading = true;
-    lastLesson = false;
-    showDetails = false;
-    
-    dateRange = [];
-    tabSelectedIndex: number;
-           
-    constructor(
-        private appValuesService: AppValuesService,
-        private homeworkService: HomeworkService,
-        private router: Router,
-        private timetableService: TimetableService,
-    ) {
-        this.selectedStudent = this.appValuesService.getSelectedStudent();
+	allTimetableDays: Array<TimetableDay> = [];
+	timetableDaysForDate: Array<TimetableDay> = [];
 
-        this.startDate.setDate(this.startDate.getDate() - (this.startDate.getDay() + 7));
-        this.endDate.setDate(this.endDate.getDate() - (this.endDate.getDay() - 14));
+	allPeriods: Period[] = [];
+	periodsForDate: Period[] = [];
 
-        this.getAllHomework();
-        this.getLessonsDateRange();
-        this.getLessons();
-        this.getPeriods();
-     }
+	current = false;
+	hasLesson = true;
+	isDueLesson = false;
+	isLoading = true;
+	lastLesson = false;
+	showDetails = false;
 
-    ngOnInit() { }
+	tabSelectedIndex: number;
 
-    ngOnDestroy() {
-        if (this.subscriptions) {
-            for (let subscription of this.subscriptions)
-            {
-                subscription.unsubscribe();
-            }
-        }
-    }
+	constructor(private appValuesService: AppValuesService, private homeworkService: HomeworkService, private router: Router, private timetableService: TimetableService) {
+		this.selectedStudent = this.appValuesService.getSelectedStudent();
 
-    getAllHomework() {
-        this.subscriptions.push(this.homeworkService.getStudentHomework(this.selectedStudent.id)
-            .subscribe(
-                homework => {
-                    this.allHomeworks = homework;
-                }
-            )
-        )
-    }
+		this.startDate.setDate(this.startDate.getDate() - (this.startDate.getDay() + 7));
+		this.endDate.setDate(this.endDate.getDate() - (this.endDate.getDay() - 14));
 
-    getCurrentLesson(lesson: Lesson): boolean {
-        let today = new Date();
+		this.getAllHomework();
+		this.GetTimetableDays();
+	}
 
-        if ((today >= new Date(lesson.startDate)) && (today <= new Date(lesson.endDate))) {
-            this.current = true;
-            return true;
-        } else {
-            this.current = false;
-            return false;
-        }
-    }
+	ngOnInit() {}
 
-    getHomeworkDueDate(lesson: Lesson): boolean {
-        const dueHomework = this.allHomeworks.find(h =>
-            h.subject == lesson.subject
-        );
+	ngOnDestroy() {
+		if (this.subscriptions) {
+			for (let subscription of this.subscriptions) {
+				subscription.unsubscribe();
+			}
+		}
+	}
 
-        if (dueHomework != undefined) {
-            this.allDueHomeworks.push(dueHomework);
-            let isOverdue = this.homeworkService.getHomeworkDeadlineStatus(dueHomework) === HomeworkDeadlineStatus.overDue;
+	getAllHomework() {
+		this.homeworkService.getStudentHomework(this.selectedStudent.id).then(result => {
+			this.allHomeworks = result;
+		});
+	}
 
-            if (isOverdue === true) {
-                this.isDueLesson = true;
-                this.homeworkIcon = String.fromCharCode(0xe91f);
-                return true;
-            }
-        }
+	getCurrentEvent(event: Event): boolean {
+		let today = new Date();
 
-        return false;
-    }
+		if (today >= new Date(event.startDateTime) && today <= new Date(event.endDateTime)) {
+			this.current = true;
+			return true;
+		} else {
+			this.current = false;
+			return false;
+		}
+	}
 
-    getLessons() {
-        this.subscriptions.push(this.timetableService.getLessons(this.dateRange)
-            .subscribe(
-                lessons => {
-                    lessons = lessons.sort ((obj1: Lesson, obj2: Lesson)  =>
-                    {
-                        return new Date(obj1.startDate).getHours() - new Date(obj2.startDate).getHours();
-                    });
-                    
-                    this.allLessons = lessons;
-                    this.getTabDateLesson();
-                },
-            )
-        );
-    }
+	public async GetTimetableDays() {
+		await this.timetableService.GetTimetableDaysForDates(this.startDate, this.endDate);
+	}
 
-    getLessonsDateRange() {
-        // one week previous date
-        let minDate = new Date();
-        minDate.setDate(minDate.getDate() - (minDate.getDay() + 7));
+	getSubjectColour(event: Event): string {
+		let subject = Subject;
+		let color = '';
 
-        // one week future date
-        let maxDate = new Date();
-        maxDate.setDate(maxDate.getDate() - (maxDate.getDay() - 13));
-                
-        let tabItemDate = new Date();
-        while (tabItemDate < maxDate) {
-            tabItemDate = new Date(minDate.setDate(minDate.getDate() + 1));
-            this.dateRange.push(tabItemDate.toString()); 
-        }
-    }
+		switch (event.subjectName) {
+			case subject.art: {
+				color = '#8B0000';
+				break;
+			}
+			case subject.computing: {
+				color = '#8B4513';
+				break;
+			}
+			case subject.design: {
+				color = '#808000';
+				break;
+			}
+			case subject.english: {
+				color = '#2ECCFA';
+				break;
+			}
+			case subject.geography: {
+				color = '#FA58F4';
+				break;
+			}
+			case subject.history: {
+				color = '#04B404';
+				break;
+			}
+			case subject.languages: {
+				color = '#BF00FF';
+				break;
+			}
+			case subject.math: {
+				color = '#FF8000';
+				break;
+			}
+			case subject.music: {
+				color = '#642EFE';
+				break;
+			}
+			case subject.pe: {
+				color = '#FFFF00';
+				break;
+			}
+			case subject.reg: {
+				color = '#086A87';
+				break;
+			}
+			case subject.science: {
+				color = '#FF0000';
+				break;
+			}
+		}
 
-    getLessonsForDate(date: Date) {
-        if (!this.allLessons) {
-            this.lessonsForDate = [];
-            return;
-        }
-        
-        this.lessonsForDate = this.allLessons.filter(l => new Date(l.startDate).toDateString() === date.toDateString());
-    }
+		return color;
+	}
 
-    getPeriods() {
-        this.subscriptions.push(
-            this.timetableService.getPeriods(this.dateRange)
-                .subscribe(p => { 
-                    this.allPeriods = p;
-                })
-        );
-    }
+	onTabSwipe(args: SelectedIndexChangedEventData) {
+		if (args.oldIndex !== -1) {
+			return;
+		}
 
-    getPeriodNameForLesson(lesson: Lesson): string {
-        let name = "";
+		// for (let tabDate of this.tabDates) {
+		// 	if (new Date(tabDate.date).getDate() === this.lessonDate.getDate()) {
+		// 		setTimeout(() => {
+		// 			this.tabSelectedIndex = this.dateRange.findIndex(x => x == tabDate.date);
+		// 		}, 200);
+		// 		return;
+		// 	}
+		// }
+	}
 
-        const startLessonDay = new Date(lesson.startDate).getDay();
-        const startLessonHour = new Date(lesson.startDate).getHours();
-        const startLessonMinute = new Date(lesson.startDate).getMinutes();
-        const endLessonDay = new Date(lesson.endDate).getDay();
-        const endLessonHour = new Date(lesson.endDate).getHours();
-        const endLessonMinute = new Date(lesson.endDate).getMinutes();
+	onTapHomework(event: Event) {
+		const homework = this.allDueHomeworks.find(h => h.subject == event.subjectName);
 
-        const period = this.allPeriods.find(p => 
-            new Date(p.startDate).getDay() == startLessonDay && 
-            new Date(p.startDate).getHours() == startLessonHour && 
-            new Date(p.startDate).getMinutes() == startLessonMinute && 
-            new Date(p.endDate).getDay() == endLessonDay && 
-            new Date(p.endDate).getHours() == endLessonHour && 
-            new Date(p.endDate).getMinutes() == endLessonMinute
-        );
-
-        if (period){
-            name = period.name;
-        }
-        
-        return name;
-    }  
-
-    getSubjectColour(lesson: Lesson): string {
-        let subject = Subject;
-        let color = "";
-
-        switch (lesson.subject) {
-            case subject.art: {
-                color = "#8B0000";
-                break;
-            }
-            case subject.computing: {
-                color = "#8B4513";
-                break;
-            }
-            case subject.design: {
-                color = "#808000";
-                break;
-            }
-            case subject.english: {
-                color = "#2ECCFA";
-                break;
-            }
-            case subject.geography: {
-                color = "#FA58F4";
-                break;
-            }
-            case subject.history: {
-                color = "#04B404";
-                break;
-            }
-            case subject.languages: {
-                color = "#BF00FF";
-                break;
-            }
-            case subject.math: {
-                color = "#FF8000";
-                break;
-            }
-            case subject.music: {
-                color = "#642EFE";
-                break;
-            }
-            case subject.pe: {
-                color = "#FFFF00";
-                break;
-            }
-            case subject.reg: {
-                color = "#086A87";
-                break;
-            }
-            case subject.science: {
-                color = "#FF0000";
-                break;
-            }
-        }
-
-        return color;
-    }
-
-    getTabDateLesson() {
-        for (let tabDate of this.dateRange) {
-            this.getLessonsForDate(new Date(tabDate));
-            let timetableTab = new TimetableTab;
-
-            timetableTab.date = tabDate;
-            timetableTab.lessons = this.lessonsForDate;
-            this.tabDates.push(timetableTab);
-        }
-
-        this.isLoading = false;
-    }
-
-    onTabSwipe(args: SelectedIndexChangedEventData) {        
-        if (args.oldIndex !== -1) {
-            return;
-        }
-
-        for (let tabDate of this.tabDates) {
-            if (new Date(tabDate.date).getDate() === this.lessonDate.getDate()) {
-                setTimeout(() => {this.tabSelectedIndex = this.dateRange.findIndex(x => x == tabDate.date);}, 200);
-                return;
-            }
-        }   
-    }
-
-    onTapHomework(lesson: Lesson) {
-        const homework = this.allDueHomeworks.find(h =>
-            h.subject == lesson.subject
-        );
-        
-        this.router.navigate([`/homeworkdetails/${homework.id}`]);
-    }
+		this.router.navigate([`/homeworkdetails/${homework.id}`]);
+	}
 }

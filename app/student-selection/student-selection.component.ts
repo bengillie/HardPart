@@ -1,21 +1,20 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { RouterExtensions } from 'nativescript-angular/router'
+import { RouterExtensions } from 'nativescript-angular/router';
 
 import { Subscription } from 'rxjs';
 
-import { User } from '~/model/user.model';
+import { User } from '../shared/model/user.model';
 
-import { AppValuesService } from '../service/appvalues.service';
+import { AppValuesService } from '../shared/service/appvalues.service';
 
 @Component({
 	moduleId: module.id,
 	selector: 'student-selection',
 	templateUrl: './student-selection.component.html',
-	styleUrls: ['./student-selection.component.css']
+	styleUrls: ['./student-selection.component.css'],
 })
-
 export class StudentSelectionComponent implements OnInit, OnDestroy {
-	private subscriptions : Subscription[] = [];
+	private subscriptions: Subscription[] = [];
 
 	currentUser: User = new User();
 	students: User[] = [];
@@ -25,9 +24,7 @@ export class StudentSelectionComponent implements OnInit, OnDestroy {
 
 	warningIconCode = String.fromCharCode(0xea08);
 
-	constructor(private appValuesService: AppValuesService,
-		private routerExt: RouterExtensions
-		) { }
+	constructor(private appValuesService: AppValuesService, private routerExt: RouterExtensions) {}
 
 	ngOnInit() {
 		this.getSelectedStudent();
@@ -36,16 +33,15 @@ export class StudentSelectionComponent implements OnInit, OnDestroy {
 
 	ngOnDestroy() {
 		if (this.subscriptions) {
-            for (let subscription of this.subscriptions)
-            {
-                subscription.unsubscribe();
-            }
-        }
+			for (let subscription of this.subscriptions) {
+				subscription.unsubscribe();
+			}
+		}
 	}
 
 	getSelectedStudent() {
 		let currentSelected = this.appValuesService.getSelectedStudent();
-		if(currentSelected) { 
+		if (currentSelected) {
 			this.selectedStudent = currentSelected;
 		}
 	}
