@@ -16,7 +16,7 @@ export class AppValuesService {
 	notification: Notification[] = [];
 	totalNotif = 0;
 
-	public ApiUrl = 'http://localhost:50007/api/';
+	public ApiUrl = 'http://10.0.2.2:50007/api/';
 
 	getLoggedInUser(): User {
 		return this.currentUser;

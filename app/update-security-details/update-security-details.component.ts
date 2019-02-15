@@ -9,6 +9,7 @@ import { User } from '../shared/model/user.model';
 import { AppValuesService } from '../shared/service/appvalues.service';
 import { HelperService } from '../shared/service/helper.service';
 import { UserService } from '../shared/service/user.service';
+import { AuthorizationService } from '~/shared/service/authorization.service';
 
 export enum pageState {
 	updatePassword = 0,
@@ -27,7 +28,6 @@ export class UpdateSecurityDetailsComponent implements OnInit, OnDestroy {
 
 	currentUser: User = new User();
 	hasNavigationBack: boolean;
-	hasSkip;
 	isLoading = true;
 	pageState: pageState;
 
@@ -49,15 +49,13 @@ export class UpdateSecurityDetailsComponent implements OnInit, OnDestroy {
 		private routerExt: RouterExtensions,
 		private appValuesService: AppValuesService,
 		private helperService: HelperService,
-		private userService: UserService
+		private userService: UserService,
+		private authorizationService: AuthorizationService
 	) {}
 
 	ngOnInit() {
 		this.getCurrentUser();
 		this.getQueryParams();
-
-		this.hasNavigationBack = !this.currentUser.isfirsttime;
-		this.hasSkip = this.currentUser.isfirsttime;
 
 		this.primaryEmailAddress = decodeURIComponent(this.currentUser.emailprimary);
 		this.secondaryEmailAddress = decodeURIComponent(this.currentUser.emailsecondary);
@@ -132,29 +130,16 @@ export class UpdateSecurityDetailsComponent implements OnInit, OnDestroy {
 		);
 	}
 
-	goToSuccessaPage() {
-		if (this.currentUser.isfirsttime) {
-			this.currentUser.isfirsttime = this.currentUser.isfirsttime ? false : this.currentUser.isfirsttime;
-			this.subscriptions.push(
-				this.userService.updateUser(this.currentUser).subscribe(x => {
-					this.routerExt.navigate([`messagepage`], {
-						queryParams: {
-							title: 'Account Security',
-							messageSub: 'Account successfully changed.',
-							nextModule: 'dashboard',
-						},
-					});
-				})
-			);
-		} else {
+	async goToSuccessaPage() {
+		this.userService.UpdateUser(this.currentUser).then(() => {
 			this.routerExt.navigate([`messagepage`], {
 				queryParams: {
 					title: 'Account Security',
 					messageSub: 'Account successfully changed.',
-					nextModule: 'accountsecurity',
+					nextModule: 'dashboard',
 				},
 			});
-		}
+		});
 	}
 
 	skipEmailAddress() {
@@ -180,15 +165,14 @@ export class UpdateSecurityDetailsComponent implements OnInit, OnDestroy {
 		} else {
 			this.currentUser.emailprimary = this.primaryEmailAddress;
 			this.currentUser.emailsecondary = this.secondaryEmailAddress;
-			this.subscriptions.push(
-				this.userService.updateUser(this.currentUser).subscribe(x => {
-					if (this.currentUser.isfirsttime) {
-						this.pageState = pageState.updatePhoneNo;
-					} else {
-						this.goToSuccessaPage();
-					}
-				})
-			);
+
+			this.userService.UpdateUser(this.currentUser).then(x => {
+				if (this.authorizationService.ReturnFirstTimeLogin()) {
+					this.pageState = pageState.updatePhoneNo;
+				} else {
+					this.goToSuccessaPage();
+				}
+			});
 		}
 	}
 
@@ -205,15 +189,14 @@ export class UpdateSecurityDetailsComponent implements OnInit, OnDestroy {
 			}
 		} else {
 			this.currentUser.password = this.passwordNew;
-			this.subscriptions.push(
-				this.userService.updateUser(this.currentUser).subscribe(x => {
-					if (this.currentUser.isfirsttime) {
-						this.pageState = pageState.updateEmailAddress;
-					} else {
-						this.goToSuccessaPage();
-					}
-				})
-			);
+
+			this.userService.UpdateUser(this.currentUser).then(x => {
+				if (this.authorizationService.ReturnFirstTimeLogin()) {
+					this.pageState = pageState.updateEmailAddress;
+				} else {
+					this.goToSuccessaPage();
+				}
+			});
 		}
 	}
 
@@ -228,11 +211,9 @@ export class UpdateSecurityDetailsComponent implements OnInit, OnDestroy {
 		} else {
 			this.currentUser.phoneprimary = this.primaryPhoneNo;
 			this.currentUser.phonesecondary = this.secondaryPhoneNo;
-			this.subscriptions.push(
-				this.userService.updateUser(this.currentUser).subscribe(x => {
-					this.goToSuccessaPage();
-				})
-			);
+			this.userService.UpdateUser(this.currentUser).then(x => {
+				this.goToSuccessaPage();
+			});
 		}
 	}
 }

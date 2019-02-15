@@ -4,7 +4,7 @@ import * as auth0 from 'auth0-js';
 
 import { AuthorizationService } from '../service/authorization.service';
 import { HttpService } from '../service/httpservice.service';
-import { LoginService } from '../service/login.service';
+import { LoginService } from '../../login/login.service';
 import { UserService } from '../service/user.service';
 
 import { Auth0Config } from './Auth0Config.model';
@@ -137,8 +137,8 @@ export class Auth0Service {
 	}
 
 	private async loginForAuth0(authResponse: Auth0ResponseData): Promise<void> {
-		const successful = await this.authorizationService.LoginForAuth0(authResponse);
-		if (!successful) {
+		await this.authorizationService.LoginForAuth0(authResponse);
+		if (!this.authorizationService.IsLoggedIn()) {
 			return;
 		}
 		this.loginService.HandleLogin(authResponse.idTokenPayload.email);

@@ -5,6 +5,7 @@ import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { AppRoutingModule } from './app.routing';
 import { NativeScriptFormsModule } from 'nativescript-angular/forms';
 import { NativeScriptModule } from 'nativescript-angular/nativescript.module';
+import { NativeScriptHttpClientModule } from 'nativescript-angular/http-client';
 import { NativeScriptUIGaugeModule } from 'nativescript-ui-gauge/angular';
 import { NativeScriptUIListViewModule } from 'nativescript-ui-listview/angular';
 import { NativeScriptUISideDrawerModule } from 'nativescript-ui-sidedrawer/angular';
@@ -33,7 +34,7 @@ import { TimetableComponent } from './timetable/timetable.component';
 import { UpdateSecurityDetailsComponent } from './update-security-details/update-security-details.component';
 
 import { AchievementService } from './achievement/achievement.service';
-import { AdvertService } from './shared/service/advert.service';
+import { AdvertService } from './advert/advert.service';
 import { AppValuesService } from './shared/service/appvalues.service';
 import { AttendanceService } from './attendance/attendance.service';
 import { BehaviourService } from './behaviour/behaviour.service';
@@ -44,7 +45,7 @@ import { HelperService } from './shared/service/helper.service';
 import { HttpService } from './shared/service/httpservice.service';
 import { HomeworkService } from './homework/homework.service';
 import { LoggingService } from './shared/service/logging.service';
-import { LoginService } from './shared/service/login.service';
+import { LoginService } from './login/login.service';
 import { NotificationService } from './shared/service/notification.service';
 import { TimetableService } from './timetable/timetable.service';
 import { UserService } from './shared/service/user.service';
@@ -57,7 +58,7 @@ import { UserService } from './shared/service/user.service';
 		FormsModule,
 		NativeScriptFormsModule,
 		NativeScriptModule,
-		NativeScriptHttpModule,
+		NativeScriptHttpClientModule,
 		AppRoutingModule,
 		HttpClientModule,
 		// HttpClientInMemoryWebApiModule.forRoot(

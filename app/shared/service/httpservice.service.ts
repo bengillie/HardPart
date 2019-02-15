@@ -39,12 +39,12 @@ export class HttpService {
 	private configureHeaders(params: HttpParams) {
 		this.httpOptions.headers = new HttpHeaders().append('Content-Type', 'application/json').append('Authorization', `Bearer ${this.authorizationService.ReturnSessionToken()}`);
 
-		const userSession: UserSession = JSON.parse(sessionStorage.getItem('userSession'));
-		if (userSession !== null && userSession.activeUserSchool) {
-			if (!params.keys().find(p => p.toUpperCase() === 'SCHOOLID')) {
-				params = params.set('schoolId', userSession.activeUserSchool.schoolId);
-			}
-		}
+		// const userSession: UserSession = JSON.parse(sessionStorage.getItem('userSession'));
+		// if (userSession !== null && userSession.activeUserSchool) {
+		// 	if (!params.keys().find(p => p.toUpperCase() === 'SCHOOLID')) {
+		// 		params = params.set('schoolId', userSession.activeUserSchool.schoolId);
+		// 	}
+		// }
 
 		this.httpOptions.params = params;
 	}

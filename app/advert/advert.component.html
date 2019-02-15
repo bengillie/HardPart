@@ -1,16 +1,16 @@
 <actionbar hasNavigationBack="true"></actionbar>
 
 <StackLayout *ngIf="!isLoading">
-    <GridLayout  rows="auto,*" *ngFor="let advert of allAdvert" (tap)="getUrl()">
-        <StackLayout row="0">
-            <Image class="" [src]="advert.image"></Image>
-        </StackLayout>
-        <StackLayout row="1" class="m-t-20">
-            <Label class="title" [text]="advert.title"></Label>
-            <Label class="subTitle" [text]="advert.subTitle"></Label>
-            <Label class="description" [text]="advert.description" textWrap="true"></Label>
-        </StackLayout>
-    </GridLayout>
+	<GridLayout rows="auto,*" *ngFor="let advert of this.advertService.Adverts" (tap)="getUrl()">
+		<StackLayout row="0">
+			<Image class="" [src]="advert.image"></Image>
+		</StackLayout>
+		<StackLayout row="1" class="m-t-20">
+			<Label class="title" [text]="advert.title"></Label>
+			<Label class="subTitle" [text]="advert.subTitle"></Label>
+			<Label class="description" [text]="advert.description" textWrap="true"></Label>
+		</StackLayout>
+	</GridLayout>
 </StackLayout>
 
 <ActivityIndicator [busy]="isLoading" horizontalAlignment="center"></ActivityIndicator>

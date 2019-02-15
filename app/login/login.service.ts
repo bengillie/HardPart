@@ -4,13 +4,13 @@ import { HttpParams } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-import { User } from '../model/user.model';
+import { User } from '../shared/model/user.model';
 
-import { ErrorService } from '../service/error.service';
-import { HttpService } from '../service/httpservice.service';
-import { LoggingService } from '../service/logging.service';
-import { AuthorizationService } from './authorization.service';
-import { UserService } from './user.service';
+import { ErrorService } from '../shared/service/error.service';
+import { HttpService } from '../shared/service/httpservice.service';
+import { LoggingService } from '../shared/service/logging.service';
+import { AuthorizationService } from '../shared/service/authorization.service';
+import { UserService } from '../shared/service/user.service';
 import { Router } from '@angular/router';
 
 @Injectable()
@@ -45,7 +45,7 @@ export class LoginService {
 
 		await this.userService.GetUserSession(username);
 
-		if (this.authorizationService.token.firstLogin) {
+		if (this.authorizationService.ReturnFirstTimeLogin()) {
 			this.router.navigate([`updatesecuritydetails`]);
 		} else {
 			this.router.navigate([`dashboard`]);

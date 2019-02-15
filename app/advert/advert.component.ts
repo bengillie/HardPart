@@ -1,39 +1,39 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { Subscription } from "rxjs";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 
-import { AdvertService } from "~/shared/service/advert.service";
+import { AdvertService } from '~/advert/advert.service';
 
 @Component({
-  moduleId: module.id,
-  selector: "ns-advert",
-  templateUrl: "./advert.component.html",
-  styleUrls: ["./advert.component.css"]
+	moduleId: module.id,
+	selector: 'ns-advert',
+	templateUrl: './advert.component.html',
+	styleUrls: ['./advert.component.css'],
 })
 export class AdvertComponent implements OnInit, OnDestroy {
-  private subscriptions: Subscription[] = [];
-  isLoading = true;
+	private subscriptions: Subscription[] = [];
+	isLoading = true;
 
-  constructor(private advertService: AdvertService) {}
+	constructor(public advertService: AdvertService) {}
 
-  ngOnInit() {
-    this.getAdvert();
-  }
+	ngOnInit() {
+		this.getAdvert();
+	}
 
-  ngOnDestroy() {
-    if (this.subscriptions) {
-      for (let subscription of this.subscriptions) {
-        subscription.unsubscribe();
-      }
-    }
-  }
+	ngOnDestroy() {
+		if (this.subscriptions) {
+			for (let subscription of this.subscriptions) {
+				subscription.unsubscribe();
+			}
+		}
+	}
 
-  async getAdvert() {
-    await this.advertService.getAdvert();
-    this.isLoading = false;
-  }
+	async getAdvert() {
+		await this.advertService.getAdvert();
+		this.isLoading = false;
+	}
 
-  getUrl() {
-    let utilityModule = require("utils/utils");
-    utilityModule.openUrl(this.advertService.Adverts[0].urlLink);
-  }
+	getUrl() {
+		let utilityModule = require('utils/utils');
+		utilityModule.openUrl(this.advertService.Adverts[0].urlLink);
+	}
 }

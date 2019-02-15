@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { User } from '../shared/model/user.model';
 
 import { AppValuesService } from '../shared/service/appvalues.service';
-import { LoginService } from '../shared/service/login.service';
+import { LoginService } from './login.service';
 import { AuthorizationService } from '~/shared/service/authorization.service';
 import { UserService } from '~/shared/service/user.service';
 

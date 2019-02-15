@@ -7,8 +7,9 @@ import { RadSideDrawerComponent } from 'nativescript-ui-sidedrawer/angular';
 import { RadSideDrawer } from 'nativescript-ui-sidedrawer';
 import { Subscription } from 'rxjs';
 
-import { User } from './shared/model/user.model';
+import { User, UserType } from './shared/model/user.model';
 import { AppValuesService } from '../app/shared/service/appvalues.service';
+import { AuthorizationService } from './shared/service/authorization.service';
 
 export class navItem {
 	sortId: number;
@@ -28,7 +29,26 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 	public drawerComponent: RadSideDrawerComponent;
 	private sideDrawer: RadSideDrawer;
 
-	currentUser: User;
+	currentUser: User = {
+		id: 1,
+		fname: 'Jay',
+		mname: '',
+		lname: 'Smith',
+		username: '1',
+		password: '1',
+		birthdate: '1',
+		phoneprimary: '9123',
+		phonesecondary: '0123',
+		emailprimary: encodeURIComponent('jaysmith@email.com'),
+		emailsecondary: encodeURIComponent('jaysmith2@email.com'),
+		usertype: UserType.student,
+		hasIncompleteHomework: true,
+		image: '~/images/dp1.jpg',
+		lastpwupdate: new Date(),
+		lastlogin: new Date(),
+		children: [],
+	};
+
 	navItemSettings: navItem = {
 		sortId: 1,
 		icon: String.fromCharCode(0xe994),
@@ -46,7 +66,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 	};
 	navItems: navItem[] = [];
 
-	constructor(private appValuesService: AppValuesService, private router: Router, private routerExt: RouterExtensions) {}
+	constructor(private appValuesService: AppValuesService, private router: Router, private routerExt: RouterExtensions, private authorizationService: AuthorizationService) {}
 
 	ngOnInit() {
 		this.getRouteUrl();
@@ -75,28 +95,20 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	getRouteUrl() {
 		this.router.events.subscribe(res => {
-			this.getCurrentUser();
 			this.getNavItems();
 		});
-	}
-
-	getCurrentUser() {
-		this.currentUser = this.appValuesService.getLoggedInUser();
 	}
 
 	getNavItems() {
 		if (!this.currentUser) {
 			this.navItems = [];
 		} else {
-			if (this.currentUser.isfirsttime) {
-			} else {
-				this.pushNavItem(this.navItemSettings);
-				this.pushNavItem(this.navItemSecurity);
-			}
-
-			this.pushNavItem(this.navItemLogout);
-			this.navItems.sort(this.sortMenu);
+			this.pushNavItem(this.navItemSettings);
+			this.pushNavItem(this.navItemSecurity);
 		}
+
+		this.pushNavItem(this.navItemLogout);
+		this.navItems.sort(this.sortMenu);
 	}
 
 	onLoaded() {

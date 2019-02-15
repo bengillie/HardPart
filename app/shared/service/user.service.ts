@@ -10,10 +10,11 @@ import { HelperService } from '../service/helper.service';
 import { HttpService } from '../service/httpservice.service';
 import { UserSession } from '../model/userSession.model';
 import { AppValuesService } from './appvalues.service';
+import { UserRequest } from '../model/userRequest.model';
 
 @Injectable()
 export class UserService {
-	private url = 'user';
+	private url = 'user/';
 
 	constructor(private httpService: HttpService, private helperService: HelperService, private appValuesService: AppValuesService) {}
 
@@ -85,8 +86,33 @@ export class UserService {
 		return this.appValuesService.UserSession;
 	}
 
-	updateUser(user: User): Observable<any> {
-		return this.httpService.put(this.url, user);
+	public async UpdateUser(userToUpdate: User): Promise<string> {
+		const fullUrl = this.url + 'UpdateUser';
+		let user = null;
+
+		const body = new UserRequest(this.ReturnUserSession().userId, userToUpdate.password, userToUpdate.emailprimary, userToUpdate.phoneprimary);
+
+		await this.httpService
+			.Post<string>(fullUrl, body)
+			.then(result => {
+				console.log('User Updated');
+				user = result;
+
+				// if (user !== undefined) {
+				// 	const snackBarRef = this.snackBar.open('Successfully updated user and contact details.');
+				// 	snackBarRef.onAction().subscribe(() => snackBarRef.dismiss());
+				// } else {
+				// 	const snackBarRef = this.snackBar.open('Failed to update user and contact details.', 'Dismiss');
+				// 	snackBarRef.onAction().subscribe(() => snackBarRef.dismiss());
+				// }
+			})
+			.catch(error => {
+				console.log('Error creating updating user');
+				// const snackBarRef = this.snackBar.open('Error updating user and contact details.', 'Dismiss');
+				// snackBarRef.onAction().subscribe(() => snackBarRef.dismiss());
+			});
+
+		return user;
 	}
 
 	validatePassword(passwordNew: string, passwordConfirm: string) {

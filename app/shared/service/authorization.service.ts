@@ -18,8 +18,6 @@ import { AppValuesService } from './appvalues.service';
 	providedIn: 'root',
 })
 export class AuthorizationService {
-	public token: Token;
-
 	private baseUrl = '';
 	private serviceUrl = 'authorization/';
 	private session: AuthSession;
@@ -94,43 +92,35 @@ export class AuthorizationService {
 	}
 
 	public async Login(username: string, password: string) {
-		const fullUrl = this.baseUrl + this.serviceUrl + 'requesttoken';
+		const fullUrl = this.serviceUrl + 'requesttoken';
 		const body = new TokenRequest(username, password);
 
 		await this.getAuthorizeTokenFromAPI(fullUrl, body)
-			.then(result => (this.token = result))
+			.then(result => {
+				this.session = new AuthSession(username, result.token, result.firstLogin);
+				// sessionStorage.setItem('authSession', JSON.stringify(this.session));
+			})
 			.catch(error => {
-				this.token = undefined;
 				this.session = undefined;
 				console.log('Could not get token');
 			});
-
-		if (!this.token) {
-			return;
-		}
-		this.session = new AuthSession(username, this.token.token);
-		// sessionStorage.setItem('authSession', JSON.stringify(this.session));
 	}
 
-	public async LoginForAuth0(authResponse: Auth0ResponseData): Promise<boolean> {
+	public async LoginForAuth0(authResponse: Auth0ResponseData) {
 		const payload: IdTokenPayload = authResponse.idTokenPayload;
 		const fullUrl = this.serviceUrl + 'RequestTokenForAuth0';
 		const body = new Auth0User(payload.email, payload.given_name, payload.family_name);
 
 		await this.getAuthorizeTokenFromAPI(fullUrl, body)
-			.then(result => (this.token = result))
+			.then(result => {
+				this.session = new AuthSession(payload.email, result.token, result.firstLogin);
+				sessionStorage.setItem('authSession', JSON.stringify(this.session));
+			})
 			.catch(error => {
-				this.token = undefined;
 				this.session = undefined;
 				console.log('Could not get token');
+				return false;
 			});
-
-		if (!this.token) {
-			return false;
-		}
-		this.session = new AuthSession(payload.email, this.token.token);
-		// sessionStorage.setItem('authSession', JSON.stringify(this.session));
-		return true;
 	}
 
 	public Logout() {
@@ -140,5 +130,9 @@ export class AuthorizationService {
 
 	public ReturnSessionToken(): string {
 		return this.session.token;
+	}
+
+	public ReturnFirstTimeLogin(): boolean {
+		return this.session.firstLogin;
 	}
 }

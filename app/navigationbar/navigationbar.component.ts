@@ -9,6 +9,7 @@ import { User } from '../shared/model/user.model';
 import { AppValuesService } from '../shared/service/appvalues.service';
 import { HelperService } from '../shared/service/helper.service';
 import { NotificationService } from '~/shared/service/notification.service';
+import { AuthorizationService } from '~/shared/service/authorization.service';
 
 @Component({
 	moduleId: module.id,
@@ -41,7 +42,8 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
 		private helperService: HelperService,
 		private notificationService: NotificationService,
 		private router: Router,
-		private routerExt: RouterExtensions
+		private routerExt: RouterExtensions,
+		private authorizationService: AuthorizationService
 	) {}
 
 	ngOnInit() {
@@ -115,7 +117,7 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
 
 			let excludedPages: string[] = ['/login', '/forgotpassword', '/advert'];
 			let tempShowNavBar = excludedPages.filter(x => this.router.url.startsWith(x)).length === 0;
-			tempShowNavBar = tempShowNavBar && this.currentUser && !this.currentUser.isfirsttime;
+			tempShowNavBar = tempShowNavBar && this.currentUser && !this.authorizationService.ReturnFirstTimeLogin();
 			this.showNavBar = tempShowNavBar;
 		});
 	}
