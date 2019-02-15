@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import * as auth0 from 'auth0-js';
 
@@ -32,8 +31,7 @@ export class Auth0Service {
 		private authorizationService: AuthorizationService,
 		private httpService: HttpService,
 		private loginService: LoginService,
-		private userService: UserService,
-		private snackBar: MatSnackBar
+		private userService: UserService
 	) {}
 
 	public async GetAuth0Credentials(): Promise<void> {
@@ -56,8 +54,8 @@ export class Auth0Service {
 						this.Auth0Loading = false;
 						resolve();
 					} else {
-						const snackBarRef = this.snackBar.open('An error occurred: Only Flytdex-based login is possible', 'Dismiss');
-						snackBarRef.onAction().subscribe(() => snackBarRef.dismiss());
+						// const snackBarRef = this.snackBar.open('An error occurred: Only Flytdex-based login is possible', 'Dismiss');
+						// snackBarRef.onAction().subscribe(() => snackBarRef.dismiss());
 						this.DisplayLoginChoice = false;
 						this.FlytdexLoginChosen = true;
 						this.Auth0Available = false;
@@ -66,8 +64,8 @@ export class Auth0Service {
 					}
 				})
 				.catch(error => {
-					const snackBarRef = this.snackBar.open('An error occurred: Only Flytdex-based login is possible', 'Dismiss');
-					snackBarRef.onAction().subscribe(() => snackBarRef.dismiss());
+					// const snackBarRef = this.snackBar.open('An error occurred: Only Flytdex-based login is possible', 'Dismiss');
+					// snackBarRef.onAction().subscribe(() => snackBarRef.dismiss());
 					console.log(error.message);
 					this.DisplayLoginChoice = false;
 					this.FlytdexLoginChosen = true;
@@ -131,8 +129,8 @@ export class Auth0Service {
 			} else if (err) {
 				this.router.navigate(['/login']);
 				console.log(err);
-				const snackBarRef = this.snackBar.open('An error occurred: Single Sign On (SSO) failed.  Please try again or use Flytdex login', 'Dismiss');
-				snackBarRef.onAction().subscribe(() => snackBarRef.dismiss());
+				// const snackBarRef = this.snackBar.open('An error occurred: Single Sign On (SSO) failed.  Please try again or use Flytdex login', 'Dismiss');
+				// snackBarRef.onAction().subscribe(() => snackBarRef.dismiss());
 			}
 			this.Auth0Loading = false;
 		});
@@ -148,7 +146,7 @@ export class Auth0Service {
 
 	public LoginFailed(message: string): void {
 		this.router.navigate(['/login']);
-		const snackBarRef = this.snackBar.open(message, 'Dismiss');
-		snackBarRef.onAction().subscribe(() => snackBarRef.dismiss());
+		// const snackBarRef = this.snackBar.open(message, 'Dismiss');
+		// snackBarRef.onAction().subscribe(() => snackBarRef.dismiss());
 	}
 }

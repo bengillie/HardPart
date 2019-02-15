@@ -91,7 +91,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 	}
 
 	private validInput(logIn): boolean {
-		if (!logIn.username || !logIn.password || !logIn.birthdate) {
+		if (!logIn.username || !logIn.password) {
 			this.errorMessage = 'Required fields';
 			if (!logIn.username) {
 				this.username.nativeElement.borderColor = 'red';

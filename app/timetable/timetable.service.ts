@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 
-import { ErrorService } from '../shared/service/error.service';
 import { HttpService } from '../shared/service/httpservice.service';
-import { LoggingService } from '../shared/service/logging.service';
 import { UserService } from '../shared/service/user.service';
 import { DateHelper } from '../shared/helpers/date.helper';
 import { TimetableDay } from '../shared/model/timetableDay.model';
@@ -17,7 +15,7 @@ export class TimetableService {
 	public TimetableDaysForDates: Array<TimetableDay> = [];
 	public Periods: Array<Period> = [];
 
-	constructor(private errorService: ErrorService, private httpService: HttpService, private logService: LoggingService, private userService: UserService, private dateHelper: DateHelper) {}
+	constructor(private httpService: HttpService, private userService: UserService, private dateHelper: DateHelper) {}
 
 	public async GetTimetableDaysForDates(fromDate: Date, toDate: Date): Promise<TimetableDay[]> {
 		const fullUrl = this.urlEvents + 'GetTimetableForDatesAndStudent';

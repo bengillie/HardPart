@@ -1,9 +1,8 @@
-import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { SelectedIndexChangedEventData } from 'tns-core-modules/ui/tab-view';
 
-import { Subject } from '~/shared/model/timetable.model';
 import { User } from '~/shared/model/user.model';
 import { Event } from '~/shared/model/event.model';
 import { Period } from '~/shared/model/period.model';
@@ -13,6 +12,7 @@ import { HomeworkService } from '~/homework/homework.service';
 import { TimetableService } from './timetable.service';
 import { Homework, HomeworkDeadlineStatus } from '~/shared/model/homework.model';
 import { TimetableDay } from '~/shared/model/timetableDay.model';
+import { Subject } from '~/shared/model/subject.model';
 
 @Component({
 	moduleId: module.id,

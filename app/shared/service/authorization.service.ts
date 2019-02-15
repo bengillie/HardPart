@@ -12,6 +12,7 @@ import { Token } from '../model/token.model';
 import { ApiResult } from '../model/apiResult.model';
 import { retry, tap } from 'rxjs/operators';
 import { ResultType } from '../model/enums/resultType.model';
+import { AppValuesService } from './appvalues.service';
 
 @Injectable({
 	providedIn: 'root',
@@ -19,10 +20,13 @@ import { ResultType } from '../model/enums/resultType.model';
 export class AuthorizationService {
 	public token: Token;
 
+	private baseUrl = '';
 	private serviceUrl = 'authorization/';
 	private session: AuthSession;
 
-	constructor(private router: Router, private http: HttpClient, private errorService: ErrorService, @Inject('baseUrl') private baseUrl: string) {}
+	constructor(private router: Router, private http: HttpClient, private errorService: ErrorService, private appValuesService: AppValuesService) {
+		this.baseUrl = this.appValuesService.ApiUrl;
+	}
 
 	private async getAuthorizeTokenFromAPI(url: string, body: any): Promise<Token> {
 		const fullUrl = this.baseUrl + url;
@@ -82,15 +86,15 @@ export class AuthorizationService {
 		if (this.session) {
 			return true;
 		}
-		this.session = JSON.parse(sessionStorage.getItem('authSession'));
-		if (this.session) {
-			return true;
-		}
+		// this.session = JSON.parse(sessionStorage.getItem('authSession'));
+		// if (this.session) {
+		// 	return true;
+		// }
 		return false;
 	}
 
 	public async Login(username: string, password: string) {
-		const fullUrl = this.serviceUrl + 'requesttoken';
+		const fullUrl = this.baseUrl + this.serviceUrl + 'requesttoken';
 		const body = new TokenRequest(username, password);
 
 		await this.getAuthorizeTokenFromAPI(fullUrl, body)
@@ -105,7 +109,7 @@ export class AuthorizationService {
 			return;
 		}
 		this.session = new AuthSession(username, this.token.token);
-		sessionStorage.setItem('authSession', JSON.stringify(this.session));
+		// sessionStorage.setItem('authSession', JSON.stringify(this.session));
 	}
 
 	public async LoginForAuth0(authResponse: Auth0ResponseData): Promise<boolean> {
@@ -125,13 +129,13 @@ export class AuthorizationService {
 			return false;
 		}
 		this.session = new AuthSession(payload.email, this.token.token);
-		sessionStorage.setItem('authSession', JSON.stringify(this.session));
+		// sessionStorage.setItem('authSession', JSON.stringify(this.session));
 		return true;
 	}
 
 	public Logout() {
 		this.session = undefined;
-		sessionStorage.clear();
+		// sessionStorage.clear();
 	}
 
 	public ReturnSessionToken(): string {

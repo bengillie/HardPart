@@ -57,6 +57,7 @@ import { UserService } from './shared/service/user.service';
 		FormsModule,
 		NativeScriptFormsModule,
 		NativeScriptModule,
+		NativeScriptHttpModule,
 		AppRoutingModule,
 		HttpClientModule,
 		// HttpClientInMemoryWebApiModule.forRoot(
