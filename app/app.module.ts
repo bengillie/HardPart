@@ -46,7 +46,7 @@ import { HttpService } from './shared/service/httpservice.service';
 import { HomeworkService } from './homework/homework.service';
 import { LoggingService } from './shared/service/logging.service';
 import { LoginService } from './login/login.service';
-import { NotificationService } from './shared/service/notification.service';
+import { NotificationService } from './notification/notification.service';
 import { TimetableService } from './timetable/timetable.service';
 import { UserService } from './shared/service/user.service';
 

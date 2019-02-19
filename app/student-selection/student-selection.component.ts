@@ -16,7 +16,7 @@ import { AppValuesService } from '../shared/service/appvalues.service';
 export class StudentSelectionComponent implements OnInit, OnDestroy {
 	private subscriptions: Subscription[] = [];
 
-	currentUser: User = new User();
+	// currentUser: User = new User();
 	students: User[] = [];
 	selectedStudent: User = new User();
 
@@ -47,8 +47,8 @@ export class StudentSelectionComponent implements OnInit, OnDestroy {
 	}
 
 	getStudents() {
-		this.currentUser = this.appValuesService.getLoggedInUser();
-		this.students = this.currentUser.children;
+		// this.currentUser = this.appValuesService.getLoggedInUser();
+		// this.students = this.currentUser.children;
 		this.isLoading = false;
 	}
 

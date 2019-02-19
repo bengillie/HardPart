@@ -1,41 +1,37 @@
 <actionbar title="Account Security" hasNavigationBack="true"></actionbar>
 
 <StackLayout [visibility]="isLoading ? 'collapse' : 'visible'" class="container">
-    <GridLayout rows="auto, auto, *" class="selection-item" (tap)="onTap('Password')">
-        <GridLayout row="0" class="selection-item-header" columns="auto, *">
-            <Label col="0" class="item-textheader" text="Password"></Label>
-            <Label col="1" class="icon editIconCode" horizontalAlignment="right" [text]="editIconCode"></Label>
-        </GridLayout>
-        <GridLayout row="1" columns="100, 5, *" rows="auto, auto, *"  class="selection-item-detail" orientation="vertical">
-            <Label row="0" col="0" text="Last update"></Label>
-            <Label row="0" col="2" text="{{currentUser.lastpwupdate | date : 'longDate'}}"></Label>
-            <Label row="1" col="0" text="Last login"></Label>
-            <Label row="1" col="2" text="{{currentUser.lastlogin | date : 'longDate'}}"></Label>
-        </GridLayout>
-    </GridLayout>
-    <GridLayout rows="auto, auto, *" class="selection-item" (tap)="onTap('EmailAddress')">
-        <GridLayout row="0" class="selection-item-header" columns="auto, *">
-            <Label col="0" class="item-textheader" text="Email Address"></Label>
-            <Label col="1" class="icon editIconCode" horizontalAlignment="right" [text]="editIconCode"></Label>
-        </GridLayout>
-        <GridLayout row="1" columns="100, 5, *" rows="auto, auto, *"  class="selection-item-detail" orientation="vertical">
-            <Label row="0" col="0" text="Primary"></Label>
-            <Label row="0" col="2" [text]="checkValue(currentUser.emailprimary)"></Label>
-            <Label row="1" col="0" text="Secondary"></Label>
-            <Label row="1" col="2" [text]="checkValue(currentUser.emailsecondary)"></Label>
-        </GridLayout>
-    </GridLayout>
-    <GridLayout rows="auto, auto, *" class="selection-item" (tap)="onTap('PhoneNo')">
-        <GridLayout row="0" class="selection-item-header" columns="auto, *">
-            <Label col="0" class="item-textheader" text="Phone No."></Label>
-            <Label col="1" class="icon editIconCode" horizontalAlignment="right" [text]="editIconCode"></Label>
-        </GridLayout>
-        <GridLayout row="1" columns="100, 5, *" rows="auto, auto, *"  class="selection-item-detail" orientation="vertical">
-            <Label row="0" col="0" text="Primary"></Label>
-            <Label row="0" col="2" [text]="checkValue(currentUser.phoneprimary)"></Label>
-            <Label row="1" col="0" text="Secondary"></Label>
-            <Label row="1" col="2" [text]="checkValue(currentUser.phonesecondary)"></Label>
-        </GridLayout>
-    </GridLayout>
+	<GridLayout rows="auto, auto, *" class="selection-item" (tap)="onTap('Password')">
+		<GridLayout row="0" class="selection-item-header" columns="auto, *">
+			<Label col="0" class="item-textheader" text="Password"></Label>
+			<Label col="1" class="icon editIconCode" horizontalAlignment="right" [text]="editIconCode"></Label>
+		</GridLayout>
+		<GridLayout row="1" columns="100, 5, *" rows="auto, auto, *" class="selection-item-detail" orientation="vertical">
+			<Label row="0" col="0" text="Last update"></Label>
+			<Label row="0" col="2" text="{{ this.Date | date: 'longDate' }}"></Label>
+			<Label row="1" col="0" text="Last login"></Label>
+			<Label row="1" col="2" text="{{ this.userService.ReturnUserSession().lastLoginDateTime | date: 'longDate' }}"></Label>
+		</GridLayout>
+	</GridLayout>
+	<GridLayout rows="auto, auto, *" class="selection-item" (tap)="onTap('EmailAddress')">
+		<GridLayout row="0" class="selection-item-header" columns="auto, *">
+			<Label col="0" class="item-textheader" text="Email Address"></Label>
+			<Label col="1" class="icon editIconCode" horizontalAlignment="right" [text]="editIconCode"></Label>
+		</GridLayout>
+		<GridLayout row="1" columns="100, 5, *" rows="auto, auto, *" class="selection-item-detail" orientation="vertical">
+			<Label row="0" col="0" text="Primary"></Label>
+			<Label row="0" col="2" [text]="checkValue(this.userService.ReturnUserSession().username)"></Label>
+		</GridLayout>
+	</GridLayout>
+	<GridLayout rows="auto, auto, *" class="selection-item" (tap)="onTap('PhoneNo')">
+		<GridLayout row="0" class="selection-item-header" columns="auto, *">
+			<Label col="0" class="item-textheader" text="Phone No."></Label>
+			<Label col="1" class="icon editIconCode" horizontalAlignment="right" [text]="editIconCode"></Label>
+		</GridLayout>
+		<GridLayout row="1" columns="100, 5, *" rows="auto, auto, *" class="selection-item-detail" orientation="vertical">
+			<Label row="0" col="0" text="Primary"></Label>
+			<Label row="0" col="2" [text]="checkValue(this.userService.ReturnUserSession().phoneNumber)"></Label>
+		</GridLayout>
+	</GridLayout>
 </StackLayout>
 <ActivityIndicator [busy]="isLoading" horizontalAlignment="center"></ActivityIndicator>

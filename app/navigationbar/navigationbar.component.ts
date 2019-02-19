@@ -8,7 +8,7 @@ import { User } from '../shared/model/user.model';
 
 import { AppValuesService } from '../shared/service/appvalues.service';
 import { HelperService } from '../shared/service/helper.service';
-import { NotificationService } from '~/shared/service/notification.service';
+import { NotificationService } from '~/notification/notification.service';
 import { AuthorizationService } from '~/shared/service/authorization.service';
 
 @Component({
@@ -20,7 +20,6 @@ import { AuthorizationService } from '~/shared/service/authorization.service';
 export class NavigationBarComponent implements OnInit, OnDestroy {
 	private subscriptions: Subscription[] = [];
 
-	currentUser: User = new User();
 	iconCodeMenu = '';
 	iconCodeHomework = '';
 	iconCodeStudentSelection = '';
@@ -49,6 +48,7 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
 	ngOnInit() {
 		this.getIcon();
 		this.getRouteUrl();
+		this.getNotification();
 	}
 
 	ngOnDestroy() {
@@ -59,13 +59,13 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	getCurrentUser() {
-		this.currentUser = this.appValuesService.getLoggedInUser();
-		if (this.currentUser) {
-			this.showStudentSelection = this.currentUser.children.length > 1;
-			this.getNotification();
-		}
-	}
+	// getCurrentUser() {
+	// 	if (this.currentUser) {
+	// 		this.showStudentSelection = this.currentUser.children.length > 1;
+	// 		this.getNotification();
+	// 	}
+
+	// }
 
 	getEmergencyNotification(notification: Notification[]) {
 		let today = new Date();
@@ -88,15 +88,17 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
 	async getNotification() {
 		this.totalNotification = this.appValuesService.getTotalNotification();
 
-		if (this.totalNotification === 0) {
-			await this.notificationService.getNotification();
-
-			this.notificationService.Notifications.sort((a, b) => (new Date(a.createdDate) > new Date(b.createdDate) ? -1 : 1));
-			this.appValuesService.setNotification(this.notificationService.Notifications);
-			this.appValuesService.setTotalNotification(this.notificationService.Notifications.length);
-			this.totalNotification = this.notificationService.Notifications.length;
-			this.getEmergencyNotification(this.notificationService.Notifications);
+		if (!this.authorizationService.IsLoggedIn()) {
+			return;
 		}
+
+		await this.notificationService.getNotification();
+
+		this.notificationService.Notifications.sort((a, b) => (new Date(a.createdDate) > new Date(b.createdDate) ? -1 : 1));
+		this.appValuesService.setNotification(this.notificationService.Notifications);
+		this.appValuesService.setTotalNotification(this.notificationService.Notifications.length);
+		this.totalNotification = this.notificationService.Notifications.length;
+		this.getEmergencyNotification(this.notificationService.Notifications);
 	}
 
 	getTabList() {
@@ -113,11 +115,9 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
 
 	getRouteUrl() {
 		this.router.events.subscribe(res => {
-			this.getCurrentUser();
-
 			let excludedPages: string[] = ['/login', '/forgotpassword', '/advert'];
 			let tempShowNavBar = excludedPages.filter(x => this.router.url.startsWith(x)).length === 0;
-			tempShowNavBar = tempShowNavBar && this.currentUser && !this.authorizationService.ReturnFirstTimeLogin();
+			tempShowNavBar = tempShowNavBar && this.authorizationService.IsLoggedIn() && !this.authorizationService.ReturnFirstTimeLogin();
 			this.showNavBar = tempShowNavBar;
 		});
 	}

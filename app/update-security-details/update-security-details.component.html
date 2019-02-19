@@ -1,62 +1,75 @@
 <actionbar [title]="title" [hasNavigationBack]="hasNavigationBack"></actionbar>
 
 <StackLayout [visibility]="isLoading ? 'collapse' : 'visible'" class="container">
-    <GridLayout *ngIf="pageState === 0" rows="auto, auto, auto, auto" class="input-item">
-        <TextField required row="0" class="input txt-class" [class.txt-class-error]="errorMessageNewPassword.length > 0"  
-            hint="New Password" [(ngModel)]="passwordNew" secure="true">
-        </TextField>
-        <TextField required row="1" class="input txt-class" [class.txt-class-error]="errorMessageConfirmPassword.length > 0" 
-            hint="Confirm Password" [(ngModel)]="passwordConfirm" secure="true"
-            returnKeyType="done" (returnPress)="updatePassword()">
-        </TextField>
+	<GridLayout *ngIf="pageState === 0" rows="auto, auto, auto, auto" class="input-item">
+		<TextField required row="0" class="input txt-class" [class.txt-class-error]="errorMessageNewPassword.length > 0" hint="New Password" [(ngModel)]="passwordNew" secure="true"> </TextField>
+		<TextField
+			required
+			row="1"
+			class="input txt-class"
+			[class.txt-class-error]="errorMessageConfirmPassword.length > 0"
+			hint="Confirm Password"
+			[(ngModel)]="passwordConfirm"
+			secure="true"
+			returnKeyType="done"
+			(returnPress)="updatePassword()"
+		>
+		</TextField>
 
-        <Label *ngIf="errorMessageNewPassword.length > 0" row="2" class="error-msg" [text]="errorMessageNewPassword" ></Label>
-        <Label *ngIf="errorMessageConfirmPassword.length > 0" row="2" class="error-msg" [text]="errorMessageConfirmPassword" ></Label>
+		<Label *ngIf="errorMessageNewPassword.length > 0" row="2" class="error-msg" [text]="errorMessageNewPassword"></Label>
+		<Label *ngIf="errorMessageConfirmPassword.length > 0" row="2" class="error-msg" [text]="errorMessageConfirmPassword"></Label>
 
-        <StackLayout row="3" class="container-buttons" orientation="horizontal" verticalAlignment="center" horizontalAlignment="center">
-            <Button class="button" text="Update" (tap)="updatePassword()"></Button>
-            <Button class="button" text="Clear" (tap)="clearPasswords()"></Button>
-        </StackLayout>
-    </GridLayout>
+		<StackLayout row="3" class="container-buttons" orientation="horizontal" verticalAlignment="center" horizontalAlignment="center">
+			<Button class="button" text="Update" (tap)="updatePassword()"></Button>
+			<Button class="button" text="Clear" (tap)="clearPasswords()"></Button>
+		</StackLayout>
+	</GridLayout>
 
-    <GridLayout *ngIf="pageState === 1" rows="auto, auto, auto, auto" class="input-item">
-        <TextField required row="0" class="input txt-class" [class.txt-class-error]="errorMessagePrimaryEmailAddress.length > 0"  
-            hint="Primary (emailaddress@email.com)" autocapitalizationType="none" [(ngModel)]="primaryEmailAddress"
-            keyboardType="email">
-        </TextField>
-        <TextField required row="1" class="input txt-class" [class.txt-class-error]="errorMessageSecondaryEmailAddress.length > 0" 
-            hint="Secondary (emailaddress@email.com)" autocapitalizationType="none" [(ngModel)]="secondaryEmailAddress"
-            keyboardType="email"
-            returnKeyType="done" (returnPress)="updatEmailAddress()">
-        </TextField>
+	<GridLayout *ngIf="pageState === 1" rows="auto, auto, auto, auto" class="input-item">
+		<TextField
+			required
+			row="0"
+			class="input txt-class"
+			[class.txt-class-error]="errorMessagePrimaryEmailAddress.length > 0"
+			hint="Primary (emailaddress@email.com)"
+			autocapitalizationType="none"
+			[(ngModel)]="primaryEmailAddress"
+			keyboardType="email"
+			returnKeyType="done"
+			(returnPress)="updatEmailAddress()"
+		>
+		</TextField>
 
-        <Label *ngIf="errorMessagePrimaryEmailAddress.length > 0" row="2" class="error-msg" [text]="errorMessagePrimaryEmailAddress" ></Label>
-        <Label *ngIf="errorMessageSecondaryEmailAddress.length > 0" row="2" class="error-msg" [text]="errorMessageSecondaryEmailAddress" ></Label>
+		<Label *ngIf="errorMessagePrimaryEmailAddress.length > 0" row="2" class="error-msg" [text]="errorMessagePrimaryEmailAddress"></Label>
 
-        <StackLayout row="3" class="container-buttons" orientation="horizontal" verticalAlignment="center" horizontalAlignment="center">
-            <Button class="button" text="Update" (tap)="updatEmailAddress()"></Button>
-            <Button *ngIf="hasSkip" class="button" text="Skip" (tap)="skipEmailAddress()"></Button>
-            <Button class="button" text="Clear" (tap)="clearEmailAddress()"></Button>
-        </StackLayout>
-    </GridLayout>
+		<StackLayout row="3" class="container-buttons" orientation="horizontal" verticalAlignment="center" horizontalAlignment="center">
+			<Button class="button" text="Update" (tap)="updatEmailAddress()"></Button>
+			<Button class="button" text="Skip" (tap)="skipEmailAddress()"></Button>
+			<Button class="button" text="Clear" (tap)="clearEmailAddress()"></Button>
+		</StackLayout>
+	</GridLayout>
 
-    <GridLayout *ngIf="pageState === 2" rows="auto, auto, auto, auto" class="input-item">
-        <TextField required row="0" class="input txt-class" [class.txt-class-error]="errorMessagePrimaryPhoneNo.length > 0"  
-            hint="Primary phone no" autocapitalizationType="none" [(ngModel)]="primaryPhoneNo">
-        </TextField>
-        <TextField required row="1" class="input txt-class" [class.txt-class-error]="errorMessageSecondaryPhoneNo.length > 0" 
-            hint="Secondary phone no" autocapitalizationType="none" [(ngModel)]="secondaryPhoneNo"
-            returnKeyType="done" (returnPress)="updatePhoneNo()">
-        </TextField>
+	<GridLayout *ngIf="pageState === 2" rows="auto, auto, auto, auto" class="input-item">
+		<TextField
+			required
+			row="0"
+			class="input txt-class"
+			[class.txt-class-error]="errorMessagePrimaryPhoneNo.length > 0"
+			hint="Primary phone no"
+			autocapitalizationType="none"
+			[(ngModel)]="primaryPhoneNo"
+			returnKeyType="done"
+			(returnPress)="updatePhoneNo()"
+		>
+		</TextField>
 
-        <Label *ngIf="errorMessagePrimaryPhoneNo.length > 0" row="2" class="error-msg" [text]="errorMessagePrimaryPhoneNo" ></Label>
-        <Label *ngIf="errorMessageSecondaryPhoneNo.length > 0" row="2" class="error-msg" [text]="errorMessageSecondaryPhoneNo" ></Label>
+		<Label *ngIf="errorMessagePrimaryPhoneNo.length > 0" row="2" class="error-msg" [text]="errorMessagePrimaryPhoneNo"></Label>
 
-        <StackLayout row="3" class="container-buttons" orientation="horizontal" verticalAlignment="center" horizontalAlignment="center">
-            <Button class="button" text="Update" (tap)="updatePhoneNo()"></Button>
-            <Button *ngIf="hasSkip" class="button" text="Skip" (tap)="skipPhoneNo()"></Button>
-            <Button class="button" text="Clear" (tap)="clearPhoneNo()"></Button>
-        </StackLayout>
-    </GridLayout>
+		<StackLayout row="3" class="container-buttons" orientation="horizontal" verticalAlignment="center" horizontalAlignment="center">
+			<Button class="button" text="Update" (tap)="updatePhoneNo()"></Button>
+			<Button class="button" text="Skip" (tap)="skipPhoneNo()"></Button>
+			<Button class="button" text="Clear" (tap)="clearPhoneNo()"></Button>
+		</StackLayout>
+	</GridLayout>
 </StackLayout>
 <ActivityIndicator [busy]="isLoading" horizontalAlignment="center"></ActivityIndicator>

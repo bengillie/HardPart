@@ -8,7 +8,7 @@ import { Notification } from '~/shared/model/notification.model';
 import { User } from '~/shared/model/user.model';
 
 import { AppValuesService } from '~/shared/service/appvalues.service';
-import { NotificationService } from '~/shared/service/notification.service';
+import { NotificationService } from '~/notification/notification.service';
 import { RouterExtensions } from 'nativescript-angular/router';
 
 @Component({
@@ -21,8 +21,6 @@ export class NotificationComponent implements OnInit, OnDestroy {
 	private subscriptions: Subscription[] = [];
 	isLoading = true;
 
-	loggedInUser: User;
-
 	allNotification: Notification[] = [];
 
 	itemIndex = 0;
@@ -30,9 +28,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
 	@ViewChild('listView_notif')
 	listView_notif: RadListViewComponent;
 
-	constructor(private appValuesService: AppValuesService, private notificationService: NotificationService, private routerExt: RouterExtensions) {
-		this.loggedInUser = this.appValuesService.getLoggedInUser();
-	}
+	constructor(private appValuesService: AppValuesService, private notificationService: NotificationService, private routerExt: RouterExtensions) {}
 
 	ngOnInit() {
 		this.getNotification();

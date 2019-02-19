@@ -1,71 +1,64 @@
-import { Component, Input, OnInit, OnDestroy } from "@angular/core";
-import { Location } from "@angular/common";
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Location } from '@angular/common';
 
-import { RadSideDrawer } from "nativescript-ui-sidedrawer";
-import { Subscription } from "rxjs";
-import * as app from "tns-core-modules/application";
+import { RadSideDrawer } from 'nativescript-ui-sidedrawer';
+import { Subscription } from 'rxjs';
+import * as app from 'tns-core-modules/application';
 
-import { User } from "~/shared/model/user.model";
+import { User } from '~/shared/model/user.model';
 
-import { AppValuesService } from "~/shared/service/appvalues.service";
+import { AppValuesService } from '~/shared/service/appvalues.service';
+import { UserService } from '~/shared/service/user.service';
 
 @Component({
-  moduleId: module.id,
-  selector: "actionbar",
-  templateUrl: "./actionbar.component.html",
-  styleUrls: ["./actionbar.component.css"]
+	moduleId: module.id,
+	selector: 'actionbar',
+	templateUrl: './actionbar.component.html',
+	styleUrls: ['./actionbar.component.css'],
 })
 export class ActionbarComponent implements OnInit, OnDestroy {
-  @Input()
-  title: string;
-  @Input()
-  hasDisplayPicture: boolean;
-  @Input()
-  hasNavigationBack;
+	@Input()
+	title: string;
 
-  private subscriptions: Subscription[] = [];
-  sideDrawer = <RadSideDrawer>app.getRootView();
+	@Input()
+	hasNavigationBack;
 
-  currentUser: User;
+	private subscriptions: Subscription[] = [];
+	sideDrawer = <RadSideDrawer>app.getRootView();
 
-  constructor(
-    private appValuesService: AppValuesService,
-    private location: Location
-  ) {
-    this.getCurrentUser();
-  }
+	displayImage: string;
 
-  ngOnInit() {
-    if (this.hasNavigationBack === "false") {
-      this.hasNavigationBack = false;
-    }
-  }
+	constructor(private appValuesService: AppValuesService, private location: Location, public userService: UserService) {
+		this.getUserImage();
+	}
 
-  ngOnDestroy() {
-    if (this.subscriptions) {
-      for (let subscription of this.subscriptions) {
-        subscription.unsubscribe();
-      }
-    }
-  }
+	ngOnInit() {
+		if (this.hasNavigationBack === 'false') {
+			this.hasNavigationBack = false;
+		}
+	}
 
-  getCurrentUser() {
-    this.currentUser = this.appValuesService.getLoggedInUser();
-    if (this.currentUser && this.currentUser.image === "") {
-      this.currentUser.image = "~/images/silhouette.png";
-      this.appValuesService.setLoggedInUser(this.currentUser);
-    }
-    this.hasDisplayPicture =
-      this.hasDisplayPicture === undefined ? true : false;
-    this.hasDisplayPicture =
-      this.hasDisplayPicture && this.currentUser !== undefined;
-  }
+	ngOnDestroy() {
+		if (this.subscriptions) {
+			for (let subscription of this.subscriptions) {
+				subscription.unsubscribe();
+			}
+		}
+	}
 
-  goBack() {
-    this.location.back();
-  }
+	getUserImage() {
+		this.displayImage = this.userService.ReturnUserSession().image;
 
-  openSidedrawer() {
-    this.sideDrawer.showDrawer();
-  }
+		if (this.displayImage) {
+			this.displayImage = '~/images/silhouette.png';
+		}
+	}
+
+	goBack() {
+		this.location.back();
+	}
+
+	openSidedrawer() {
+		this.sideDrawer.showDrawer();
+	}
 }

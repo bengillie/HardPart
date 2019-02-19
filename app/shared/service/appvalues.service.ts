@@ -18,12 +18,12 @@ export class AppValuesService {
 
 	public ApiUrl = 'http://10.0.2.2:50007/api/';
 
-	getLoggedInUser(): User {
-		return this.currentUser;
-	}
-	setLoggedInUser(user: User) {
-		this.currentUser = user;
-	}
+	// getLoggedInUser(): User {
+	// 	return this.currentUser;
+	// }
+	// setLoggedInUser(user: User) {
+	// 	this.currentUser = user;
+	// }
 
 	getNotification(): Notification[] {
 		return this.notification;

@@ -7,6 +7,7 @@ import { User } from '~/shared/model/user.model';
 
 import { HelperService } from '../shared/service/helper.service';
 import { UserService } from '../shared/service/user.service';
+import { UserRequest } from '~/shared/model/userRequest.model';
 
 export enum pageState {
 	sendCode = 0,
@@ -70,8 +71,9 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 				this.errorMessageConfirmPassword = errorMessage.message;
 			}
 		} else {
-			this.user.password = this.passwordNew;
-			this.userService.UpdateUser(this.user).then(x => {
+			const userRequest = new UserRequest(this.userService.ReturnUserSession().userId, this.passwordNew, null, null);
+
+			this.userService.UpdateUser(userRequest).then(x => {
 				this.routerExt.navigate([`messagepage`], {
 					queryParams: {
 						title: 'Forgot Password',

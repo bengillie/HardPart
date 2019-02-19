@@ -10,6 +10,7 @@ import { AppValuesService } from '../shared/service/appvalues.service';
 import { HelperService } from '../shared/service/helper.service';
 import { UserService } from '../shared/service/user.service';
 import { AuthorizationService } from '~/shared/service/authorization.service';
+import { UserRequest } from '~/shared/model/userRequest.model';
 
 export enum pageState {
 	updatePassword = 0,
@@ -26,7 +27,6 @@ export enum pageState {
 export class UpdateSecurityDetailsComponent implements OnInit, OnDestroy {
 	private subscriptions: Subscription[] = [];
 
-	currentUser: User = new User();
 	hasNavigationBack: boolean;
 	isLoading = true;
 	pageState: pageState;
@@ -34,15 +34,11 @@ export class UpdateSecurityDetailsComponent implements OnInit, OnDestroy {
 	errorMessageNewPassword = '';
 	errorMessageConfirmPassword = '';
 	errorMessagePrimaryEmailAddress = '';
-	errorMessageSecondaryEmailAddress = '';
 	errorMessagePrimaryPhoneNo = '';
-	errorMessageSecondaryPhoneNo = '';
 	passwordConfirm = '';
 	passwordNew = '';
 	primaryEmailAddress = '';
-	secondaryEmailAddress = '';
 	primaryPhoneNo = '';
-	secondaryPhoneNo = '';
 
 	constructor(
 		private route: ActivatedRoute,
@@ -50,17 +46,15 @@ export class UpdateSecurityDetailsComponent implements OnInit, OnDestroy {
 		private appValuesService: AppValuesService,
 		private helperService: HelperService,
 		private userService: UserService,
-		private authorizationService: AuthorizationService
+		public authorizationService: AuthorizationService
 	) {}
 
 	ngOnInit() {
-		this.getCurrentUser();
+		// this.getCurrentUser();
 		this.getQueryParams();
 
-		this.primaryEmailAddress = decodeURIComponent(this.currentUser.emailprimary);
-		this.secondaryEmailAddress = decodeURIComponent(this.currentUser.emailsecondary);
-		this.primaryPhoneNo = this.currentUser.phoneprimary;
-		this.secondaryPhoneNo = this.currentUser.phonesecondary;
+		this.primaryEmailAddress = decodeURIComponent(this.userService.ReturnUserSession().username);
+		this.primaryPhoneNo = this.userService.ReturnUserSession().phoneNumber;
 
 		// this.passwordNew = "test123";
 		// this.passwordConfirm = "test123";
@@ -90,9 +84,7 @@ export class UpdateSecurityDetailsComponent implements OnInit, OnDestroy {
 
 	clearEmailAddress() {
 		this.primaryEmailAddress = '';
-		this.secondaryEmailAddress = '';
 		this.errorMessagePrimaryEmailAddress = '';
-		this.errorMessageSecondaryEmailAddress = '';
 	}
 
 	clearPasswords() {
@@ -104,13 +96,7 @@ export class UpdateSecurityDetailsComponent implements OnInit, OnDestroy {
 
 	clearPhoneNo() {
 		this.primaryPhoneNo = '';
-		this.secondaryPhoneNo = '';
 		this.errorMessagePrimaryPhoneNo = '';
-		this.errorMessageSecondaryPhoneNo = '';
-	}
-
-	getCurrentUser() {
-		this.currentUser = this.appValuesService.getLoggedInUser();
 	}
 
 	getQueryParams() {
@@ -131,14 +117,12 @@ export class UpdateSecurityDetailsComponent implements OnInit, OnDestroy {
 	}
 
 	async goToSuccessaPage() {
-		this.userService.UpdateUser(this.currentUser).then(() => {
-			this.routerExt.navigate([`messagepage`], {
-				queryParams: {
-					title: 'Account Security',
-					messageSub: 'Account successfully changed.',
-					nextModule: 'dashboard',
-				},
-			});
+		this.routerExt.navigate([`messagepage`], {
+			queryParams: {
+				title: 'Account Security',
+				messageSub: 'Account successfully changed.',
+				nextModule: 'dashboard',
+			},
 		});
 	}
 
@@ -152,28 +136,24 @@ export class UpdateSecurityDetailsComponent implements OnInit, OnDestroy {
 
 	updatEmailAddress() {
 		this.errorMessagePrimaryEmailAddress = '';
-		this.errorMessageSecondaryEmailAddress = '';
 
 		if (this.primaryEmailAddress.trim().length === 0) {
 			this.errorMessagePrimaryEmailAddress = 'Primary email address is required.';
+			return;
 		} else if (!this.helperService.validateEmail(this.primaryEmailAddress)) {
 			this.errorMessagePrimaryEmailAddress = 'Invalid primary email address.';
-		} else if (this.secondaryEmailAddress.trim().length !== 0 && !this.helperService.validateEmail(this.secondaryEmailAddress)) {
-			this.errorMessageSecondaryEmailAddress = 'Invalid secondary email address.';
-		} else if (this.secondaryEmailAddress.trim().length !== 0 && this.secondaryEmailAddress === this.primaryEmailAddress) {
-			this.errorMessageSecondaryEmailAddress = 'Primary and secondary must not be the same.';
-		} else {
-			this.currentUser.emailprimary = this.primaryEmailAddress;
-			this.currentUser.emailsecondary = this.secondaryEmailAddress;
-
-			this.userService.UpdateUser(this.currentUser).then(x => {
-				if (this.authorizationService.ReturnFirstTimeLogin()) {
-					this.pageState = pageState.updatePhoneNo;
-				} else {
-					this.goToSuccessaPage();
-				}
-			});
+			return;
 		}
+
+		const userRequest = new UserRequest(this.userService.ReturnUserSession().userId, null, this.primaryEmailAddress, null);
+
+		this.userService.UpdateUser(userRequest).then(x => {
+			if (this.authorizationService.ReturnFirstTimeLogin()) {
+				this.pageState = pageState.updatePhoneNo;
+			} else {
+				this.goToSuccessaPage();
+			}
+		});
 	}
 
 	updatePassword() {
@@ -187,33 +167,35 @@ export class UpdateSecurityDetailsComponent implements OnInit, OnDestroy {
 			} else {
 				this.errorMessageConfirmPassword = errorMessage.message;
 			}
-		} else {
-			this.currentUser.password = this.passwordNew;
-
-			this.userService.UpdateUser(this.currentUser).then(x => {
-				if (this.authorizationService.ReturnFirstTimeLogin()) {
-					this.pageState = pageState.updateEmailAddress;
-				} else {
-					this.goToSuccessaPage();
-				}
-			});
+			return;
 		}
+
+		const userRequest = new UserRequest(this.userService.ReturnUserSession().userId, this.passwordNew, null, null);
+		this.userService.UpdateUser(userRequest).then(x => {
+			if (this.authorizationService.ReturnFirstTimeLogin()) {
+				this.pageState = pageState.updateEmailAddress;
+			} else {
+				this.goToSuccessaPage();
+			}
+		});
 	}
 
 	updatePhoneNo() {
 		this.errorMessagePrimaryPhoneNo = '';
-		this.errorMessageSecondaryPhoneNo = '';
 
-		if (this.primaryPhoneNo.trim().length === 0) {
+		if (this.primaryPhoneNo) {
 			this.errorMessagePrimaryPhoneNo = 'Primary phone no is required.';
-		} else if (this.secondaryPhoneNo.trim().length !== 0 && this.primaryPhoneNo === this.secondaryPhoneNo) {
-			this.errorMessageSecondaryPhoneNo = 'Primary and secondary must not be the same.';
-		} else {
-			this.currentUser.phoneprimary = this.primaryPhoneNo;
-			this.currentUser.phonesecondary = this.secondaryPhoneNo;
-			this.userService.UpdateUser(this.currentUser).then(x => {
-				this.goToSuccessaPage();
-			});
+			return;
 		}
+		if (this.primaryPhoneNo.trim().length < 10) {
+			this.errorMessagePrimaryPhoneNo = 'Primary phone number invalid.';
+			return;
+		}
+
+		const userRequest = new UserRequest(this.userService.ReturnUserSession().userId, null, null, this.primaryPhoneNo);
+
+		this.userService.UpdateUser(userRequest).then(x => {
+			this.goToSuccessaPage();
+		});
 	}
 }

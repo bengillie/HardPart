@@ -86,11 +86,11 @@ export class UserService {
 		return this.appValuesService.UserSession;
 	}
 
-	public async UpdateUser(userToUpdate: User): Promise<string> {
+	public async UpdateUser(userToUpdate: UserRequest): Promise<string> {
 		const fullUrl = this.url + 'UpdateUser';
 		let user = null;
 
-		const body = new UserRequest(this.ReturnUserSession().userId, userToUpdate.password, userToUpdate.emailprimary, userToUpdate.phoneprimary);
+		const body = userToUpdate;
 
 		await this.httpService
 			.Post<string>(fullUrl, body)
